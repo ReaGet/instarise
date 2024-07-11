@@ -5,7 +5,7 @@ import ProtectedRoute from './components/protected-route';
 import { DASHBOARD, SIGNIN } from './consts';
 import ErrorPage from './app/error-page';
 
-const isAuth = false;
+const isAuth = true;
 
 export const publicRoutes: RouteObject[] = [
   {
