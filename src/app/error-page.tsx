@@ -11,17 +11,18 @@ const ErrorPage = () => {
   const error = useRouteError() as IError;
   console.log(error)
   return (
-    <div className='flex flex-col items-center justify-center gap-12 w-screen h-screen px-6 text-primary'>
-      <h1 className='text-5xl font-bold'>Oops!</h1>
-      <div className='flex items-center gap-6'>
-        <span>Sorry, an unexpected error has occurred.</span>
-        <div className='bg-secondary w-[1px] h-12'></div>
-        <span>{error.statusText || error.message}</span>
+    <main className='flex items-center justify-center w-screen h-screen px-6'>
+      <div className='flex flex-col items-start justify-center gap-12 text-primary'>
+        <h1 className='text-5xl font-bold'>Oops!</h1>
+        <div className='flex flex-col items-start gap-3 pl-8 py-2 border-l text-sm'>
+          <span>Sorry, an unexpected error has occurred.</span>
+          <span className='text-foreground'>{error.statusText || error.message}</span>
+        </div>
+        <Button asChild size={'lg'}>
+          <Link to={DASHBOARD}>Go Home</Link>
+        </Button>
       </div>
-      <Button asChild size={'lg'}>
-        <Link to={DASHBOARD}>Go Home</Link>
-      </Button>
-    </div>
+    </main>
   )
 }
 

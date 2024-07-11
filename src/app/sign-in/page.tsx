@@ -1,9 +1,12 @@
-import React from 'react'
+import SignIn from '../../components/forms/sign-in'
 
-const SignIn = () => {
+const Page = () => {
   return (
-    <div>SignIn</div>
+    <div className='flex flex-col items-center justify-center gap-10 w-screen h-screen px-6'>
+      <h1 className='text-2xl font-semibold'>Авторизация</h1>
+      <SignIn />
+    </div>
   )
 }
 
-export default SignIn
+export default Page

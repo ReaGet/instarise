@@ -1,10 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { SIGNIN } from "../consts";
 
-const ProtectedRoute = ({ isAuthenticated }: { isAuthenticated: boolean }) => {
-  console.log(isAuthenticated)
-  if (!isAuthenticated) {
-    return <Navigate to={SIGNIN} replace />;
+const ProtectedRoute = ({ condition, redirect = SIGNIN }: { condition: boolean, redirect?: string }) => {
+  if (!condition) {
+    return <Navigate to={redirect} replace />;
   }
 
   return <Outlet />;

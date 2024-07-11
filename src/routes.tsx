@@ -9,18 +9,21 @@ const isAuth = false;
 
 export const publicRoutes: RouteObject[] = [
   {
-    path: SIGNIN,
-    element: <SignIn />,
+    element: <ProtectedRoute  condition={!isAuth} redirect={DASHBOARD} />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: SIGNIN,
+        element: <SignIn />,
+        errorElement: <ErrorPage />,
+      }
+    ]
   },
-  // {
-  //   path: '*',
-  //   element: <NotFound />,
-  // }
 ];
 
 export const privateRoutes: RouteObject[] = [
   {
-    element: <ProtectedRoute  isAuthenticated={isAuth} />,
+    element: <ProtectedRoute  condition={isAuth} />,
     errorElement: <ErrorPage />,
     children: [
       {
