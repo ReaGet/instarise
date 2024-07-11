@@ -1,15 +1,14 @@
 import React from 'react'
-import Header from '../components/header'
-import NavSidebar from '../components/nav-sidebar'
+import Header from '../components/header/header'
+import Container from '../components/container'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <Header />
-      <div className='flex h-full'>
-        <NavSidebar />
+      <Container className='flex h-full'>
         { children }
-      </div>
+      </Container>
     </div>
   )
 }
