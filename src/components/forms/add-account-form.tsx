@@ -12,14 +12,20 @@ const formSchema = z.object({
   password: z.string().min(1, {
     message: "Заполните поле пароль"
   }),
+  proxy: z.string().min(1, {
+    message: "Заполните поле Прокси"
+  }).ip({
+    message: "Введите корректный Прокси"
+  }),
 })
 
-const SignIn = () => {
+const AddAccountForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",
+      proxy: "",
     },
   })
 
@@ -56,10 +62,23 @@ const SignIn = () => {
             </FormItem>
           )}
         />
-        <Button type='submit' size={'lg'}>Войти</Button>
+        <FormField
+          control={form.control}
+          name='proxy'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Прокси</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type='submit' size='lg' className='ml-auto'>Добавить</Button>
       </form>
     </Form>
   )
 }
 
-export default SignIn
+export default AddAccountForm

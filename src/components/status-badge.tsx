@@ -1,8 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils';
-import React from 'react'
-
-type Status = 'working' | 'stop';
+import React from 'react';
+import type { Status } from '@/types';
 
 interface Props {
   status: Status

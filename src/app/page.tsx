@@ -1,5 +1,6 @@
-import React from 'react';
 import Layout from './layout'
+import AccountList from '@/components/account-list'
+import AddAccount from '@/components/dialogs/add-account'
 import {
   Select,
   SelectContent,
@@ -9,9 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Button } from '@/components/ui/button';
-import AccountList from '@/components/account-list'
+import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
+import { AccountListItem } from '@/types'
+
+const accounts: AccountListItem[] = [
+  { id: '1123', name: '@_rea_m_', description: 'Praesentium maiores eius suscipit nihil quas natus laborum soluta quam temporibus cupiditate fuga.', proxy: '192.168.0.110', status: 'working' },
+  { id: '312', name: '@landing', description: 'Come description', proxy: '132.111.101.5', status: 'stop' },
+];
 
 const HomePage = () => {
   return (
@@ -37,9 +43,9 @@ const HomePage = () => {
               </Select>
               <Button size='sm'>Применить</Button>
             </div>
-            <Button size='sm'>Добавить аккаунт</Button>
+            <AddAccount />
           </div>
-          <AccountList />
+          <AccountList data={accounts} />
         </div>
       </main>
     </Layout>
