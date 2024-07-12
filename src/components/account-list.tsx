@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Table,
   TableBody,
@@ -8,8 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Badge } from "@/components/ui/badge"
 import AccountActions from './account-actions'
+import StatusBadge from "@/components/status-badge"
 
 const AccountList = () => {
   return (
@@ -32,11 +31,8 @@ const AccountList = () => {
           <TableCell className="font-bold">@_rea_m_</TableCell>
           <TableCell>Lorem ipsum dolor sit amet, consectetur adipisicing asd</TableCell>
           <TableCell>192.168.0.111</TableCell>
-          <TableCell className='flex justify-start'>
-            <Badge variant='outline' className='flex items-center gap-2 py-1'>
-              <div className='w-2 h-2 rounded-full bg-primary'></div>
-              <span>Работает</span>
-            </Badge>
+          <TableCell>
+            <StatusBadge status="working" />
           </TableCell>
           <TableCell className="text-right">
             <AccountActions />

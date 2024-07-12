@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +20,7 @@ const AccountActions = () => {
         { ACCOUNT_ACTIONS.map(({value, text}) => {
           return (
             <DropdownMenuItem className='p-0' key={value}>
-              <Button variant='ghost' size='sm' className='w-full'>{text}</Button>
+              <Button variant='ghost' size='sm' className='justify-start w-full'>{text}</Button>
             </DropdownMenuItem>
           )
         })}

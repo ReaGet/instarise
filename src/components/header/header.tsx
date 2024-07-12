@@ -1,5 +1,5 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import Profile from "./profile"
+import AccountMenu from "./account-menu"
 
 const Header = () => {
   return (
@@ -15,7 +15,7 @@ const Header = () => {
           <DropdownMenuItem>Subscription</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Profile className='ml-auto' />
+      <AccountMenu className='ml-auto' />
     </header>
   )
 }

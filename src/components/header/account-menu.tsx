@@ -1,7 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { LogOut, User2 } from 'lucide-react'
 
-const Profile = ({ className }: { className: string }) => {
+const AccountMenu = ({ className }: { className: string }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className={className}>
@@ -19,4 +19,4 @@ const Profile = ({ className }: { className: string }) => {
   )
 }
 
-export default Profile
+export default AccountMenu
