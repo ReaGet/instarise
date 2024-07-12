@@ -1,5 +1,4 @@
-import React from 'react'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { LogOut, User2 } from 'lucide-react'
 
 const Profile = ({ className }: { className: string }) => {

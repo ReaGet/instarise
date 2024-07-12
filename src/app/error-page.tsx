@@ -1,6 +1,6 @@
 import { Link, useRouteError } from 'react-router-dom'
-import { Button } from '../components/ui/button';
-import { DASHBOARD } from '../consts';
+import { Button } from '@/components/ui/button';
+import { DASHBOARD } from '@/consts';
 
 interface IError {
   statusText: string;

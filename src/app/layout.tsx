@@ -1,6 +1,6 @@
 import React from 'react'
-import Header from '../components/header/header'
-import Container from '../components/container'
+import Header from '@/components/header/header'
+import Container from '@/components/container'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
