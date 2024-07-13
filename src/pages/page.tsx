@@ -17,6 +17,8 @@ import { AccountListItem } from '@/types'
 const accounts: AccountListItem[] = [
   { id: '1123', name: '@_rea_m_', description: 'Praesentium maiores eius suscipit nihil quas natus laborum soluta quam temporibus cupiditate fuga.', proxy: '192.168.0.110', status: 'working' },
   { id: '312', name: '@landing', description: 'Come description', proxy: '132.111.101.5', status: 'stop' },
+  { id: '12', name: '@pause', description: 'Some descr', proxy: '0.0.0.0', status: 'pause' },
+  { id: '43', name: '@queue', description: 'Asd asdqwe', proxy: '1.111.101.5', status: 'queue' },
 ];
 
 const HomePage = () => {

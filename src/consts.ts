@@ -1,5 +1,6 @@
 export const SIGNIN = '/sign-in';
 export const DASHBOARD = '/';
+export const ACCOUNT = '/account';
 
 export const BASE_URL = 'http://localhost:5173';
 

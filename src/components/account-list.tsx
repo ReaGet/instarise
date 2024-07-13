@@ -11,6 +11,8 @@ import { Checkbox } from '@/components/ui/checkbox'
 import AccountActions from './account-actions'
 import StatusBadge from '@/components/status-badge'
 import { AccountListItem } from '@/types'
+import { Link } from 'react-router-dom'
+import { ACCOUNT } from '@/consts'
 
 interface Props {
   data: AccountListItem[]
@@ -39,7 +41,9 @@ const AccountList = (props: Props) => {
           return (
             <TableRow key={item.id}>
               <TableCell><Checkbox /></TableCell>
-              <TableCell className='font-bold'>{item.name}</TableCell>
+              <TableCell className='font-bold'>
+                <Link to={`${ACCOUNT}/${item.id}`}>{item.name}</Link>
+              </TableCell>
               <TableCell>{item.description}</TableCell>
               <TableCell>{item.proxy}</TableCell>
               <TableCell>

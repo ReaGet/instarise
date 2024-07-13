@@ -6,4 +6,4 @@ export interface AccountListItem {
   proxy: string;
 }
 
-export type Status = 'working' | 'stop';
+export type Status = 'working' | 'stop' | 'pause' | 'queue';

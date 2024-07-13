@@ -1,15 +1,20 @@
 import React from 'react'
 import Header from '@/components/header/header'
 import Container from '@/components/container'
+import NavSidebar from '@/components/nav-sidebar/nav-sidebar'
+import { Outlet } from 'react-router-dom'
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = () => {
   return (
-    <div>
+    <>
       <Header />
       <Container className='flex h-full'>
-        { children }
+        <NavSidebar />
+        <main>
+          <Outlet />
+        </main>
       </Container>
-    </div>
+    </>
   )
 }
 

@@ -1,9 +1,12 @@
-import HomePage from './app/page';
-import SignIn from './app/sign-in/page';
+import HomePage from './pages/page';
+import SignIn from './pages/sign-in/page';
 import type { RouteObject } from 'react-router-dom';
 import ProtectedRoute from './components/protected-route';
-import { DASHBOARD, SIGNIN } from './consts';
-import ErrorPage from './app/error-page';
+import { ACCOUNT, DASHBOARD, SIGNIN } from './consts';
+import ErrorPage from './pages/error-page';
+import AccountPage from './pages/account/page';
+import Layout from './pages/account/layout';
+import ActionsPage from './pages/account/page-actions';
 
 const isAuth = true;
 
@@ -29,6 +32,19 @@ export const privateRoutes: RouteObject[] = [
       {
         path: DASHBOARD,
         element: <HomePage />,
+      },
+      {
+        element: <Layout />,
+        children: [
+          {
+            path: `${ACCOUNT}/:id`,
+            element: <AccountPage />,
+          },
+          {
+            path: `${ACCOUNT}/:id/actions`,
+            element: <ActionsPage />
+          }
+        ]
       }
     ],
   }
