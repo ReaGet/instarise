@@ -7,6 +7,8 @@ import ErrorPage from './pages/error-page';
 import AccountPage from './pages/account/page';
 import Layout from './pages/account/layout';
 import ActionsPage from './pages/account/page-actions';
+import AutoReplyPage from './pages/account/page-auto-replay';
+import ParsePage from './pages/account/page-parse';
 
 const isAuth = true;
 
@@ -41,9 +43,17 @@ export const privateRoutes: RouteObject[] = [
             element: <AccountPage />,
           },
           {
+            path: `${ACCOUNT}/:id/auto-replay`,
+            element: <AutoReplyPage />
+          },
+          {
             path: `${ACCOUNT}/:id/actions`,
             element: <ActionsPage />
-          }
+          },
+          {
+            path: `${ACCOUNT}/:id/parse`,
+            element: <ParsePage />
+          },
         ]
       }
     ],

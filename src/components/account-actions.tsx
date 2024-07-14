@@ -6,9 +6,10 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Ellipsis } from 'lucide-react'
-import { ACCOUNT_ACTIONS } from '@/consts'
+import { ACCOUNT, ACCOUNT_ACTIONS } from '@/consts'
+import { Link } from 'react-router-dom'
 
-const AccountActions = () => {
+const AccountActions = ({ accountId }: { accountId: string }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -24,6 +25,11 @@ const AccountActions = () => {
             </DropdownMenuItem>
           )
         })}
+        <DropdownMenuItem className='p-0'>
+          <Button variant='ghost' size='sm' className='justify-start w-full' asChild>
+            <Link to={`${ACCOUNT}/${accountId}`}>Настройки</Link>
+          </Button>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

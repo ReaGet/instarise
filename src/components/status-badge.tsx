@@ -40,7 +40,7 @@ const StatusBadge = (props: Props) => {
     <div className='flex'>
       <Badge variant='outline' className={cn('flex items-center gap-2 px-4 py-2 border-current', color)}>
         <div className='w-2 h-2 rounded-full bg-current'></div>
-        <span>{text}</span>
+        <span className='whitespace-nowrap'>{text}</span>
       </Badge>
     </div>
   )

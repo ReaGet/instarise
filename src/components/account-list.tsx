@@ -15,13 +15,13 @@ import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 
 interface Props {
-  data: AccountListItem[]
+  accounts: AccountListItem[]
 }
 
-const AccountList = (props: Props) => {
+const AccountList = ({ accounts = [] }: Props) => {
   return (
     <Table className='mt-8'>
-      { !props.data?.length && (
+      { !accounts.length && (
         <TableCaption key='caption'>Вы еще не добавили аккунты</TableCaption>
       )}
       <TableHeader>
@@ -37,20 +37,20 @@ const AccountList = (props: Props) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        { props.data?.map((item) => {
+        { accounts.map((a) => {
           return (
-            <TableRow key={item.id}>
+            <TableRow key={a.id}>
               <TableCell><Checkbox /></TableCell>
               <TableCell className='font-bold'>
-                <Link to={`${ACCOUNT}/${item.id}`}>{item.name}</Link>
+                <Link to={`${ACCOUNT}/${a.id}`}>{a.name}</Link>
               </TableCell>
-              <TableCell>{item.description}</TableCell>
-              <TableCell>{item.proxy}</TableCell>
+              <TableCell>{a.description}</TableCell>
+              <TableCell>{a.proxy}</TableCell>
               <TableCell>
-                <StatusBadge status={item.status} />
+                <StatusBadge status={a.status} />
               </TableCell>
               <TableCell className='text-right'>
-                <AccountActions />
+                <AccountActions accountId={a.id} />
               </TableCell>
             </TableRow>
           )

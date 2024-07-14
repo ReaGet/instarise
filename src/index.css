@@ -63,7 +63,13 @@
   * {
     @apply border-border;
   }
+  html {
+    @apply h-full;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply flex flex-col h-full bg-background text-foreground;
+  }
+  #root {
+    @apply flex-grow;
   }
 }

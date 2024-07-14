@@ -47,7 +47,7 @@ const HomePage = () => {
             </div>
             <AddAccount />
           </div>
-          <AccountList data={accounts} />
+          <AccountList accounts={accounts} />
         </div>
       </main>
     </Layout>
