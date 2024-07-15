@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import ControlsBlock from './controls-block'
 
 const formSchema = z.object({
-  accounts: z.string().min(1, {
+  tags: z.string().min(1, {
     message: 'Поле не может быть пустым',
   }),
 
@@ -28,18 +28,18 @@ const formSchema = z.object({
   subscribitionsTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
 })
 
-export type AccountsActionsFormValues = z.infer<typeof formSchema>;
+export type TagsActionsFormValues = z.infer<typeof formSchema>;
 
-interface AccountsActionsProps {
-  onSubmit: (values: AccountsActionsFormValues) => void;
+interface TagsActionsProps {
+  onSubmit: (values: TagsActionsFormValues) => void;
   enabled: boolean
 }
 
-const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
-  const form = useForm<AccountsActionsFormValues>({
+const TagsActionsForm = ({ onSubmit, enabled }: TagsActionsProps) => {
+  const form = useForm<TagsActionsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      accounts: '',
+      tags: '',
       masslookingEnabled: false,
       masslookingFrom: 1,
       masslookingTo: 2,
@@ -66,7 +66,7 @@ const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
         <FormField
           control={form.control}
-          name='accounts'
+          name='tags'
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -120,4 +120,4 @@ const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
   )
 }
 
-export default AccountsActionsForm
+export default TagsActionsForm

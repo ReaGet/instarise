@@ -19,8 +19,10 @@ const formSchema = z.object({
   }),
 })
 
+export type AddAccountFormValues = z.infer<typeof formSchema>;
+
 const AddAccountForm = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<AddAccountFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
@@ -29,7 +31,7 @@ const AddAccountForm = () => {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: AddAccountFormValues) {
     console.log(values)
   }
 
