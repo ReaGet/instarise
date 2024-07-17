@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom"
-import Layout from "./layout"
 
 const AccountPage = () => {
   const { id } = useParams();

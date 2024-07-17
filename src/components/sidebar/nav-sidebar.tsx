@@ -1,6 +1,6 @@
 import React from 'react'
 import { BarChartBig, Database, MessageSquareText, Settings } from 'lucide-react'
-import { Link, NavLink, useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 
 function Heading({ children }: { children: React.ReactNode }) {

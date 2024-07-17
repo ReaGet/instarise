@@ -8,9 +8,7 @@ import {
 import { Button } from '@/components/ui/button'
 import AddAccountForm from '../forms/add-account-form'
 
-interface Props {}
-
-const AddAccount = (props: Props) => {
+const AddAccount = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
