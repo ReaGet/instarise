@@ -1,8 +1,8 @@
-export const SIGNIN = '/sign-in';
-export const DASHBOARD = '/';
-export const ACCOUNT = '/account';
+export const BASE_URL = '/instarise';
 
-export const BASE_URL = 'http://localhost:5173';
+export const SIGNIN = `${BASE_URL}/sign-in`;
+export const DASHBOARD = `${BASE_URL}/`;
+export const ACCOUNT = `${BASE_URL}/account`;
 
 export const ACCOUNT_ACTIONS = [
   { value: "start", text: "Запустить" },

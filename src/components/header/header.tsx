@@ -2,7 +2,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import AccountMenu from './account-menu'
 import { Button } from '../ui/button'
-import { ACCOUNT, DASHBOARD } from '@/consts'
+import { ACCOUNT, BASE_URL, DASHBOARD } from '@/consts'
 import { ArrowLeft, ChevronDown } from 'lucide-react'
 
 const accounts = [
@@ -15,7 +15,7 @@ const accounts = [
 const Header = () => {
   const { id } = useParams();
   const { pathname } = useLocation();
-  const isDashboardPage = pathname === '/';
+  const isDashboardPage = pathname === BASE_URL;
   
   const currentAccount = accounts.find(a => a.id === id) || accounts[0];
   const filteredAccounts = accounts.filter(a => a.id !== currentAccount.id);
