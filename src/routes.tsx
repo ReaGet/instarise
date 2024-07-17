@@ -8,7 +8,8 @@ import AccountPage from './pages/account/page';
 import Layout from './pages/account/layout';
 import ActionsPage from './pages/account/page-actions';
 import AutoReplyPage from './pages/account/page-auto-replay';
-import ParsePage from './pages/account/page-parse';
+import ParsePage from './pages/account/parse/page';
+import ParseResultsPage from './pages/account/parse/page-results';
 
 const isAuth = true;
 
@@ -53,6 +54,10 @@ export const privateRoutes: RouteObject[] = [
           {
             path: `${ACCOUNT}/:id/parse`,
             element: <ParsePage />
+          },
+          {
+            path: `${ACCOUNT}/:id/parse/results`,
+            element: <ParseResultsPage />
           },
         ]
       }

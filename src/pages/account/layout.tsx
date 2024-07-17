@@ -10,7 +10,7 @@ const Layout = () => {
       <Header />
       <Container className='flex h-full'>
         <NavSidebar />
-        <main className='p-6 flex-1'>
+        <main className='flex flex-col flex-1 gap-10 p-6'>
           <Outlet />
         </main>
         <InfoSidebar />

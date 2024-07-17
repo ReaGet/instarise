@@ -12,7 +12,7 @@ const AutoReplayPage = () => {
   }
 
   return (
-    <div className='flex flex-col gap-6'>
+    <>
       <h1 className='text-lg font-bold'>Автоответ</h1>
       <div className='flex flex-col gap-4'>
         <div className="flex items-center gap-2">
@@ -21,7 +21,7 @@ const AutoReplayPage = () => {
         </div>
         <AutoReplyForm onSubmit={onSubmit} enabled={isFormEnabled} />
       </div>
-    </div>
+    </>
   )
 }
 

@@ -1,26 +1,26 @@
 import { cn } from '@/lib/utils';
 
-interface Props {
-  className: string;
+export interface InfoBlock {
+  title: string;
+  value: number;
 }
 
-const Statistics = (props: Props) => {
+interface Props {
+  className?: string;
+  data: InfoBlock[];
+}
+
+const Statistics = ({ className = '', data = [] }: Props) => {
   return (
-    <div className={cn('flex gap-8', props.className)}>
-      <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg'>
-        <div className='text-[#d2d2d2] font-medium'>Всего аккаунтов</div>
-        <div className='text-3xl font-bold'>15</div>
-      </div>
-
-      <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg'>
-        <div className='text-[#d2d2d2] font-medium'>В работе</div>
-        <div className='text-3xl font-bold'>7</div>
-      </div>
-
-      <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg'>
-        <div className='text-[#d2d2d2] font-medium'>Завершили работу</div>
-        <div className='text-3xl font-bold'>8</div>
-      </div>
+    <div className={cn('flex flex-wrap gap-8', className)}>
+      { data.map(({ title, value }) => {
+        return (
+          <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg' key={title}>
+            <div className='text-[#d2d2d2] font-medium whitespace-nowrap'>{title}</div>
+            <div className='text-3xl font-bold'>{value}</div>
+          </div>
+        )
+      })}
     </div>
   )
 }

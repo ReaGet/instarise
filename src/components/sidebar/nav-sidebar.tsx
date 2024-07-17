@@ -36,7 +36,7 @@ const NavSidebar = () => {
               <Settings className="mr-2 h-5 w-5" />
               <span>Действия</span>
             </NavLink>
-            <NavLink className='flex items-center p-2 rounded-md hover:bg-accent [&.active]:font-bold' to={`${ACCOUNT}/${id}/parse`}>
+            <NavLink end className='flex items-center p-2 rounded-md hover:bg-accent [&.active]:font-bold' to={`${ACCOUNT}/${id}/parse`}>
               <Database className="mr-2 h-5 w-5" />
               <span>Сбор данных</span>
             </NavLink>
