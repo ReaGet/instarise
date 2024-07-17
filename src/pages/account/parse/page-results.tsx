@@ -1,5 +1,3 @@
-import React from 'react'
-
 const ParseResultsPage = () => {
   return (
     <div>Тут отображаются данные по задаче "сбор данных"</div>
