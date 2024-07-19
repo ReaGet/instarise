@@ -8,8 +8,19 @@ import { Button } from '@/components/ui/button'
 import { Ellipsis } from 'lucide-react'
 import { ACCOUNT, ACCOUNT_ACTIONS } from '@/consts'
 import { Link } from 'react-router-dom'
+import { AccountStatus } from '@/types'
 
-const AccountActions = ({ accountId }: { accountId: string }) => {
+interface ActionsProps {
+  accountId: string;
+  status: AccountStatus
+}
+
+const AccountActions = ({ accountId, status }: ActionsProps) => {
+  const skippingActions = status === 'stop'
+    ? ['stop', 'pause']
+    : status === 'pause' ? ['pause'] : ['start'];
+  const filteredActions = ACCOUNT_ACTIONS.filter(a => !skippingActions.includes(a.value));
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -18,7 +29,7 @@ const AccountActions = ({ accountId }: { accountId: string }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end'>
-        { ACCOUNT_ACTIONS.map(({value, text}) => {
+        { filteredActions.map(({value, text}) => {
           return (
             <DropdownMenuItem className='p-0' key={value}>
               <Button variant='ghost' size='sm' className='justify-start w-full'>{text}</Button>
@@ -27,7 +38,7 @@ const AccountActions = ({ accountId }: { accountId: string }) => {
         })}
         <DropdownMenuItem className='p-0'>
           <Button variant='ghost' size='sm' className='justify-start w-full' asChild>
-            <Link to={`${ACCOUNT}/${accountId}`}>Настройки</Link>
+            <Link to={`${ACCOUNT}/${accountId}/auto-replay/`}>Настройки</Link>
           </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>

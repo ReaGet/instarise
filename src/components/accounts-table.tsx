@@ -10,15 +10,15 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import AccountActions from './account-actions'
 import StatusBadge from '@/components/status-badge'
-import { AccountListItem } from '@/types'
+import { AccountsTableItem } from '@/types'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 
 interface Props {
-  accounts: AccountListItem[]
+  accounts: AccountsTableItem[]
 }
 
-const AccountList = ({ accounts = [] }: Props) => {
+const AccountsTable = ({ accounts = [] }: Props) => {
   return (
     <Table className='mt-8'>
       { !accounts.length && (
@@ -50,7 +50,7 @@ const AccountList = ({ accounts = [] }: Props) => {
                 <StatusBadge status={a.status} />
               </TableCell>
               <TableCell className='text-right'>
-                <AccountActions accountId={a.id} />
+                <AccountActions accountId={a.id} status={a.status} />
               </TableCell>
             </TableRow>
           )
@@ -60,4 +60,4 @@ const AccountList = ({ accounts = [] }: Props) => {
   )
 }
 
-export default AccountList
+export default AccountsTable

@@ -1,5 +1,5 @@
 import Layout from './layout'
-import AccountList from '@/components/account-list'
+import AccountsTable from '@/components/accounts-table'
 import AddAccount from '@/components/dialogs/add-account'
 import {
   Select,
@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/select"
 import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
-import { AccountListItem } from '@/types'
+import { AccountsTableItem } from '@/types'
 import Report, { InfoBlock } from '@/components/report'
 
-const accounts: AccountListItem[] = [
+const accounts: AccountsTableItem[] = [
   { id: '1123', name: '@_rea_m_', description: 'Praesentium maiores eius suscipit nihil quas natus laborum soluta quam temporibus cupiditate fuga.', proxy: '192.168.0.110', status: 'working' },
   { id: '312', name: '@landing', description: 'Come description', proxy: '132.111.101.5', status: 'stop' },
   { id: '12', name: '@pause', description: 'Some descr', proxy: '0.0.0.0', status: 'pause' },
@@ -23,7 +23,7 @@ const accounts: AccountListItem[] = [
 ]
 
 const accountsInfo: InfoBlock[] = [
-  { title: 'Всего аккаунтов', value: 15 },
+  { title: 'Всего аккаунтов', value: 1_000_000 },
   { title: 'Включено', value: 6 },
   { title: 'Отключено', value: 2 },
   { title: 'На паузе', value: 7 },
@@ -55,7 +55,7 @@ const HomePage = () => {
             </div>
             <AddAccount />
           </div>
-          <AccountList accounts={accounts} />
+          <AccountsTable accounts={accounts} />
         </div>
       </main>
     </Layout>

@@ -1,9 +1,18 @@
-export interface AccountListItem {
+export interface AccountsTableItem {
   id: string;
   name: string;
   description: string;
-  status: Status;
+  status: AccountStatus;
   proxy: string;
 }
 
-export type Status = 'working' | 'stop' | 'pause' | 'queue';
+export interface ReportsTableItem {
+  id: string;
+  createdAt: string;
+  progress: string;
+  taskType: 'parse' | 'action';
+  taskStatus: AccountStatus;
+  hasErrors?: boolean;
+}
+
+export type AccountStatus = 'working' | 'stop' | 'pause' | 'queue';

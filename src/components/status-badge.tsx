@@ -1,15 +1,15 @@
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils';
 import React from 'react';
-import type { Status } from '@/types';
+import type { AccountStatus } from '@/types';
 
 interface Props {
-  status: Status
+  status: AccountStatus
   children?: React.ReactNode
 }
 
 type Variants = {
-  [K in Status]: {
+  [K in AccountStatus]: {
     text: string
     color: string
   }
