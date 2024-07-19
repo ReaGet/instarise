@@ -13,7 +13,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
 import { AccountListItem } from '@/types'
-import Statistics, { InfoBlock } from '@/components/statistics'
+import Report, { InfoBlock } from '@/components/report'
 
 const accounts: AccountListItem[] = [
   { id: '1123', name: '@_rea_m_', description: 'Praesentium maiores eius suscipit nihil quas natus laborum soluta quam temporibus cupiditate fuga.', proxy: '192.168.0.110', status: 'working' },
@@ -24,15 +24,16 @@ const accounts: AccountListItem[] = [
 
 const accountsInfo: InfoBlock[] = [
   { title: 'Всего аккаунтов', value: 15 },
-  { title: 'В работе', value: 4 },
-  { title: 'Завершили работу', value: 7 },
+  { title: 'Включено', value: 6 },
+  { title: 'Отключено', value: 2 },
+  { title: 'На паузе', value: 7 },
 ]
 
 const HomePage = () => {
   return (
     <Layout>
       <main className='w-full'>
-        <Statistics className='mt-20' data={accountsInfo} />
+        <Report className='mt-20' data={accountsInfo} />
         <div className='mt-20'>
           <h1 className='text-2xl font-bold'>Аккаунты</h1>
           <div className='flex items-center justify-between mt-8'>

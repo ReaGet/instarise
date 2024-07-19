@@ -1,31 +1,37 @@
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import ControlsBlock from './controls-block'
+import Interval from './fields/interval'
+import Toggler from './fields/toggler'
+import Amount from './fields/amount'
+
+const numberValidation = z.coerce.number().min(1, { message: 'Значение должно быть больше 0'});
 
 const formSchema = z.object({
   accounts: z.string().min(1, {
     message: 'Поле не может быть пустым',
   }),
-
-  masslookingEnabled: z.boolean(),
-  masslookingFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  masslookingTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  
-  masslookingStoriesEnabled: z.boolean(),
-  masslookingStoriesFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  masslookingStoriesTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  
-  storiesActionsEnabled: z.boolean(),
-  storiesActionsFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  storiesActionsTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  
-  subscribitionsEnabled: z.boolean(),
-  subscribitionsFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  subscribitionsTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
+  timeout_form: numberValidation,
+  timeout_to: numberValidation,
+  follow: z.boolean(),
+  // Posts
+  posts_like: z.boolean(),
+  posts_timeout_form: numberValidation,
+  posts_timeout_to: numberValidation,
+  posts_amount: numberValidation,
+  // Stories
+  stories_like: z.boolean(),
+  stories_timeout_form: numberValidation,
+  stories_timeout_to: numberValidation,
+  stories_amount: numberValidation,
+  // Reels
+  reels_like: z.boolean(),
+  reels_timeout_form: numberValidation,
+  reels_timeout_to: numberValidation,
+  reels_amount: numberValidation,
 })
 
 export type AccountsActionsFormValues = z.infer<typeof formSchema>;
@@ -40,30 +46,32 @@ const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       accounts: '',
-      masslookingEnabled: false,
-      masslookingFrom: 1,
-      masslookingTo: 2,
-      masslookingStoriesEnabled: false,
-      masslookingStoriesFrom: 1,
-      masslookingStoriesTo: 2,
-      storiesActionsEnabled: false,
-      storiesActionsFrom: 1,
-      storiesActionsTo: 2,
-      subscribitionsEnabled: false,
-      subscribitionsFrom: 1,
-      subscribitionsTo: 2,
+      timeout_form: 1,
+      timeout_to: 2,
+      follow: false,
+      // Posts
+      posts_like: false,
+      posts_timeout_form: 1,
+      posts_timeout_to: 1,
+      posts_amount: 30,
+      // Stories
+      stories_like: false,
+      stories_timeout_form: 1,
+      stories_timeout_to: 1,
+      stories_amount: 30,
+      // Reels
+      reels_like: false,
+      reels_timeout_form: 1,
+      reels_timeout_to: 1,
+      reels_amount: 30,
     },
   });
 
   const isControlsEnabled = !enabled;
-  const isMasslookingEnabled = form.watch('masslookingEnabled') && !isControlsEnabled;
-  const masslookingStoriesEnabled = form.watch('masslookingStoriesEnabled') && !isControlsEnabled;
-  const storiesActionsEnabled = form.watch('storiesActionsEnabled') && !isControlsEnabled;
-  const subscribitionsEnabled = form.watch('subscribitionsEnabled') && !isControlsEnabled;
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-6'>
         <FormField
           control={form.control}
           name='accounts'
@@ -77,42 +85,24 @@ const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
           )}
         />
 
-        <ControlsBlock
-          title='Маслукинг'
-          checkboxName='masslookingEnabled'
-          fromName='masslookingFrom'
-          toName='masslookingTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={isMasslookingEnabled}
-        />
-        <ControlsBlock
-          title='Масслайкинг сторис'
-          checkboxName='masslookingStoriesEnabled'
-          fromName='masslookingStoriesFrom'
-          toName='masslookingStoriesTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={masslookingStoriesEnabled}
-        />
-        <ControlsBlock
-          title='Нажатие на реакции сторис'
-          checkboxName='storiesActionsEnabled'
-          fromName='storiesActionsFrom'
-          toName='storiesActionsTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={storiesActionsEnabled}
-        />
-        <ControlsBlock
-          title='Подписка на аккаунты'
-          checkboxName='subscribitionsEnabled'
-          fromName='subscribitionsFrom'
-          toName='subscribitionsTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={subscribitionsEnabled}
-        />
+        <Interval fromName='timeout_form' toName='timeout_to' form={form} disabled={isControlsEnabled} />
+        
+        <Toggler title='Подписаться по списку' name='follow' form={form} disabled={isControlsEnabled} />
+
+        <Toggler title='Пролайкать посты' name='posts_like' form={form} disabled={isControlsEnabled}>
+          <Interval fromName='posts_timeout_form' toName='posts_timeout_to' form={form} disabled={isControlsEnabled} />
+          <Amount name='posts_amount' form={form} disabled={isControlsEnabled} />
+        </Toggler>
+
+        <Toggler title='Сторис' name='stories_like' form={form} disabled={isControlsEnabled}>
+          <Interval fromName='stories_timeout_form' toName='stories_timeout_to' form={form} disabled={isControlsEnabled} />
+          <Amount name='stories_amount' form={form} disabled={isControlsEnabled} />
+        </Toggler>
+
+        <Toggler title='Поставить лайк на рилсы' name='reels_like' form={form} disabled={isControlsEnabled}>
+          <Interval fromName='reels_timeout_form' toName='reels_timeout_to' form={form} disabled={isControlsEnabled} />
+          <Amount name='reels_amount' form={form} disabled={isControlsEnabled} />
+        </Toggler>
 
         <Button type='submit' size={'lg'} className='ml-auto' disabled={isControlsEnabled}>Сохранить</Button>
       </form>

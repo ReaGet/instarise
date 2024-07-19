@@ -1,31 +1,20 @@
-import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
-import ControlsBlock from './controls-block'
+import Interval from './fields/interval'
+import { Input } from '../ui/input'
 
 const formSchema = z.object({
   tags: z.string().min(1, {
     message: 'Поле не может быть пустым',
   }),
 
-  masslookingEnabled: z.boolean(),
-  masslookingFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  masslookingTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  
-  masslookingStoriesEnabled: z.boolean(),
-  masslookingStoriesFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  masslookingStoriesTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  
-  storiesActionsEnabled: z.boolean(),
-  storiesActionsFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  storiesActionsTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  
-  subscribitionsEnabled: z.boolean(),
-  subscribitionsFrom: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  subscribitionsTo: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
+  posts_amount: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
+  timeout_form: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
+  timeout_to: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
 })
 
 export type TagsActionsFormValues = z.infer<typeof formSchema>;
@@ -40,26 +29,13 @@ const TagsActionsForm = ({ onSubmit, enabled }: TagsActionsProps) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       tags: '',
-      masslookingEnabled: false,
-      masslookingFrom: 1,
-      masslookingTo: 2,
-      masslookingStoriesEnabled: false,
-      masslookingStoriesFrom: 1,
-      masslookingStoriesTo: 2,
-      storiesActionsEnabled: false,
-      storiesActionsFrom: 1,
-      storiesActionsTo: 2,
-      subscribitionsEnabled: false,
-      subscribitionsFrom: 1,
-      subscribitionsTo: 2,
+      posts_amount: 10,
+      timeout_form: 1,
+      timeout_to: 2,
     },
   });
 
   const isControlsEnabled = !enabled;
-  const isMasslookingEnabled = form.watch('masslookingEnabled') && !isControlsEnabled;
-  const masslookingStoriesEnabled = form.watch('masslookingStoriesEnabled') && !isControlsEnabled;
-  const storiesActionsEnabled = form.watch('storiesActionsEnabled') && !isControlsEnabled;
-  const subscribitionsEnabled = form.watch('subscribitionsEnabled') && !isControlsEnabled;
 
   return (
     <Form {...form}>
@@ -76,42 +52,19 @@ const TagsActionsForm = ({ onSubmit, enabled }: TagsActionsProps) => {
             </FormItem>
           )}
         />
-
-        <ControlsBlock
-          title='Маслукинг'
-          checkboxName='masslookingEnabled'
-          fromName='masslookingFrom'
-          toName='masslookingTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={isMasslookingEnabled}
-        />
-        <ControlsBlock
-          title='Масслайкинг сторис'
-          checkboxName='masslookingStoriesEnabled'
-          fromName='masslookingStoriesFrom'
-          toName='masslookingStoriesTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={masslookingStoriesEnabled}
-        />
-        <ControlsBlock
-          title='Нажатие на реакции сторис'
-          checkboxName='storiesActionsEnabled'
-          fromName='storiesActionsFrom'
-          toName='storiesActionsTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={storiesActionsEnabled}
-        />
-        <ControlsBlock
-          title='Подписка на аккаунты'
-          checkboxName='subscribitionsEnabled'
-          fromName='subscribitionsFrom'
-          toName='subscribitionsTo'
-          isFormEnabled={isControlsEnabled}
-          form={form}
-          isControlsEnabled={subscribitionsEnabled}
+        <Interval fromName='timeout_form' toName='timeout_to' form={form} disabled={isControlsEnabled} />
+        <FormField
+          control={form.control}
+          name='posts_amount'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Глубина выполнения</FormLabel>
+              <FormControl>
+                <Input type='number' {...field} disabled={isControlsEnabled} className='max-w-[200px]' />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
         <Button type='submit' size={'lg'} className='ml-auto' disabled={isControlsEnabled}>Сохранить</Button>

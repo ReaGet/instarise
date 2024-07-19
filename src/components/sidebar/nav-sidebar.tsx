@@ -14,13 +14,13 @@ const NavSidebar = () => {
 
   return (
     <aside className='w-[200px] h-full py-6 pr-6 border-r'>
-      <nav className='text-sm text-accent-foreground'>
+      <nav className='sticky top-[104px] text-sm text-accent-foreground'>
         <div>
           <Heading>Общее</Heading>
           <div className='flex flex-col gap-1'>
             <NavLink className='flex items-center p-2 rounded-md hover:bg-accent [&.active]:font-bold' end to={`${ACCOUNT}/${id}`}>
               <BarChartBig className="mr-2 h-5 w-5" />
-              <span>Статистика</span>
+              <span>Отчет</span>
             </NavLink>
           </div>
         </div>

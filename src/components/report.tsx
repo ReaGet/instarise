@@ -10,7 +10,7 @@ interface Props {
   data: InfoBlock[];
 }
 
-const Statistics = ({ className = '', data = [] }: Props) => {
+const Report = ({ className = '', data = [] }: Props) => {
   return (
     <div className={cn('flex flex-wrap gap-8', className)}>
       { data.map(({ title, value }) => {
@@ -25,4 +25,4 @@ const Statistics = ({ className = '', data = [] }: Props) => {
   )
 }
 
-export default Statistics
+export default Report

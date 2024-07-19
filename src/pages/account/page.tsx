@@ -1,4 +1,4 @@
-import Statistics, { type InfoBlock } from '@/components/statistics'
+import Report, { type InfoBlock } from '@/components/report'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ACCOUNT } from '@/consts'
 import { SquareArrowOutUpRight } from 'lucide-react'
@@ -36,16 +36,16 @@ const AccountPage = () => {
 
   return (
     <>
-      <h1 className='text-lg font-bold'>Статистика</h1>
+      <h1 className='text-lg font-bold'>Отчет</h1>
 
       <article>
         <h2 className='text-md font-bold'>Люди</h2>
-        <Statistics className='mt-4' data={byAccounts} />
+        <Report className='mt-4' data={byAccounts} />
       </article>
 
       <article>
         <h2 className='text-md font-bold'>Хештеги</h2>
-        <Statistics className='mt-4' data={byTags} />
+        <Report className='mt-4' data={byTags} />
       </article>
 
       <article>
@@ -55,7 +55,7 @@ const AccountPage = () => {
             <SquareArrowOutUpRight className='w-3 h-3 ml-1 -mt-2' />
           </Link>
         </h2>
-        <Statistics className='mt-4' data={parsingByAccounts} />
+        <Report className='mt-4' data={parsingByAccounts} />
       </article>
 
       <article>
@@ -65,7 +65,7 @@ const AccountPage = () => {
             <SquareArrowOutUpRight className='w-3 h-3 ml-1 -mt-2' />
           </Link>
         </h2>
-        <Statistics className='mt-4' data={parsingByTags} />
+        <Report className='mt-4' data={parsingByTags} />
       </article>
 
       <div className='my-6 border-b'></div>
@@ -75,7 +75,7 @@ const AccountPage = () => {
           <CardTitle>Люди</CardTitle>
         </CardHeader>
         <CardContent>
-          <Statistics className='mt-4' data={byAccounts} />
+          <Report className='mt-4' data={byAccounts} />
         </CardContent>
       </Card>
 
@@ -84,7 +84,7 @@ const AccountPage = () => {
           <CardTitle>Хештеги</CardTitle>
         </CardHeader>
         <CardContent>
-          <Statistics className='mt-4' data={byTags} />
+          <Report className='mt-4' data={byTags} />
         </CardContent>
       </Card>
 
@@ -93,7 +93,7 @@ const AccountPage = () => {
           <CardTitle>Сбор данных по аккаунтам</CardTitle>
         </CardHeader>
         <CardContent>
-          <Statistics className='mt-4' data={parsingByAccounts} />
+          <Report className='mt-4' data={parsingByAccounts} />
         </CardContent>
       </Card>
 
@@ -102,7 +102,7 @@ const AccountPage = () => {
           <CardTitle>Сбор данных по тегам</CardTitle>
         </CardHeader>
         <CardContent>
-          <Statistics className='mt-4' data={parsingByTags} />
+          <Report className='mt-4' data={parsingByTags} />
         </CardContent>
       </Card>
     </>

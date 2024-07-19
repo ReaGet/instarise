@@ -1,26 +1,16 @@
-import { Link, useLocation, useParams } from 'react-router-dom'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { Link, useLocation } from 'react-router-dom'
 import AccountMenu from './account-menu'
 import { Button } from '../ui/button'
-import { ACCOUNT, BASE_URL, DASHBOARD } from '@/consts'
-import { ArrowLeft, ChevronDown } from 'lucide-react'
-
-const accounts = [
-  { id: '1123', name: '@_rea_m_' },
-  { id: '312', name: '@landing' },
-  { id: '12', name: '@pause' },
-  { id: '43', name: '@queue' },
-]
+import { BASE_URL, DASHBOARD } from '@/consts'
+import { ArrowLeft } from 'lucide-react'
+import AccountSwitcher from './account-switcher'
 
 const Header = () => {
-  const { id } = useParams();
   const { pathname } = useLocation();
   const isDashboardPage = pathname === BASE_URL;
   
-  const currentAccount = accounts.find(a => a.id === id) || accounts[0];
-  const filteredAccounts = accounts.filter(a => a.id !== currentAccount.id);
   return (
-    <header className='flex items-center gap-6 w-full h-20 border-b px-6'>
+    <header className='sticky flex items-center gap-6 w-full h-20 px-6 top-0 bg-white z-10 border-b'>
       { !isDashboardPage && (
         <>
           <Button variant='ghost' asChild>
@@ -29,24 +19,15 @@ const Header = () => {
               Назад
             </Link>
           </Button>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant='outline'>
-                {currentAccount.name}
-                <ChevronDown className='w-4 h-4 ml-2'/>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='start'>
-              {filteredAccounts.map((a) => {
-                return (
-                  <DropdownMenuItem key={a.id}>
-                    <Link to={`${ACCOUNT}/${a.id}`}>{a.name}</Link>
-                  </DropdownMenuItem>
-                )
-              })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AccountSwitcher  />
+          <div className='text-sm'>
+            <div className='flex'>
+              <div className='w-28'>Подписчиков:</div> 200
+            </div>
+            <div className='flex'>
+              <div className='w-28'>Подписок:</div> 200
+            </div>
+          </div>
         </>
       )}
       <AccountMenu className='ml-auto' />

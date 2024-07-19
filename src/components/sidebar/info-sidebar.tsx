@@ -19,16 +19,18 @@ function InfoBlock({ children, heading }: BlockProps) {
 
 const InfoSidebar = () => {
   return (
-    <aside className='flex flex-col gap-6 w-[200px] lg:w-[300px] h-full py-6 pl-6 border-l'>
-      <InfoBlock heading='Статус аккаунта'>
-        <StatusBadge status='working' />
-      </InfoBlock>
-      <InfoBlock heading='Описание'>
-        <Textarea rows={4} />
-      </InfoBlock>
-      <InfoBlock heading='Прокси'>
-        <Input />
-      </InfoBlock>
+    <aside className='w-[200px] lg:w-[300px] h-full py-6 pl-6 border-l'>
+      <div className='sticky flex flex-col gap-6 top-[104px]'>
+        <InfoBlock heading='Статус аккаунта'>
+          <StatusBadge status='working' />
+        </InfoBlock>
+        <InfoBlock heading='Описание'>
+          <Textarea rows={4} />
+        </InfoBlock>
+        <InfoBlock heading='Прокси'>
+          <Input />
+        </InfoBlock>
+      </div>
     </aside>
   )
 }
