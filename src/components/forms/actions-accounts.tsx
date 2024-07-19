@@ -1,4 +1,4 @@
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
@@ -11,7 +11,7 @@ import Amount from './fields/amount'
 const numberValidation = z.coerce.number().min(1, { message: 'Значение должно быть больше 0'});
 
 const formSchema = z.object({
-  accounts: z.string().min(1, {
+  users: z.string().min(1, {
     message: 'Поле не может быть пустым',
   }),
   timeout_form: numberValidation,
@@ -45,7 +45,7 @@ const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
   const form = useForm<AccountsActionsFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      accounts: '',
+      users: '',
       timeout_form: 1,
       timeout_to: 2,
       follow: false,
@@ -74,7 +74,7 @@ const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
       <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-6'>
         <FormField
           control={form.control}
-          name='accounts'
+          name='users'
           render={({ field }) => (
             <FormItem>
               <FormControl>

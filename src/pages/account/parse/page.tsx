@@ -1,20 +1,12 @@
-import AccountsActionsForm from '@/components/forms/actions-accounts'
-import type { AccountsActionsFormValues } from '@/components/forms/actions-accounts'
-import TagsActionsForm from '@/components/forms/actions-tags'
-import type { TagsActionsFormValues } from '@/components/forms/actions-tags'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { useState } from 'react'
+import ParseForm, { ParseFormValues } from '@/components/forms/parse'
 
 const ParsePage = () => {
-  const [isAccountsformEnabled, setIsAccountsFormEnabled] = useState(false);
-  const [isTagsformEnabled, setIsTagsEnabled] = useState(false);
+  const [isParseEnabled, setIsParseEnabled] = useState(false);
 
-  function onActionsSubmit(values: AccountsActionsFormValues) {
-    console.log(values);
-  }
-
-  function onTagsSubmit(values: TagsActionsFormValues) {
+  function onSubmit(values: ParseFormValues) {
     console.log(values);
   }
 
@@ -23,17 +15,10 @@ const ParsePage = () => {
       <h1 className='text-lg font-bold'>Сбор данных</h1>
       <div className='flex flex-col gap-4'>
         <div className="flex items-center gap-2">
-          <Switch id='AccountsFormEnabled' checked={isAccountsformEnabled} onCheckedChange={setIsAccountsFormEnabled} />
-          <Label htmlFor='AccountsFormEnabled'>Люди</Label>
+          <Switch id='ParseFormEnabled' checked={isParseEnabled} onCheckedChange={setIsParseEnabled} />
+          <Label htmlFor='ParseFormEnabled'>Люди</Label>
         </div>
-        <AccountsActionsForm onSubmit={onActionsSubmit} enabled={isAccountsformEnabled} />
-      </div>
-      <div className='flex flex-col gap-4 mt-6'>
-        <div className="flex items-center gap-2">
-          <Switch id='AccountsFormEnabled' checked={isTagsformEnabled} onCheckedChange={setIsTagsEnabled} />
-          <Label htmlFor='AccountsFormEnabled'>Хештеги</Label>
-        </div>
-        <TagsActionsForm onSubmit={onTagsSubmit} enabled={isTagsformEnabled} />
+        <ParseForm onSubmit={onSubmit} enabled={isParseEnabled} />
       </div>
     </>
   )
