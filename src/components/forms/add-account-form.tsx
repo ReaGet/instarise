@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import ProxyInput from '../proxy-input'
 
 const formSchema = z.object({
   username: z.string().min(1, {
@@ -64,19 +65,7 @@ const AddAccountForm = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name='proxy'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Прокси</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <ProxyInput form={form} name='proxy' />
         <Button type='submit' size='lg' className='ml-auto'>Добавить</Button>
       </form>
     </Form>
