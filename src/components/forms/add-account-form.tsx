@@ -59,7 +59,7 @@ const AddAccountForm = () => {
             <FormItem>
               <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} type='password' />
               </FormControl>
               <FormMessage />
             </FormItem>

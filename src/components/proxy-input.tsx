@@ -49,7 +49,7 @@ const useProxy = () => {
 
 const ProxyInput = <T extends FieldValues>({ form, name }: ProxyProps<T>) => {
   const { state, setStatus, reset } = useProxy();
-  
+
   const proxyValue = form.watch(name);
   let isValidProxyValue = false;
   try {
