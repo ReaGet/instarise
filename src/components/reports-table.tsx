@@ -8,8 +8,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { ReportsTableItem } from '@/types'
-import { Link } from 'react-router-dom'
-import { ACCOUNT } from '@/consts'
 
 interface Props {
   reports: ReportsTableItem[]
