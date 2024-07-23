@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils';
 import React from 'react';
-import type { AccountStatus } from '@/types';
+import type { AccountStatus } from '@/app/types'
 
 interface Props {
   status: AccountStatus

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
-import { AccountsTableItem } from '@/types'
+import { AccountsTableItem } from '@/app/types'
 import Report, { InfoBlock } from '@/components/report'
 
 const accounts: AccountsTableItem[] = [

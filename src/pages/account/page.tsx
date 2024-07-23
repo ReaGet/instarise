@@ -1,5 +1,5 @@
 import ReportsTable from '@/components/reports-table';
-import type { ReportsTableItem } from '@/types';
+import type { ReportsTableItem } from '@/app/types'
 import { useParams } from 'react-router-dom'
 
 const reports: ReportsTableItem[] = [

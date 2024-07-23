@@ -4,7 +4,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/comp
 import type { FieldValues, Path, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button';
 import * as z from 'zod';
-import { fetchProxyCheck } from '@/api/proxy';
+import { fetchProxyCheck } from '@/app/api/proxy';
 import { Ban, Check, CircleX, Loader } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

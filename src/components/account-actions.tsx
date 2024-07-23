@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Ellipsis } from 'lucide-react'
 import { ACCOUNT, ACCOUNT_ACTIONS } from '@/consts'
 import { Link } from 'react-router-dom'
-import { AccountStatus } from '@/types'
+import { AccountStatus } from '@/app/types'
 
 interface ActionsProps {
   accountId: string;

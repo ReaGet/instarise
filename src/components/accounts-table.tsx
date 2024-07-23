@@ -10,7 +10,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import AccountActions from '@/components/account-actions'
 import StatusBadge from '@/components/status-badge'
-import { AccountsTableItem } from '@/types'
+import { AccountsTableItem } from '@/app/types'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 import { useState } from 'react'

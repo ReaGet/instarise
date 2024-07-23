@@ -1,4 +1,5 @@
 export const BASE_URL = '/instarise/';
+export const API_URL = '/';
 
 export const SIGNIN = `${BASE_URL}sign-in`;
 export const DASHBOARD = `${BASE_URL}`;

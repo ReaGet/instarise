@@ -1,20 +1,21 @@
-import HomePage from './pages/page';
-import SignIn from './pages/sign-in/page';
+import HomePage from '@/pages/page';
+import SignIn from '@/pages/sign-in/page';
 import type { RouteObject } from 'react-router-dom';
-import ProtectedRoute from './components/protected-route';
-import { ACCOUNT, DASHBOARD, SIGNIN } from './consts';
-import ErrorPage from './pages/error-page';
-import AccountPage from './pages/account/page';
-import Layout from './pages/account/layout';
-import ActionsPage from './pages/account/page-actions';
-import AutoReplyPage from './pages/account/page-auto-replay';
-import ParsePage from './pages/account/parse/page';
-import ParseResultsPage from './pages/account/parse/page-results';
+import ProtectedRoute from '@/components/protected-route';
+import { ACCOUNT, DASHBOARD, SIGNIN } from '@/consts';
+import ErrorPage from '@/pages/error-page';
+import AccountPage from '@/pages/account/page';
+import Layout from '@/pages/account/layout';
+import ActionsPage from '@/pages/account/page-actions';
+import AutoReplyPage from '@/pages/account/page-auto-replay';
+import ParsePage from '@/pages/account/parse/page';
+import ParseResultsPage from '@/pages/account/parse/page-results';
 
 const isAuth = true;
 
 export const publicRoutes: RouteObject[] = [
   {
+    // TODO: remove Protected Route
     element: <ProtectedRoute  condition={!isAuth} redirect={DASHBOARD} />,
     errorElement: <ErrorPage />,
     children: [

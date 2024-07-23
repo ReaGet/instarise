@@ -3,8 +3,11 @@ import Container from '@/components/container'
 import NavSidebar from '@/components/sidebar/nav-sidebar'
 import InfoSidebar from '@/components/sidebar/info-sidebar'
 import { Outlet } from 'react-router-dom'
+import { useAuthGuard } from '@/hooks/useAuthGuard'
 
 const Layout = () => {
+  useAuthGuard();
+
   return (
     <>
       <Header />

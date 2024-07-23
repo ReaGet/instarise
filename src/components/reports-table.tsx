@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { ReportsTableItem } from '@/types'
+import { ReportsTableItem } from '@/app/types'
 
 interface Props {
   reports: ReportsTableItem[]
