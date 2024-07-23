@@ -8,12 +8,14 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Checkbox } from '@/components/ui/checkbox'
-import AccountActions from './account-actions'
+import AccountActions from '@/components/account-actions'
 import StatusBadge from '@/components/status-badge'
 import { AccountsTableItem } from '@/types'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 import { useState } from 'react'
+import EditableText from '@/components/editable-text'
+import { Input } from '@/components/ui/input'
 
 interface Props {
   accounts: AccountsTableItem[]
@@ -52,6 +54,7 @@ const AccountsTable = ({ accounts = [] }: Props) => {
           <TableHead className='text-right'>Действие</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
         { accounts.map((a) => {
           return (
@@ -65,7 +68,9 @@ const AccountsTable = ({ accounts = [] }: Props) => {
               <TableCell className='font-bold'>
                 <Link to={`${ACCOUNT}/${a.id}`}>{a.name}</Link>
               </TableCell>
-              <TableCell>{a.description}</TableCell>
+              <TableCell>
+                {a.description}
+              </TableCell>
               <TableCell>{a.proxy}</TableCell>
               <TableCell>
                 <StatusBadge status={a.status} />
