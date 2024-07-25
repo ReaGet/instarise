@@ -1,17 +1,20 @@
-import { logout } from '@/app/features/user/userSlice';
-import { useAppDispatch } from '@/app/hooks'
+import { useLazyLogoutQuery } from '@/app/services/userApi';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
-import { BASE_URL, SIGNIN } from '@/consts';
+import { SIGNIN } from '@/consts';
 import { LogOut, User2 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom';
 
 const AccountMenu = ({ className }: { className: string }) => {
-  const dispatch = useAppDispatch();
+  const [logout] = useLazyLogoutQuery();
   const navigate = useNavigate();
 
-  function handleLogout() {
-    dispatch(logout());
-    navigate(`${SIGNIN}`);
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate(SIGNIN)
+    } catch(e) {
+      console.log(e);
+    }
   }
 
 

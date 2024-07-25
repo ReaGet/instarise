@@ -33,6 +33,26 @@ const userSlice = createSlice({
         state.refresh_token = ''
         state.isAuthenticated = false;
         localStorage.removeItem('token');
+        localStorage.removeItem('refresh_token');
+      })
+      // Это для теста, так как реальные запросы не проходят
+      .addMatcher(userApi.endpoints.login.matchRejected, (state, action) => {
+        state.token = "secret_token"
+        state.refresh_token = "secret_refresh_token"
+        state.isAuthenticated = true
+        localStorage.setItem('token', state.token);
+        localStorage.setItem('refresh_token', state.refresh_token);
+      })
+      .addMatcher(userApi.endpoints.me.matchRejected, (state) => {
+        const token = localStorage.getItem("token")
+        state.isAuthenticated = !!token
+      })
+      .addMatcher(userApi.endpoints.logout.matchRejected, (state) => {
+        console.log(123123132)
+        state.token = state.refresh_token = ''
+        state.isAuthenticated = false;
+        localStorage.removeItem('token');
+        localStorage.removeItem('refresh_token');
       })
   },
 })

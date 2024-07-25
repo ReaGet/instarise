@@ -31,34 +31,32 @@ const accountsInfo: InfoBlock[] = [
 
 const HomePage = () => {
   return (
-    <Layout>
-      <main className='w-full'>
-        <Report className='mt-20' data={accountsInfo} />
-        <div className='mt-20'>
-          <h1 className='text-2xl font-bold'>Аккаунты</h1>
-          <div className='flex items-center justify-between mt-8'>
-            <div className='flex items-center gap-6'>
-              <Select>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Выберите действие" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Действия</SelectLabel>
-                    { ACCOUNT_ACTIONS.map(({ value, text }) => {
-                      return <SelectItem value={value} key={value}>{text}</SelectItem>
-                    })}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-              <Button size='sm'>Применить</Button>
-            </div>
-            <AddAccount />
+    <main className='w-full'>
+      <Report className='mt-20' data={accountsInfo} />
+      <div className='mt-20'>
+        <h1 className='text-2xl font-bold'>Аккаунты</h1>
+        <div className='flex items-center justify-between mt-8'>
+          <div className='flex items-center gap-6'>
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Выберите действие" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Действия</SelectLabel>
+                  { ACCOUNT_ACTIONS.map(({ value, text }) => {
+                    return <SelectItem value={value} key={value}>{text}</SelectItem>
+                  })}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Button size='sm'>Применить</Button>
           </div>
-          <AccountsTable accounts={accounts} />
+          <AddAccount />
         </div>
-      </main>
-    </Layout>
+        <AccountsTable accounts={accounts} />
+      </div>
+    </main>
   )
 }
 

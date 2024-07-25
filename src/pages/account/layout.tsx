@@ -1,25 +1,26 @@
-import Header from '@/components/header/header'
-import Container from '@/components/container'
 import NavSidebar from '@/components/sidebar/nav-sidebar'
 import InfoSidebar from '@/components/sidebar/info-sidebar'
-import { Outlet } from 'react-router-dom'
-import { useAuthGuard } from '@/hooks/useAuthGuard'
+import { Navigate, Outlet } from 'react-router-dom'
+import { useAppSelector } from '@/app/hooks'
+import { selectIsAuthenticated } from '@/app/features/user/userSlice'
+import { SIGNIN } from '@/consts'
 
-const Layout = () => {
-  useAuthGuard();
+const AccountLayout = () => {
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
+  if (!isAuthenticated) {
+    return <Navigate to={SIGNIN} />
+  }
 
   return (
     <>
-      <Header />
-      <Container className='flex h-full'>
-        <NavSidebar />
-        <main className='flex flex-col flex-1 gap-10 p-6'>
-          <Outlet />
-        </main>
-        <InfoSidebar />
-      </Container>
+      <NavSidebar />
+      <main className='flex flex-col flex-1 gap-10 p-6'>
+        <Outlet />
+      </main>
+      <InfoSidebar />
     </>
   )
 }
 
-export default Layout
+export default AccountLayout

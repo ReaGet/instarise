@@ -28,8 +28,14 @@ export const userApi = api.injectEndpoints({
     }),
     refresh: builder.query<string, void>({
       query: () => ({
-        url: '/auth/refres',
+        url: '/auth/refresh',
         method: 'POST'
+      })
+    }),
+    me: builder.query<void, void>({
+      query: () => ({
+        url: '/auth/me',
+        method: 'GET',
       })
     })
   })
@@ -38,5 +44,7 @@ export const userApi = api.injectEndpoints({
 export const {
   useLoginMutation,
   useLogoutQuery,
-  useRefreshQuery
+  useLazyLogoutQuery,
+  useRefreshQuery,
+  useMeQuery,
 } = userApi

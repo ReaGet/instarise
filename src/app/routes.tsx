@@ -1,44 +1,31 @@
 import HomePage from '@/pages/page';
 import SignIn from '@/pages/sign-in/page';
 import type { RouteObject } from 'react-router-dom';
-import ProtectedRoute from '@/components/protected-route';
 import { ACCOUNT, DASHBOARD, SIGNIN } from '@/consts';
 import ErrorPage from '@/pages/error-page';
 import AccountPage from '@/pages/account/page';
-import Layout from '@/pages/account/layout';
+import AccountLayout from '@/pages/account/layout';
+import MainLayout from '@/pages/layout';
 import ActionsPage from '@/pages/account/page-actions';
 import AutoReplyPage from '@/pages/account/page-auto-replay';
 import ParsePage from '@/pages/account/parse/page';
 import ParseResultsPage from '@/pages/account/parse/page-results';
 
-const isAuth = true;
-
-export const publicRoutes: RouteObject[] = [
+export const routes: RouteObject[] = [
   {
-    // TODO: remove Protected Route
-    element: <ProtectedRoute  condition={!isAuth} redirect={DASHBOARD} />,
+    path: SIGNIN,
+    element: <SignIn />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: SIGNIN,
-        element: <SignIn />,
-        errorElement: <ErrorPage />,
-      }
-    ]
   },
-];
-
-export const privateRoutes: RouteObject[] = [
   {
-    element: <ProtectedRoute  condition={isAuth} />,
-    errorElement: <ErrorPage />,
+    element: <MainLayout />,
     children: [
       {
         path: DASHBOARD,
         element: <HomePage />,
       },
       {
-        element: <Layout />,
+        element: <AccountLayout />,
         children: [
           {
             path: `${ACCOUNT}/:id`,
@@ -65,5 +52,3 @@ export const privateRoutes: RouteObject[] = [
     ],
   }
 ]
-
-export const routes = [...privateRoutes, ...publicRoutes];
