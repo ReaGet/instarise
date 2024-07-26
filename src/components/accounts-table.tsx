@@ -16,9 +16,10 @@ import { ACCOUNT } from '@/consts'
 import { useState } from 'react'
 import EditableText from '@/components/editable-text'
 import { Input } from '@/components/ui/input'
+import type { Account } from '@/app/services/accountApi'
 
 interface Props {
-  accounts: AccountsTableItem[]
+  accounts: Account[]
 }
 
 const AccountsTable = ({ accounts = [] }: Props) => {
@@ -66,7 +67,7 @@ const AccountsTable = ({ accounts = [] }: Props) => {
                 />
               </TableCell>
               <TableCell className='font-bold'>
-                <Link to={`${ACCOUNT}/${a.id}`}>{a.name}</Link>
+                <Link to={`${ACCOUNT}/${a.id}`}>{a.username}</Link>
               </TableCell>
               <TableCell>
                 {a.description}

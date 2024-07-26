@@ -14,13 +14,7 @@ import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
 import { AccountsTableItem } from '@/app/types'
 import Report, { InfoBlock } from '@/components/report'
-
-const accounts: AccountsTableItem[] = [
-  { id: '1123', name: '@_rea_m_', description: 'Praesentium maiores eius suscipit nihil quas natus laborum soluta quam temporibus cupiditate fuga.', proxy: '192.168.0.110', status: 'working' },
-  { id: '312', name: '@landing', description: 'Come description', proxy: '132.111.101.5', status: 'stop' },
-  { id: '12', name: '@pause', description: 'Some descr', proxy: '0.0.0.0', status: 'pause' },
-  { id: '43', name: '@queue', description: 'Asd asdqwe', proxy: '1.111.101.5', status: 'queue' },
-]
+import { useGetAllAccountsQuery } from '@/app/services/accountApi'
 
 const accountsInfo: InfoBlock[] = [
   { title: 'Всего аккаунтов', value: 1_000_000 },
@@ -30,6 +24,9 @@ const accountsInfo: InfoBlock[] = [
 ]
 
 const HomePage = () => {
+  const { data, isLoading } = useGetAllAccountsQuery();
+  console.log(data)
+
   return (
     <main className='w-full'>
       <Report className='mt-20' data={accountsInfo} />
@@ -54,7 +51,7 @@ const HomePage = () => {
           </div>
           <AddAccount />
         </div>
-        <AccountsTable accounts={accounts} />
+        <AccountsTable accounts={data} />
       </div>
     </main>
   )
