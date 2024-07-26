@@ -11,30 +11,32 @@ type LoginResponse = {
   token_type: string;
 }
 
+const AUTH_URL = '/auth'
+
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginCredentials>({
       query: (userData) => ({
-        url: '/auth/login',
+        url: `${AUTH_URL}/login`,
         method: 'POST',
         body: userData
       })
     }),
     logout: builder.query<string, void>({
       query: () => ({
-        url: '/auth/logout',
+        url: `${AUTH_URL}/logout`,
         method: 'POST'
       })
     }),
     refresh: builder.query<string, void>({
       query: () => ({
-        url: '/auth/refresh',
+        url: `${AUTH_URL}/refresh`,
         method: 'POST'
       })
     }),
     me: builder.query<void, void>({
       query: () => ({
-        url: '/auth/me',
+        url: `${AUTH_URL}/me`,
         method: 'GET',
       })
     })
