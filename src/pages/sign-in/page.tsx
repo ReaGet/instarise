@@ -1,8 +1,15 @@
+import { selectIsAuthenticated } from '@/app/features/user/userSlice';
+import { useAppSelector } from '@/app/hooks';
 import SignInForm from '@/components/forms/sign-in-form'
-import { useAuthGuard } from '@/hooks/useAuthGuard';
+import { DASHBOARD } from '@/consts';
+import { Navigate } from 'react-router-dom';
 
 const Page = () => {
-  useAuthGuard();
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+
+  if (isAuthenticated) {
+    return <Navigate to={DASHBOARD} />
+  }
 
   return (
     <div className='flex flex-col items-center justify-center gap-10 w-screen h-screen px-6'>

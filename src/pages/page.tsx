@@ -12,9 +12,9 @@ import {
 } from "@/components/ui/select"
 import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
-import { AccountsTableItem } from '@/app/types'
 import Report, { InfoBlock } from '@/components/report'
-import { useGetAllAccountsQuery } from '@/app/services/accountApi'
+import { useAppSelector } from '@/app/hooks'
+import { selectAccounts } from '@/app/features/account/accountSlice'
 
 const accountsInfo: InfoBlock[] = [
   { title: 'Всего аккаунтов', value: 1_000_000 },
@@ -24,8 +24,7 @@ const accountsInfo: InfoBlock[] = [
 ]
 
 const HomePage = () => {
-  const { data, isLoading } = useGetAllAccountsQuery();
-  console.log(data)
+  const accounts = useAppSelector(selectAccounts);
 
   return (
     <main className='w-full'>
@@ -51,7 +50,7 @@ const HomePage = () => {
           </div>
           <AddAccount />
         </div>
-        <AccountsTable accounts={data} />
+        <AccountsTable accounts={accounts} />
       </div>
     </main>
   )

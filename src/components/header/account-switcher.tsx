@@ -4,6 +4,8 @@ import { Link, useParams } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 import { ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useAppSelector } from '@/app/hooks'
+import { selectAccounts } from '@/app/features/account/accountSlice'
 
 const accounts = [
   { id: '1123', name: '@_rea_m_' },
@@ -14,6 +16,7 @@ const accounts = [
 
 const AccountSwitcher = () => {
   const { id } = useParams();
+  const accounts = useAppSelector(selectAccounts);
 
   const currentAccount = accounts.find(a => a.id === id) || accounts[0];
   const filteredAccounts = accounts.filter(a => a.id !== currentAccount.id);
@@ -21,7 +24,7 @@ const AccountSwitcher = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant='outline'>
-          {currentAccount.name}
+          {currentAccount?.username || 'Название аккаунта'}
           <ChevronDown className='w-4 h-4 ml-2'/>
         </Button>
       </DropdownMenuTrigger>
@@ -29,7 +32,7 @@ const AccountSwitcher = () => {
         {filteredAccounts.map((a) => {
           return (
             <DropdownMenuItem key={a.id} className='hover:bg-accent'>
-              <Link to={`${ACCOUNT}/${a.id}`} className='w-full'>{a.name}</Link>
+              <Link to={`${ACCOUNT}/${a.id}`} className='w-full'>{a.username}</Link>
             </DropdownMenuItem>
           )
         })}

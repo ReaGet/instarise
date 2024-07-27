@@ -1,6 +1,8 @@
+import { AccountStatus } from '../types';
 import { api } from './api'
 
-const ACCOUNT_URL = '/clients'
+// const ACCOUNT_URL = '/clients'
+const ACCOUNT_URL = ''
 
 export type Account = {
   id: string;
@@ -11,7 +13,7 @@ export type Account = {
   auto_reply_id: string;
   user_id: string;
   group_id: string;
-  status: string;
+  status: AccountStatus;
   proxy: string;
 }
 
@@ -45,5 +47,6 @@ export const accountApi = api.injectEndpoints({
 })
 
 export const {
-  useGetAllAccountsQuery
+  useGetAllAccountsQuery,
+  useGetAccountByIdQuery,
 } = accountApi;
