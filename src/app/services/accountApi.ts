@@ -23,7 +23,8 @@ export const accountApi = api.injectEndpoints({
       query: () => ({
         url: `${ACCOUNT_URL}/operations/`,
         method: 'GET',
-      })
+      }),
+      providesTags: ['Account'],
     }),
     getAccountById: builder.query<Account, string>({
       query: (accountId) => ({
@@ -35,13 +36,16 @@ export const accountApi = api.injectEndpoints({
       query: (accountId) => ({
         url: `${ACCOUNT_URL}/operations/${accountId}`,
         method: 'DELETE',
-      })
+      }),
+      invalidatesTags: ['Account']
     }),
     updateAccount: builder.mutation<Account, Partial<Account>>({
-      query: (accountId) => ({
+      query: ({ id: accountId, ...body }) => ({
         url: `${ACCOUNT_URL}/operations/${accountId}`,
         method: 'PUT',
-      })
+        body: body,
+      }),
+      invalidatesTags: ['Account']
     })
   }),
 })
@@ -49,4 +53,6 @@ export const accountApi = api.injectEndpoints({
 export const {
   useGetAllAccountsQuery,
   useGetAccountByIdQuery,
+  useDeleteAccountMutation,
+  useUpdateAccountMutation,
 } = accountApi;

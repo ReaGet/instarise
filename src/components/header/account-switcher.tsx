@@ -31,7 +31,7 @@ const AccountSwitcher = () => {
       <DropdownMenuContent align='start'>
         {filteredAccounts.map((a) => {
           return (
-            <DropdownMenuItem key={a.id} className='hover:bg-accent'>
+            <DropdownMenuItem key={a.id} className='hover:bg-accent cursor-pointer' asChild>
               <Link to={`${ACCOUNT}/${a.id}`} className='w-full'>{a.username}</Link>
             </DropdownMenuItem>
           )

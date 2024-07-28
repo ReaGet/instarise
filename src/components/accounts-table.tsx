@@ -10,12 +10,9 @@ import {
 import { Checkbox } from '@/components/ui/checkbox'
 import AccountActions from '@/components/account-actions'
 import StatusBadge from '@/components/status-badge'
-import { AccountsTableItem } from '@/app/types'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 import { useState } from 'react'
-import EditableText from '@/components/editable-text'
-import { Input } from '@/components/ui/input'
 import type { Account } from '@/app/services/accountApi'
 
 interface Props {

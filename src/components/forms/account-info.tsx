@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import StatusBadge from '@/components/status-badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
@@ -7,7 +7,8 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import ProxyInput from '../proxy-input';
-import { Account } from '@/app/services/accountApi';
+import { Account, useUpdateAccountMutation } from '@/app/services/accountApi';
+import { Spinner } from '../ui/spinner';
 
 const formSchema = z.object({
   description: z.string(),
@@ -26,6 +27,8 @@ interface SidebarProps {
 
 // TODO: уменьшить колечетсво рендеров
 const AccountInfoForm = ({ data }: SidebarProps) => {
+  const [updateAccount, { isLoading }] = useUpdateAccountMutation()
+
   const form = useForm<AccountInfoFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: data
@@ -35,7 +38,8 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
     form.reset(data);
   }, [data]);
 
-  function onSubmit(values: AccountInfoFormValues) {
+  async function onSubmit(values: AccountInfoFormValues) {
+    await updateAccount({ ...data, ...values }).unwrap()
     console.log(values)
   }
 
@@ -56,7 +60,12 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
           )}
         />
         <ProxyInput form={form} name='proxy' />
-        <Button type='submit' size='sm' className='ml-auto'>Сохранить</Button>
+        <Button type='submit' size='sm' className='ml-auto w-24' disabled={isLoading}>
+          { isLoading
+            ? <Spinner className='w-6 h-6 text-white' />
+            : 'Сохранить'
+          }
+        </Button>
       </form>
     </Form>
   )

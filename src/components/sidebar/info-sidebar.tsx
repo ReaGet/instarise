@@ -7,7 +7,7 @@ interface SidebarProps {
 
 const InfoSidebar = ({ data }: SidebarProps) => {
   return (
-    <aside className='w-[200px] lg:w-[250px] h-full py-6 pl-6 border-l'>
+    <aside className='w-[220px] lg:w-[250px] h-full py-6 pl-6 border-l'>
       {/* TODO: Добавить скелетон */}
       { data && <AccountInfoForm data={data} /> }
     </aside>
