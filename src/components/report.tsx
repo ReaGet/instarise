@@ -1,3 +1,4 @@
+import { Account } from '@/app/services/accountApi';
 import { cn } from '@/lib/utils';
 
 export interface InfoBlock {
@@ -7,20 +8,37 @@ export interface InfoBlock {
 
 interface Props {
   className?: string;
-  data: InfoBlock[];
+  accounts: Account[];
 }
 
-const Report = ({ className = '', data = [] }: Props) => {
+const ReportBlock = ({ title, value }: { title: string, value: number }) => {
+  return (
+    <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg'>
+      <div className='text-[#d2d2d2] font-medium whitespace-nowrap'>{title}</div>
+      <div className='text-3xl font-bold'>{value}</div>
+    </div>
+  )
+}
+
+const Report = ({ className = '', accounts = [] }: Props) => {
+  let turnedOnCount = 0,
+    turnedOffCount = 0,
+    pausedCount = 0;
+
+  accounts.forEach(a => {
+    switch(a.status) {
+      case 'working': turnedOnCount++; break;
+      case 'stop': turnedOffCount++; break;
+      case 'pause': pausedCount++; break;
+    }
+  })
+
   return (
     <div className={cn('flex flex-wrap gap-8', className)}>
-      { data.map(({ title, value }) => {
-        return (
-          <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg' key={title}>
-            <div className='text-[#d2d2d2] font-medium whitespace-nowrap'>{title}</div>
-            <div className='text-3xl font-bold'>{value}</div>
-          </div>
-        )
-      })}
+      <ReportBlock title='Всего аккаунтов' value={accounts.length} />
+      {turnedOnCount > 0 && <ReportBlock title='Включено' value={turnedOnCount} />}
+      {turnedOffCount > 0 && <ReportBlock title='Отключено' value={turnedOffCount} />}
+      {pausedCount > 0 && <ReportBlock title='На паузе' value={pausedCount} />}
     </div>
   )
 }

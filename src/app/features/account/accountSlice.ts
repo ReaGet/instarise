@@ -19,9 +19,6 @@ const accountSlice = createSlice({
     .addMatcher(accountApi.endpoints.getAllAccounts.matchFulfilled, (state, action) => {
       state.accounts = action.payload;
     })
-    // .addMatcher(accountApi.endpoints.deleteAccount.matchFulfilled, (state, action) => {
-    //   state.accounts = action.payload;
-    // })
   }
 })
 

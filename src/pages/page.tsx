@@ -1,4 +1,3 @@
-import Layout from './layout'
 import AccountsTable from '@/components/accounts-table'
 import AddAccount from '@/components/dialogs/add-account'
 import {
@@ -12,23 +11,16 @@ import {
 } from "@/components/ui/select"
 import { Button } from '@/components/ui/button'
 import { ACCOUNT_ACTIONS } from '@/consts'
-import Report, { InfoBlock } from '@/components/report'
+import Report from '@/components/report'
 import { useAppSelector } from '@/app/hooks'
 import { selectAccounts } from '@/app/features/account/accountSlice'
-
-const accountsInfo: InfoBlock[] = [
-  { title: 'Всего аккаунтов', value: 1_000_000 },
-  { title: 'Включено', value: 6 },
-  { title: 'Отключено', value: 2 },
-  { title: 'На паузе', value: 7 },
-]
 
 const HomePage = () => {
   const accounts = useAppSelector(selectAccounts);
 
   return (
     <main className='w-full'>
-      <Report className='mt-20' data={accountsInfo} />
+      <Report className='mt-20' accounts={accounts} />
       <div className='mt-20'>
         <h1 className='text-2xl font-bold'>Аккаунты</h1>
         <div className='flex items-center justify-between mt-8'>

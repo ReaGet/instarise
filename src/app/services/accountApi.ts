@@ -9,12 +9,70 @@ export type Account = {
   username: string;
   photo: string;
   description: string;
-  settings: object;
+  config: AccountConfig;
   auto_reply_id: string;
   user_id: string;
   group_id: string;
   status: AccountStatus;
   proxy: string;
+}
+
+export type AccountConfig = {
+  people: boolean,
+  people_config: {
+    timeout_from: number,
+    timeout_to: number,
+    posts_timeout_from: number,
+    posts_timeout_to: number,
+    reels_timeout_from: number,
+    reels_timeout_to: number,
+    stories_timeout_from: number,
+    stories_timeout_to: number,
+    follow: boolean,
+    stories_like: boolean,
+    stories_amount: number,
+    posts_like: boolean,
+    posts_amount: number,
+    reels_like: boolean,
+    reels_amount: number,
+    users: string[]
+  },
+  hashtags: boolean,
+  hashtags_config: {
+    timeout_from: number,
+    timeout_to: number,
+    posts_timeout_from: number,
+    posts_timeout_to: number,
+    reels_timeout_from: number,
+    reels_timeout_to: number,
+    stories_timeout_from: number,
+    stories_timeout_to: number,
+    follow: boolean,
+    stories_like: boolean,
+    stories_amount: number,
+    posts_like: boolean,
+    posts_amount: number,
+    reels_like: boolean,
+    reels_amount: number,
+    hashtags: string[],
+    amount: number
+  },
+  parsing: boolean,
+  parsing_config: {
+    users: string[],
+    followers: boolean,
+    followers_amount: number,
+    followings: boolean,
+    followings_amount: number
+  }
+}
+
+const accountTaskQuery = (url: string) => {
+  return (ids: string[]) => ({
+    url: `${ACCOUNT_URL}${url}`,
+    method: 'POST',
+    body: ids,
+  })
 }
 
 export const accountApi = api.injectEndpoints({
@@ -46,6 +104,25 @@ export const accountApi = api.injectEndpoints({
         body: body,
       }),
       invalidatesTags: ['Account']
+    }),
+    startAccountTask: builder.mutation<string[], string[]>({
+      query: accountTaskQuery('/mixed/tasks/start'),
+      invalidatesTags: ['Account']
+    }),
+    pauseAccountTask: builder.mutation<string[], string[]>({
+      query: accountTaskQuery('/mixed/tasks/pause'),
+      invalidatesTags: ['Account']
+    }),
+    stopAccountTask: builder.mutation<string[], string[]>({
+      query: accountTaskQuery('/mixed/tasks/stop'),
+      invalidatesTags: ['Account']
+    }),
+    updateAccountConfig: builder.mutation<string, { accountId: string, config: AccountConfig }>({
+      query: ({ accountId, config }) => ({
+        url: `${ACCOUNT_URL}/config/client/${accountId}`,
+        method: 'POST',
+        body: config
+      })
     })
   }),
 })
