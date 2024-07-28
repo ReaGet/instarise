@@ -15,4 +15,4 @@ export interface ReportsTableItem {
   hasErrors?: boolean;
 }
 
-export type AccountStatus = 'working' | 'stop' | 'pause' | 'queue';
+export type AccountStatus = 'working' | 'stop' | 'pause' | 'finish';
