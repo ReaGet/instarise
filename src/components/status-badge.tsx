@@ -28,10 +28,10 @@ const variants: Variants = {
     text: 'Пауза',
     color: 'text-orange-400'
   },
-  queue: {
-    text: 'В очереди',
+  finish: {
+    text: 'Завершен',
     color: 'text-primary'
-  }
+  },
 }
 
 const StatusBadge = (props: Props) => {

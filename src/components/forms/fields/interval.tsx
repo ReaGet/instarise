@@ -1,5 +1,4 @@
-import React from 'react'
-import { FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { FormControl, FormDescription, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import type { FieldValues, Path, useForm } from 'react-hook-form';
 

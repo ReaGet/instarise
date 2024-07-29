@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/table'
 import type { Report } from '@/app/services/reportApi'
 import { useDateFormatter } from '@/hooks/useDateFormatter'
-import StatusBadge from './status-badge'
 import { AccountStatus } from '@/app/types'
 
 interface Props {

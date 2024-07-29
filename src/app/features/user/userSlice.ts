@@ -36,7 +36,7 @@ const userSlice = createSlice({
         localStorage.removeItem('refresh_token');
       })
       // Это для теста, так как реальные запросы не проходят
-      .addMatcher(userApi.endpoints.login.matchRejected, (state, action) => {
+      .addMatcher(userApi.endpoints.login.matchRejected, (state) => {
         state.token = "secret_token"
         state.refresh_token = "secret_refresh_token"
         state.isAuthenticated = true

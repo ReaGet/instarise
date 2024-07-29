@@ -1,11 +1,11 @@
-import React, { forwardRef, useEffect, useReducer, useState } from 'react'
+import { useEffect, useReducer } from 'react'
 import { Input } from '@/components/ui/input'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import type { FieldValues, Path, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button';
 import * as z from 'zod';
 import { fetchProxyCheck } from '@/app/api/proxy';
-import { Ban, Check, CircleX, Loader } from 'lucide-react';
+import { Ban, Check, Loader } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProxyProps<T extends FieldValues> {

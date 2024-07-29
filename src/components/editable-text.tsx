@@ -5,7 +5,7 @@ interface EditableTextProps {
   text?: string;
 }
 
-const EditableText = ({ children, text }: EditableTextProps) => {
+const EditableText = ({ children }: EditableTextProps) => {
   return (
     <div>{children}</div>
   )

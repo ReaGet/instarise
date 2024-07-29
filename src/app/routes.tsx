@@ -1,15 +1,23 @@
-import HomePage from '@/pages/page';
-import SignIn from '@/pages/sign-in/page';
-import type { RouteObject } from 'react-router-dom';
-import { ACCOUNT, DASHBOARD, SIGNIN } from '@/consts';
-import ErrorPage from '@/pages/error-page';
-import AccountPage from '@/pages/account/page';
-import AccountLayout from '@/pages/account/layout';
-import MainLayout from '@/pages/layout';
-import ActionsPage from '@/pages/account/page-actions';
-import AutoReplyPage from '@/pages/account/page-auto-replay';
-import ParsePage from '@/pages/account/parse/page';
-import ParseResultsPage from '@/pages/account/parse/page-results';
+import HomePage from '@/pages/page'
+import SignIn from '@/pages/sign-in/page'
+import type { RouteObject } from 'react-router-dom'
+import { ACCOUNT, DASHBOARD, SIGNIN } from '@/consts'
+import ErrorPage from '@/pages/error-page'
+import AccountLayout from '@/pages/account/layout'
+import MainLayout from '@/pages/layout'
+import { lazy } from 'react'
+// import AccountPage from '@/pages/account/page';
+// import ActionsPage from '@/pages/account/page-actions';
+// import AutoReplyPage from '@/pages/account/page-auto-replay';
+// import ParsePage from '@/pages/account/parse/page';
+// import ParseResultsPage from '@/pages/account/parse/page-results';
+
+const AccountPage = lazy(() => import('@/pages/account/page'))
+const ActionsPage = lazy(() => import('@/pages/account/page-actions'))
+const AutoReplyPage = lazy(() => import('@/pages/account/page-auto-replay'))
+const ParsePage = lazy(() => import('@/pages/account/parse/page'))
+const ParseResultsPage = lazy(() => import('@/pages/account/parse/page-results'))
+
 
 export const routes: RouteObject[] = [
   {
