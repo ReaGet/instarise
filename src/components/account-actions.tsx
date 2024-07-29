@@ -13,6 +13,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from '@/components/ui/button'
 import { Ellipsis } from 'lucide-react'
@@ -57,11 +58,11 @@ const AccountActions = ({ accountId, status }: ActionsProps) => {
               </DropdownMenuItem>
             )
           })}
-          {/* <DropdownMenuItem className='p-0'>
+          <DropdownMenuItem className='p-0'>
             <AlertDialogTrigger asChild>
               <Button variant='ghost' size='sm' className='justify-start w-full'>Удалить</Button>
             </AlertDialogTrigger>
-          </DropdownMenuItem> */}
+          </DropdownMenuItem>
           <DropdownMenuItem className='p-0'>
             <Button variant='ghost' size='sm' className='justify-start w-full' asChild>
               <Link to={`${ACCOUNT}/${accountId}/auto-replay/`}>Настройки</Link>

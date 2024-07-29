@@ -1,4 +1,5 @@
 import { Account } from '@/app/services/accountApi';
+import { useNumberFormatter } from '@/hooks/useNumberFormatter';
 import { cn } from '@/lib/utils';
 
 export interface InfoBlock {
@@ -12,10 +13,12 @@ interface Props {
 }
 
 const ReportBlock = ({ title, value }: { title: string, value: number }) => {
+  const numberFormatter = useNumberFormatter();
+
   return (
     <div className='flex flex-col gap-1 min-w-[150px] py-4 px-6 border rounded-lg'>
       <div className='text-[#d2d2d2] font-medium whitespace-nowrap'>{title}</div>
-      <div className='text-3xl font-bold'>{value}</div>
+      <div className='text-3xl font-bold'>{numberFormatter(value)}</div>
     </div>
   )
 }

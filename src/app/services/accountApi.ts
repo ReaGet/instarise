@@ -123,6 +123,15 @@ export const accountApi = api.injectEndpoints({
         method: 'POST',
         body: config
       })
+    }),
+    getAccountDetails: builder.query<{
+      followers: number;
+      followings: number;
+    }, string>({
+      query: (accountId) => ({
+        url: `${ACCOUNT_URL}/info/?client_id=${accountId}`,
+        method: 'GET',
+      })
     })
   }),
 })
@@ -132,4 +141,6 @@ export const {
   useGetAccountByIdQuery,
   useDeleteAccountMutation,
   useUpdateAccountMutation,
+  useGetAccountDetailsQuery,
+  useLazyGetAccountDetailsQuery
 } = accountApi;

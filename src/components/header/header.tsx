@@ -4,6 +4,7 @@ import { Button } from '../ui/button'
 import { BASE_URL, DASHBOARD } from '@/consts'
 import { ArrowLeft } from 'lucide-react'
 import AccountSwitcher from './account-switcher'
+import AccountInfo from './account-info'
 
 const Header = () => {
   const { pathname } = useLocation();
@@ -20,14 +21,7 @@ const Header = () => {
             </Link>
           </Button>
           <AccountSwitcher  />
-          <div className='text-sm'>
-            <div className='flex'>
-              <div className='w-28'>Подписчиков:</div> 200
-            </div>
-            <div className='flex'>
-              <div className='w-28'>Подписок:</div> 200
-            </div>
-          </div>
+          <AccountInfo />
         </>
       )}
       <AccountMenu className='ml-auto' />
