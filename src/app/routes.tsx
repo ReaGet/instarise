@@ -27,6 +27,7 @@ export const routes: RouteObject[] = [
   },
   {
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: DASHBOARD,

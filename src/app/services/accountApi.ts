@@ -1,3 +1,4 @@
+import { AccountsActionsFormValues } from '@/components/forms/actions-accounts';
 import { AccountStatus } from '../types';
 import { api } from './api'
 
@@ -82,7 +83,7 @@ export const accountApi = api.injectEndpoints({
         url: `${ACCOUNT_URL}/operations/`,
         method: 'GET',
       }),
-      providesTags: ['Account'],
+      // providesTags: ['Account'],
     }),
     getAccountById: builder.query<Account, string>({
       query: (accountId) => ({
@@ -105,6 +106,13 @@ export const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Account']
     }),
+    // updateConfig: builder.mutation<string, { accountId: string, body: AccountConfig }>({
+    //   query: ({ accountId, body }) => ({
+    //     url: `${ACCOUNT_URL}/operations/${accountId}`,
+    //     method: 'PUT',
+    //     body: body
+    //   })
+    // }),
     startAccountTask: builder.mutation<string[], string[]>({
       query: accountTaskQuery('/mixed/tasks/start'),
       invalidatesTags: ['Account']

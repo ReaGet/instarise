@@ -19,7 +19,7 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} type='number' className='w-24' placeholder='От' disabled={disabled} />
+                <Input {...field} onChange={(e) => field.onChange(Number(e.target.value))} type='number' className='w-24' placeholder='От' disabled={disabled} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -32,7 +32,7 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} type='number' className='w-24' placeholder='До' disabled={disabled} />
+                <Input {...field} onChange={(e) => field.onChange(Number(e.target.value))} type='number' className='w-24' placeholder='До' disabled={disabled} />
               </FormControl>
               <FormMessage />
             </FormItem>

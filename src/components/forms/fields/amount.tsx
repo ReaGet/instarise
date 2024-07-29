@@ -16,7 +16,7 @@ const Amount = <T extends FieldValues>({ form, disabled, name }: AmountProps<T>)
       render={({ field }) => (
         <FormItem>
           <FormControl>
-            <Input type='number' {...field} disabled={disabled} className='max-w-[200px]' />
+            <Input type='number' {...field} onChange={(e) => field.onChange(Number(e.target.value))} disabled={disabled} className='max-w-[200px]' />
           </FormControl>
           <FormMessage />
           <FormDescription>Глубина выполнения</FormDescription>
