@@ -3,7 +3,7 @@ import { Input } from '@/components/ui/input'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import type { FieldValues, Path, useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button';
-import * as z from 'zod';
+import { parse, ipv4, pipe, string } from 'valibot'
 import { fetchProxyCheck } from '@/app/api/proxy';
 import { Ban, Check, Loader } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -13,8 +13,8 @@ interface ProxyProps<T extends FieldValues> {
   disabled?: boolean;
   form: ReturnType<typeof useForm<T>>;
 }
-
-const proxyCheck = z.string().ip();
+const proxySchema = pipe(string(), ipv4())
+const proxyCheck = (value: string) => parse(proxySchema, value)
 
 interface ProxyState {
   status: 'initial' | 'loading' | 'valid' | 'wrong'
@@ -53,7 +53,7 @@ const ProxyInput = <T extends FieldValues>({ form, name }: ProxyProps<T>) => {
   const proxyValue = form.watch(name);
   let isValidProxyValue = false;
   try {
-    proxyCheck.parse(proxyValue);
+    proxyCheck(proxyValue);
     isValidProxyValue = true;
   } catch(e) {
     isValidProxyValue = false;

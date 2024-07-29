@@ -1,6 +1,6 @@
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { pipe, object, string, type InferOutput, minLength } from 'valibot'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -8,20 +8,16 @@ import { useLoginMutation } from '@/app/services/userApi'
 import { useNavigate } from 'react-router-dom'
 import { DASHBOARD } from '@/consts'
 
-const formSchema = z.object({
-  username: z.string().min(1, {
-    message: "Заполните поле логин"
-  }),
-  password: z.string().min(1, {
-    message: "Заполните поле пароль"
-  }),
+const formSchema = object({
+  username: pipe(string(), minLength(1, 'Заполните поле логин')),
+  password: pipe(string(), minLength(1, 'Заполните поле логин')),
 })
 
-type SignInFormValues = z.infer<typeof formSchema>
+type SignInFormValues = InferOutput<typeof formSchema>
 
 const SignInForm = () => {
   const form = useForm<SignInFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",

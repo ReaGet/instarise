@@ -1,23 +1,21 @@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
-import { z } from 'zod'
+import { pipe, object, number, string, type InferOutput, minLength } from 'valibot'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import Interval from './fields/interval'
 import { Input } from '../ui/input'
 
-const formSchema = z.object({
-  tags: z.string().min(1, {
-    message: 'Поле не может быть пустым',
-  }),
+const formSchema = object({
+  tags: pipe(string(), minLength(1, 'Поле не может быть пустым')),
 
-  posts_amount: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  timeout_form: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
-  timeout_to: z.coerce.number().min(1, { message: 'Значение должно быть больше 0'}),
+  posts_amount: number('Значение должно быть больше 0'),
+  timeout_form: number('Значение должно быть больше 0'),
+  timeout_to: number('Значение должно быть больше 0'),
 })
 
-export type TagsActionsFormValues = z.infer<typeof formSchema>;
+export type TagsActionsFormValues = InferOutput<typeof formSchema>;
 
 interface TagsActionsProps {
   onSubmit: (values: TagsActionsFormValues) => void;
@@ -26,7 +24,7 @@ interface TagsActionsProps {
 
 const TagsActionsForm = ({ onSubmit, enabled }: TagsActionsProps) => {
   const form = useForm<TagsActionsFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       tags: '',
       posts_amount: 10,

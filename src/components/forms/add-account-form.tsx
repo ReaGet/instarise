@@ -1,30 +1,22 @@
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { pipe, object, string, type InferOutput, minLength, ipv4 } from 'valibot'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import ProxyInput from '../proxy-input'
 
-const formSchema = z.object({
-  username: z.string().min(1, {
-    message: "Заполните поле логин"
-  }),
-  password: z.string().min(1, {
-    message: "Заполните поле пароль"
-  }),
-  proxy: z.string().min(1, {
-    message: "Заполните поле Прокси"
-  }).ip({
-    message: "Введите корректный Прокси"
-  }),
+const formSchema = object({
+  username: pipe(string(), minLength(1, 'Заполните поле логин')),
+  password: pipe(string(), minLength(1, 'Заполните поле пароль')),
+  proxy: pipe(string(), ipv4('Введите корректный Прокси')),
 })
 
-export type AddAccountFormValues = z.infer<typeof formSchema>;
+export type AddAccountFormValues = InferOutput<typeof formSchema>;
 
 const AddAccountForm = () => {
   const form = useForm<AddAccountFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       username: "",
       password: "",

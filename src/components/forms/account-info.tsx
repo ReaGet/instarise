@@ -1,25 +1,21 @@
 import { useEffect } from 'react'
 import StatusBadge from '@/components/status-badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { object, string, pipe, ipv4, type InferOutput } from 'valibot'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Button } from '@/components/ui/button';
 import ProxyInput from '../proxy-input';
 import { Account, useUpdateAccountMutation } from '@/app/services/accountApi';
 import { Spinner } from '../ui/spinner';
 
-const formSchema = z.object({
-  description: z.string(),
-  proxy: z.string().min(1, {
-    message: "Заполните поле Прокси"
-  }).ip({
-    message: "Введите корректный Прокси"
-  }),
+const formSchema = object({
+  description: string(),
+  proxy: pipe(string(), ipv4('Введите корректный Прокси')),
 });
 
-type AccountInfoFormValues = z.infer<typeof formSchema>;
+type AccountInfoFormValues = InferOutput<typeof formSchema>;
 
 interface SidebarProps {
   data: Account;
@@ -30,7 +26,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
   const [updateAccount, { isLoading }] = useUpdateAccountMutation()
 
   const form = useForm<AccountInfoFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: valibotResolver(formSchema),
     defaultValues: data
   });
 
@@ -56,6 +52,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
               <FormControl>
                 <Textarea rows={4} {...field} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

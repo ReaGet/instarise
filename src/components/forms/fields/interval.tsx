@@ -1,4 +1,4 @@
-import { FormControl, FormDescription, FormField, FormItem } from '@/components/ui/form'
+import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import type { FieldValues, Path, useForm } from 'react-hook-form';
 
@@ -21,6 +21,7 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
               <FormControl>
                 <Input {...field} type='number' className='w-24' placeholder='От' disabled={disabled} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -33,6 +34,7 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
               <FormControl>
                 <Input {...field} type='number' className='w-24' placeholder='До' disabled={disabled} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

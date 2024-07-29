@@ -1,40 +1,42 @@
+import { useForm } from 'react-hook-form'
+import { pipe, boolean, object, string, type InferOutput, minLength, transform, minValue } from 'valibot'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import Interval from './fields/interval'
 import Toggler from './fields/toggler'
 import Amount from './fields/amount'
 
-const numberValidation = z.coerce.number().min(1, { message: 'Значение должно быть больше 0'});
+const numberValidation = pipe(
+  string(),
+  transform((v) => Number(v)),
+  minValue(1, 'Значение должно быть больше 0')
+);
 
-const formSchema = z.object({
-  users: z.string().min(1, {
-    message: 'Поле не может быть пустым',
-  }),
+const formSchema = object({
+  users: pipe(string(), minLength(1, 'Поле не может быть пустым')),
   timeout_form: numberValidation,
   timeout_to: numberValidation,
-  follow: z.boolean(),
+  follow: boolean(),
   // Posts
-  posts_like: z.boolean(),
+  posts_like: boolean(),
   posts_timeout_form: numberValidation,
   posts_timeout_to: numberValidation,
   posts_amount: numberValidation,
   // Stories
-  stories_like: z.boolean(),
+  stories_like: boolean(),
   stories_timeout_form: numberValidation,
   stories_timeout_to: numberValidation,
   stories_amount: numberValidation,
   // Reels
-  reels_like: z.boolean(),
+  reels_like: boolean(),
   reels_timeout_form: numberValidation,
   reels_timeout_to: numberValidation,
   reels_amount: numberValidation,
 })
 
-export type AccountsActionsFormValues = z.infer<typeof formSchema>;
+export type AccountsActionsFormValues = InferOutput<typeof formSchema>;
 
 interface AccountsActionsProps {
   onSubmit: (values: AccountsActionsFormValues) => void;
@@ -43,7 +45,7 @@ interface AccountsActionsProps {
 
 const AccountsActionsForm = ({ onSubmit, enabled }: AccountsActionsProps) => {
   const form = useForm<AccountsActionsFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       users: '',
       timeout_form: 1,

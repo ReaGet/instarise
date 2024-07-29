@@ -1,17 +1,15 @@
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
-import { z } from 'zod'
 import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { pipe, object, string, type InferOutput, minLength } from 'valibot'
+import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Button } from '@/components/ui/button'
 
-const formSchema = z.object({
-  messages: z.string().min(1, {
-    message: 'Поле не может быть пустым',
-  })
+const formSchema = object({
+  messages: pipe(string(), minLength(1, 'Поле не может быть пустым'))
 })
 
-export type AutoReplyFormValues = z.infer<typeof formSchema>;
+export type AutoReplyFormValues = InferOutput<typeof formSchema>;
 
 interface AutoReplyProps {
   onSubmit: (values: AutoReplyFormValues) => void;
@@ -20,7 +18,7 @@ interface AutoReplyProps {
 
 const AutoReplyForm = ({ onSubmit, enabled }: AutoReplyProps) => {
   const form = useForm<AutoReplyFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: valibotResolver(formSchema),
     defaultValues: {
       messages: "",
     },

@@ -14,7 +14,7 @@ const AddAccount = () => {
       <DialogTrigger asChild>
         <Button size='sm'>Добавить аккаунт</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]" aria-description="Добавить аккаунт">
+      <DialogContent className="sm:max-w-[425px]" aria-description="Добавить аккаунт" aria-describedby="">
         <DialogHeader>
           <DialogTitle>Добавить аккаунт</DialogTitle>
         </DialogHeader>
