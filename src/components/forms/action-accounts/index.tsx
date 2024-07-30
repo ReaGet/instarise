@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label'
 import Interval from '@/components/forms/fields/interval'
 import Toggler from '@/components/forms/fields/toggler'
 import Amount from '@/components/forms/fields/amount'
-import { useEffect, memo } from 'react'
+import { useEffect } from 'react'
 import { ActionAccountsSchema, ActionAccountsFormValues } from './schema'
 
 interface AccountsActionsProps {

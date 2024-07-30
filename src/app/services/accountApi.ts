@@ -146,7 +146,7 @@ export const accountApi = api.injectEndpoints({
     getAccountDetails: builder.query<{
       followers: number;
       followings: number;
-    }, string>({
+    }[], string>({
       query: (accountId) => ({
         url: `${ACCOUNT_URL}/info/?client_id=${accountId}`,
         method: 'GET',

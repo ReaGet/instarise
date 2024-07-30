@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import AutoReplyForm from '@/components/forms/auto-reply'
 import type { AutoReplyFormValues } from '@/components/forms/auto-reply/schema'
 import { useGetAutoReplyConfigQuery, useUpdateAutoReplyConfigMutation } from '@/app/services/accountApi'
@@ -7,7 +6,7 @@ import { Spinner } from '@/components/ui/spinner'
 
 const AutoReplayPage = () => {
   const { id } = useParams()
-  const { data = [], isLoading } = useGetAutoReplyConfigQuery(id!)
+  const { data = [] } = useGetAutoReplyConfigQuery(id!)
   const [updateConfig] = useUpdateAutoReplyConfigMutation();
 
   if (data.length === 0) return <Spinner />
