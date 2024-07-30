@@ -1,25 +1,35 @@
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
 import { useState } from 'react'
 import ParseForm from '@/components/forms/parse'
-import type { ParseFormValues } from '@/components/forms/parse/schema'
+import { ParseDtoToForm, ParseDto, type ParseFormValues } from '@/components/forms/parse/schema'
+import { useUpdateAccountMutation } from '@/app/services/accountApi'
+import { useParams } from 'react-router-dom'
+import { useAppSelector } from '@/app/hooks'
+import { selectAccountById } from '@/app/features/account/accountSlice'
+import { Spinner } from '@/components/ui/spinner'
 
 const ParsePage = () => {
-  const [isParseEnabled, setIsParseEnabled] = useState(false);
+  const [updateAccount] = useUpdateAccountMutation();
+  const { id } = useParams()
+  const currentAccount = useAppSelector(selectAccountById(id!))
+  const config = currentAccount?.config
 
-  function onSubmit(values: ParseFormValues) {
-    console.log(values);
+  if (!config) return <Spinner />
+
+  async function handleSubmit(values: ParseFormValues) {
+    await updateAccount({
+      ...currentAccount,
+      config: {
+        ...(config! || {}),
+        ...ParseDto(values)
+      }
+    }).unwrap()
   }
 
   return (
     <>
       <h1 className='text-lg font-bold'>Сбор данных</h1>
       <div className='flex flex-col gap-4'>
-        <div className="flex items-center gap-2">
-          <Switch id='ParseFormEnabled' checked={isParseEnabled} onCheckedChange={setIsParseEnabled} />
-          <Label htmlFor='ParseFormEnabled'>Люди</Label>
-        </div>
-        <ParseForm onSubmit={onSubmit} enabled={isParseEnabled} />
+        <ParseForm onSubmit={handleSubmit} data={ParseDtoToForm(config)} />
       </div>
     </>
   )

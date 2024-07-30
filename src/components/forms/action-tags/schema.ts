@@ -20,7 +20,7 @@ export const TagDtoToForm = (dto: AccountConfig): ActionTagsFormValues => {
   }
 }
 
-export const TagFormToDto = ({ tags, ...hashtag_config }: ActionTagsFormValues): Pick<AccountConfig, 'hashtags' | 'hashtags_config'> => {
+export const TagsDto = ({ tags, ...hashtag_config }: ActionTagsFormValues): Pick<AccountConfig, 'hashtags' | 'hashtags_config'> => {
   return {
     hashtags: tags,
     hashtags_config: {

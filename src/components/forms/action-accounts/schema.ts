@@ -35,7 +35,7 @@ export const AccountDtoToForm = (dto: AccountConfig): ActionAccountsFormValues =
   }
 }
 
-export const AccountFormToDto = ({ people, ...people_config }: ActionAccountsFormValues): Pick<AccountConfig, 'people' | 'people_config'> => {
+export const AccountsDto = ({ people, ...people_config }: ActionAccountsFormValues): Pick<AccountConfig, 'people' | 'people_config'> => {
   return {
     people,
     people_config: {

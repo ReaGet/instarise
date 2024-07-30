@@ -1,13 +1,13 @@
 
 import AccountActionsForm from '@/components/forms/action-accounts'
-import { type ActionAccountsFormValues, AccountDtoToForm, AccountFormToDto } from '@/components/forms/action-accounts/schema'
+import { type ActionAccountsFormValues, AccountDtoToForm, AccountsDto } from '@/components/forms/action-accounts/schema'
 import TagsActionsForm from '@/components/forms/action-tags'
 import { useAppSelector } from '@/app/hooks'
 import { selectAccountById } from '@/app/features/account/accountSlice'
 import { useParams } from 'react-router-dom'
 import { Spinner } from '@/components/ui/spinner'
 import { AccountConfig, useUpdateAccountMutation } from '@/app/services/accountApi'
-import { ActionTagsFormValues, TagDtoToForm, TagFormToDto } from '@/components/forms/action-tags/schema'
+import { ActionTagsFormValues, TagDtoToForm, TagsDto } from '@/components/forms/action-tags/schema'
 
 const ActionsPage = () => {
   const [updateAccount] = useUpdateAccountMutation();
@@ -20,14 +20,14 @@ const ActionsPage = () => {
   async function onAccountSubmit(values: ActionAccountsFormValues) {
     await handleSubmit({
       ...(config! || {}),
-      ...AccountFormToDto(values)
+      ...AccountsDto(values)
     })
   }
 
   async function onTagsSubmit(values: ActionTagsFormValues) {
     await handleSubmit({
       ...(config! || {}),
-      ...TagFormToDto(values)
+      ...TagsDto(values)
     })
   }
 

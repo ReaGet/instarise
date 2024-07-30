@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { valibotResolver } from '@hookform/resolvers/valibot'
@@ -8,7 +9,6 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import Interval from '@/components/forms/fields/interval'
 import { ActionTagsSchema, ActionTagsFormValues } from './schema'
-import { useEffect } from 'react'
 
 interface TagsActionsProps {
   onSubmit: (values: ActionTagsFormValues) => void;
