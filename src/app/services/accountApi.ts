@@ -1,5 +1,6 @@
 import { AccountStatus } from '../types';
 import { api } from './api'
+import { AutoReplyFormValues } from '@/components/forms/auto-reply/schema';
 
 // const ACCOUNT_URL = '/clients'
 const ACCOUNT_URL = ''
@@ -54,6 +55,13 @@ export type AccountConfig = {
   }
 }
 
+export type AutoReplyConfig = {
+  text: string;
+  autoReply: boolean;
+  timeout_from: number;
+  timeout_to: number;
+}
+
 const accountTaskQuery = (url: string) => {
   return (ids: string[]) => ({
     url: `${ACCOUNT_URL}${url}`,
@@ -62,6 +70,7 @@ const accountTaskQuery = (url: string) => {
   })
 }
 
+// TODO: разделить апи на: Работа с конфигами, работа с аккантами, работа с автоответом
 export const accountApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllAccounts: builder.query<Account[], void>({
@@ -99,6 +108,22 @@ export const accountApi = api.injectEndpoints({
     //     body: body
     //   })
     // }),
+    getAutoReplyConfig: builder.query<AutoReplyFormValues[], string>({
+      query: (accountId) => ({
+        url: `${ACCOUNT_URL}/autoReply/?client_id=${accountId}`,
+        method: 'GET',
+      })
+    }),
+    updateAutoReplyConfig: builder.mutation<string, { accountId: string, config: AutoReplyFormValues }>({
+      query: ({ accountId, config }) => ({
+        url: `${ACCOUNT_URL}/autoReply/${accountId}`,
+        method: 'PUT',
+        body: {
+          ...config,
+          client_id: accountId,
+        },
+      })
+    }),
     startAccountTask: builder.mutation<string[], string[]>({
       query: accountTaskQuery('/mixed/tasks/start'),
       invalidatesTags: ['Account']
@@ -136,5 +161,7 @@ export const {
   useDeleteAccountMutation,
   useUpdateAccountMutation,
   useGetAccountDetailsQuery,
-  useLazyGetAccountDetailsQuery
+  useLazyGetAccountDetailsQuery,
+  useGetAutoReplyConfigQuery,
+  useUpdateAutoReplyConfigMutation,
 } = accountApi;

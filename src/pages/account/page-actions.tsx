@@ -41,12 +41,8 @@ const ActionsPage = () => {
   return (
     <>
       <h1 className='text-lg font-bold'>Действия</h1>
-      <div className='flex flex-col gap-4'>
-        <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} />
-      </div>
-      <div>
-        <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} />
-      </div>
+      <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} />
+      <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} />
     </>
   )
 }

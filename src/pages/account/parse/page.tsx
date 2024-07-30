@@ -28,9 +28,7 @@ const ParsePage = () => {
   return (
     <>
       <h1 className='text-lg font-bold'>Сбор данных</h1>
-      <div className='flex flex-col gap-4'>
-        <ParseForm onSubmit={handleSubmit} data={ParseDtoToForm(config)} />
-      </div>
+      <ParseForm onSubmit={handleSubmit} data={ParseDtoToForm(config)} />
     </>
   )
 }

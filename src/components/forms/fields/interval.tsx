@@ -8,9 +8,10 @@ interface IntervalProps<T extends FieldValues> {
   toName: Path<T>;
   disabled?: boolean;
   form: ReturnType<typeof useForm<T>>;
+  children?: React.ReactNode;
 }
 
-const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: IntervalProps<T>) => {
+const Interval = <T extends FieldValues>({ form, disabled, fromName, toName, children }: IntervalProps<T>) => {
   return (
     <div className='flex flex-col gap-2'>
       <div className='flex items-center gap-3'>
@@ -56,7 +57,7 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
           )}
         />
       </div>
-      <FormDescription>Частота выполнения задачи в секундах</FormDescription>
+      <FormDescription>{ children || 'Частота выполнения задачи в секундах' }</FormDescription>
     </div>
   )
 }
