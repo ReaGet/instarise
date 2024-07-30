@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import AutoReplyForm from '@/components/forms/auto-reply'
-import type { AutoReplyFormValues } from '@/components/forms/auto-reply'
+import type { AutoReplyFormValues } from '@/components/forms/auto-reply/schema'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 

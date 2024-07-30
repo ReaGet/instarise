@@ -6,7 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
-import AddAccountForm from '../forms/add-account-form'
+import AddAccountForm from '@/components/forms/add-account'
 
 const AddAccount = () => {
   return (

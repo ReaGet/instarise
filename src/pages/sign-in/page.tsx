@@ -1,6 +1,6 @@
 import { selectIsAuthenticated } from '@/app/features/user/userSlice';
 import { useAppSelector } from '@/app/hooks';
-import SignInForm from '@/components/forms/sign-in-form'
+import SignInForm from '@/components/forms/sign-in'
 import { DASHBOARD } from '@/consts';
 import { Navigate } from 'react-router-dom';
 

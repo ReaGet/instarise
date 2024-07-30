@@ -1,6 +1,7 @@
 import { FormControl, FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import type { FieldValues, Path, useForm } from 'react-hook-form';
+import { handleNumberValue } from './utils';
 
 interface IntervalProps<T extends FieldValues> {
   fromName: Path<T>;
@@ -19,7 +20,15 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} onChange={(e) => field.onChange(Number(e.target.value))} type='number' className='w-24' placeholder='От' disabled={disabled} />
+                <Input
+                  {...field}
+                  onChange={(e) => field.onChange(handleNumberValue(e.target.value))}
+                  min='1'
+                  type='number'
+                  className='w-24'
+                  placeholder='От'
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -32,7 +41,15 @@ const Interval = <T extends FieldValues>({ form, disabled, fromName, toName }: I
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input {...field} onChange={(e) => field.onChange(Number(e.target.value))} type='number' className='w-24' placeholder='До' disabled={disabled} />
+                <Input
+                  {...field}
+                  onChange={(e) => field.onChange(handleNumberValue(e.target.value))}
+                  min='1'
+                  type='number'
+                  className='w-24'
+                  placeholder='До'
+                  disabled={disabled}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

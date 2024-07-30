@@ -1,4 +1,3 @@
-import { AccountsActionsFormValues } from '@/components/forms/actions-accounts';
 import { AccountStatus } from '../types';
 import { api } from './api'
 
@@ -42,19 +41,6 @@ export type AccountConfig = {
   hashtags_config: {
     timeout_from: number,
     timeout_to: number,
-    posts_timeout_from: number,
-    posts_timeout_to: number,
-    reels_timeout_from: number,
-    reels_timeout_to: number,
-    stories_timeout_from: number,
-    stories_timeout_to: number,
-    follow: boolean,
-    stories_like: boolean,
-    stories_amount: number,
-    posts_like: boolean,
-    posts_amount: number,
-    reels_like: boolean,
-    reels_amount: number,
     hashtags: string[],
     amount: number
   },
@@ -83,7 +69,7 @@ export const accountApi = api.injectEndpoints({
         url: `${ACCOUNT_URL}/operations/`,
         method: 'GET',
       }),
-      // providesTags: ['Account'],
+      providesTags: ['Account'],
     }),
     getAccountById: builder.query<Account, string>({
       query: (accountId) => ({

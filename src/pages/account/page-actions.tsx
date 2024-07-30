@@ -1,59 +1,52 @@
 
-import AccountsActionsForm from '@/components/forms/actions-accounts'
-import type { AccountsActionsFormValues } from '@/components/forms/actions-accounts'
-import TagsActionsForm from '@/components/forms/actions-tags'
-import type { TagsActionsFormValues } from '@/components/forms/actions-tags'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
-import { useState } from 'react'
+import AccountActionsForm from '@/components/forms/action-accounts'
+import { type ActionAccountsFormValues, AccountDtoToForm, AccountFormToDto } from '@/components/forms/action-accounts/schema'
+import TagsActionsForm from '@/components/forms/action-tags'
 import { useAppSelector } from '@/app/hooks'
 import { selectAccountById } from '@/app/features/account/accountSlice'
 import { useParams } from 'react-router-dom'
 import { Spinner } from '@/components/ui/spinner'
-import { useUpdateAccountMutation } from '@/app/services/accountApi'
+import { AccountConfig, useUpdateAccountMutation } from '@/app/services/accountApi'
+import { ActionTagsFormValues, TagDtoToForm, TagFormToDto } from '@/components/forms/action-tags/schema'
 
 const ActionsPage = () => {
-  const [updateConfig] = useUpdateAccountMutation();
+  const [updateAccount] = useUpdateAccountMutation();
   const { id } = useParams()
   const currentAccount = useAppSelector(selectAccountById(id!))
   const config = currentAccount?.config
-  // const [isTagsformEnabled, setIsTagsEnabled] = useState(false)
-  console.log(111,currentAccount)
 
   if (!config) return <Spinner />
 
-  async function onActionsSubmit({ people, ...people_config }: AccountsActionsFormValues) {
-    await updateConfig({
-      ...currentAccount,
-      config: {
-        ...config,
-        people,
-        people_config: {
-          ...people_config,
-          users: people_config.users.split(',').map(u => u.trim()),
-        }
-      }
-    }).unwrap()
-    // console.log(people, people_config)
+  async function onAccountSubmit(values: ActionAccountsFormValues) {
+    await handleSubmit({
+      ...(config! || {}),
+      ...AccountFormToDto(values)
+    })
   }
 
-  function onTagsSubmit(values: TagsActionsFormValues) {
-    console.log(values);
+  async function onTagsSubmit(values: ActionTagsFormValues) {
+    await handleSubmit({
+      ...(config! || {}),
+      ...TagFormToDto(values)
+    })
+  }
+
+  async function handleSubmit(config: AccountConfig) {
+    await updateAccount({
+      ...currentAccount,
+      config
+    }).unwrap()
   }
 
   return (
     <>
       <h1 className='text-lg font-bold'>Действия</h1>
       <div className='flex flex-col gap-4'>
-        <AccountsActionsForm onSubmit={onActionsSubmit} data={{ ...config.people_config, people: config.people, users: config.people_config.users?.join(', ') }} />
+        <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} />
       </div>
-      {/* <div className='flex flex-col gap-4 mt-6'>
-        <div className="flex items-center gap-2">
-          <Switch id='AccountsFormEnabled' checked={isTagsformEnabled} onCheckedChange={setIsTagsEnabled} />
-          <Label htmlFor='AccountsFormEnabled'>Хештеги</Label>
-        </div>
-        <TagsActionsForm onSubmit={onTagsSubmit} enabled={isTagsformEnabled} />
-      </div> */}
+      <div>
+        <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} />
+      </div>
     </>
   )
 }

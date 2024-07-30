@@ -1,64 +1,30 @@
 import { useForm } from 'react-hook-form'
-import { pipe, boolean, object, string, type InferOutput, minLength, transform, minValue, number } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
-import Interval from './fields/interval'
-import Toggler from './fields/toggler'
-import Amount from './fields/amount'
+import Interval from '@/components/forms/fields/interval'
+import Toggler from '@/components/forms/fields/toggler'
+import Amount from '@/components/forms/fields/amount'
 import { useEffect, memo } from 'react'
-
-const numberValidation = pipe(
-  number(),
-  minValue(1, 'Значение должно быть больше 0')
-);
-
-const formSchema = object({
-  people: boolean(),
-  users: pipe(string(), minLength(1, 'Поле не может быть пустым')),
-  timeout_from: numberValidation,
-  timeout_to: numberValidation,
-  follow: boolean(),
-  // Posts
-  posts_like: boolean(),
-  posts_timeout_from: numberValidation,
-  posts_timeout_to: numberValidation,
-  posts_amount: numberValidation,
-  // Stories
-  stories_like: boolean(),
-  stories_timeout_from: numberValidation,
-  stories_timeout_to: numberValidation,
-  stories_amount: numberValidation,
-  // Reels
-  reels_like: boolean(),
-  reels_timeout_from: numberValidation,
-  reels_timeout_to: numberValidation,
-  reels_amount: numberValidation,
-})
-
-export type AccountsActionsFormValues = InferOutput<typeof formSchema>;
+import { ActionAccountsSchema, ActionAccountsFormValues } from './schema'
 
 interface AccountsActionsProps {
-  onSubmit: (values: AccountsActionsFormValues) => void;
-  data: AccountsActionsFormValues;
+  onSubmit: (values: ActionAccountsFormValues) => void;
+  data: ActionAccountsFormValues;
 }
 
 const AccountsActionsForm = ({ onSubmit, data }: AccountsActionsProps) => {
-  console.log(222)
-  const form = useForm<AccountsActionsFormValues>({
-    resolver: valibotResolver(formSchema),
+  const form = useForm<ActionAccountsFormValues>({
+    resolver: valibotResolver(ActionAccountsSchema),
     defaultValues: data,
   });
 
-  // useEffect(() => {
-  //   console.log(data)
-  //   form.reset(data);
-  // }, [data]);
-
-  // console.log(form.formState.errors)
+  useEffect(() => {
+    form.reset(data);
+  }, [data]);
 
   const isControlsEnabled = !form.watch('people');
 
@@ -113,7 +79,6 @@ const AccountsActionsForm = ({ onSubmit, data }: AccountsActionsProps) => {
           <Amount name='reels_amount' form={form} disabled={isControlsEnabled} />
         </Toggler>
 
-        {/* <Button type='submit' size={'lg'} className='ml-auto' disabled={!form.formState.isDirty}>Сохранить</Button> */}
         <Button type='submit' size={'lg'} className='ml-auto'>Сохранить</Button>
       </form>
     </Form>

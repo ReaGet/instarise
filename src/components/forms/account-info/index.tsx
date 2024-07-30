@@ -1,21 +1,14 @@
 import { useEffect } from 'react'
-import StatusBadge from '@/components/status-badge';
-import { Textarea } from '@/components/ui/textarea';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { useForm } from 'react-hook-form';
-import { object, string, pipe, ipv4, type InferOutput } from 'valibot'
+import StatusBadge from '@/components/status-badge'
+import { Textarea } from '@/components/ui/textarea'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { useForm } from 'react-hook-form'
 import { valibotResolver } from '@hookform/resolvers/valibot'
-import { Button } from '@/components/ui/button';
-import ProxyInput from '../proxy-input';
-import { Account, useUpdateAccountMutation } from '@/app/services/accountApi';
-import { Spinner } from '../ui/spinner';
-
-const formSchema = object({
-  description: string(),
-  proxy: pipe(string(), ipv4('Введите корректный Прокси')),
-});
-
-type AccountInfoFormValues = InferOutput<typeof formSchema>;
+import { Button } from '@/components/ui/button'
+import ProxyInput from '@/components/proxy-input'
+import { Account, useUpdateAccountMutation } from '@/app/services/accountApi'
+import { Spinner } from '@/components/ui/spinner'
+import { AccountInfoSchema, AccountInfoFormValues} from './schema'
 
 interface SidebarProps {
   data: Account;
@@ -26,7 +19,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
   const [updateAccount, { isLoading }] = useUpdateAccountMutation()
 
   const form = useForm<AccountInfoFormValues>({
-    resolver: valibotResolver(formSchema),
+    resolver: valibotResolver(AccountInfoSchema),
     defaultValues: data
   });
 

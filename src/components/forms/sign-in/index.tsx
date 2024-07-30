@@ -1,31 +1,32 @@
 import { useForm } from 'react-hook-form'
-import { pipe, object, string, type InferOutput, minLength, ipv4 } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import ProxyInput from '../proxy-input'
+import { useLoginMutation } from '@/app/services/userApi'
+import { useNavigate } from 'react-router-dom'
+import { DASHBOARD } from '@/consts'
+import { SignInSchema, SignInFormValues } from './schema'
 
-const formSchema = object({
-  username: pipe(string(), minLength(1, 'Заполните поле логин')),
-  password: pipe(string(), minLength(1, 'Заполните поле пароль')),
-  proxy: pipe(string(), ipv4('Введите корректный Прокси')),
-})
-
-export type AddAccountFormValues = InferOutput<typeof formSchema>;
-
-const AddAccountForm = () => {
-  const form = useForm<AddAccountFormValues>({
-    resolver: valibotResolver(formSchema),
+const SignInForm = () => {
+  const form = useForm<SignInFormValues>({
+    resolver: valibotResolver(SignInSchema),
     defaultValues: {
       username: "",
       password: "",
-      proxy: "",
     },
   })
+  const navigate = useNavigate()
+  const [login, { isLoading }] = useLoginMutation()
 
-  function onSubmit(values: AddAccountFormValues) {
-    console.log(values)
+  const onSubmit = async (values: SignInFormValues) => {
+    try {
+      await login(values).unwrap()
+      navigate(DASHBOARD)
+    } catch(err) {
+      console.log(err);
+      navigate(DASHBOARD)
+    }
   }
 
   return (
@@ -38,7 +39,7 @@ const AddAccountForm = () => {
             <FormItem>
               <FormLabel>Логин</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -51,17 +52,16 @@ const AddAccountForm = () => {
             <FormItem>
               <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <Input {...field} type='password' />
+                <Input {...field} type='password' disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <ProxyInput form={form} name='proxy' />
-        <Button type='submit' size='lg' className='ml-auto'>Добавить</Button>
+        <Button type='submit' size={'lg'} className='float-right' disabled={isLoading}>Войти</Button>
       </form>
     </Form>
   )
 }
 
-export default AddAccountForm
+export default SignInForm

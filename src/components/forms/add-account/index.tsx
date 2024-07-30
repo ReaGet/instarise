@@ -1,39 +1,23 @@
 import { useForm } from 'react-hook-form'
-import { pipe, object, string, type InferOutput, minLength } from 'valibot'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useLoginMutation } from '@/app/services/userApi'
-import { useNavigate } from 'react-router-dom'
-import { DASHBOARD } from '@/consts'
+import ProxyInput from '@/components/proxy-input'
+import { AddAccountSchema, AddAccountFormValues } from './schema'
 
-const formSchema = object({
-  username: pipe(string(), minLength(1, 'Заполните поле логин')),
-  password: pipe(string(), minLength(1, 'Заполните поле логин')),
-})
-
-type SignInFormValues = InferOutput<typeof formSchema>
-
-const SignInForm = () => {
-  const form = useForm<SignInFormValues>({
-    resolver: valibotResolver(formSchema),
+const AddAccountForm = () => {
+  const form = useForm<AddAccountFormValues>({
+    resolver: valibotResolver(AddAccountSchema),
     defaultValues: {
       username: "",
       password: "",
+      proxy: "",
     },
   })
-  const navigate = useNavigate()
-  const [login, { isLoading }] = useLoginMutation()
 
-  const onSubmit = async (values: SignInFormValues) => {
-    try {
-      await login(values).unwrap()
-      navigate(DASHBOARD)
-    } catch(err) {
-      console.log(err);
-      navigate(DASHBOARD)
-    }
+  function onSubmit(values: AddAccountFormValues) {
+    console.log(values)
   }
 
   return (
@@ -46,7 +30,7 @@ const SignInForm = () => {
             <FormItem>
               <FormLabel>Логин</FormLabel>
               <FormControl>
-                <Input {...field} disabled={isLoading} />
+                <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -59,16 +43,17 @@ const SignInForm = () => {
             <FormItem>
               <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <Input {...field} type='password' disabled={isLoading} />
+                <Input {...field} type='password' />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit' size={'lg'} className='float-right' disabled={isLoading}>Войти</Button>
+        <ProxyInput form={form} name='proxy' />
+        <Button type='submit' size='lg' className='ml-auto'>Добавить</Button>
       </form>
     </Form>
   )
 }
 
-export default SignInForm
+export default AddAccountForm
