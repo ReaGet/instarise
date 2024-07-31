@@ -164,4 +164,7 @@ export const {
   useLazyGetAccountDetailsQuery,
   useGetAutoReplyConfigQuery,
   useUpdateAutoReplyConfigMutation,
+  useStartAccountTaskMutation,
+  useStopAccountTaskMutation,
+  usePauseAccountTaskMutation,
 } = accountApi;

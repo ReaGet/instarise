@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   Table,
   TableBody,
@@ -14,34 +15,36 @@ import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 import { useState } from 'react'
 import type { Account } from '@/app/services/accountApi'
+import { useActionsContext } from '@/app/providers/actions-context'
 
 interface Props {
   accounts: Account[]
 }
 
 const AccountsTable = ({ accounts = [] }: Props) => {
-  const [selectedRows, setSelectedRows] = useState<string[]>([]);
+  const { isAnyAccountSelected, setAccounts } = useActionsContext()
+  const [selectedRows, setSelectedRows] = useState<string[]>([])
 
   function toggleAllCheckbox(value: boolean | string) {
-    if (value) setSelectedRows(accounts.map((a) => a.id));
-    else setSelectedRows([]);
+    if (value) setAccounts(accounts.map((a) => a.id));
+    else setAccounts([]);
   }
 
   function toggleCheckbox(value: boolean | string, id: string) {
-    if (!value) setSelectedRows(selectedRows.filter(s => s !== id));
-    else setSelectedRows([...selectedRows, id])
+    if (!value) setAccounts(selectedRows.filter(s => s !== id));
+    else setAccounts([...selectedRows, id])
   }
   
   return (
     <Table className='mt-8'>
-      { !accounts.length && (
+      { accounts.length === 0 && (
         <TableCaption key='caption'>Вы еще не добавили аккунты</TableCaption>
       )}
       <TableHeader>
         <TableRow>
           <TableHead className='w-16'>
             <Checkbox
-              checked={selectedRows.length === accounts.length}
+              checked={selectedRows.length === accounts.length && accounts.length > 0}
               onCheckedChange={toggleAllCheckbox}
             />
           </TableHead>
