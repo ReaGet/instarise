@@ -9,30 +9,88 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { Account, usePauseAccountTaskMutation, useRemoveAccountMutation, useStartAccountTaskMutation, useStopAccountTaskMutation } from '@/app/services/accountApi';
 
 export type ActionType = 'start' | 'stop' | 'remove' | 'pause'
 
 export interface ActionsContextType {
-  onAction: (action: ActionType) => void;
-  setAccounts: (accountsIds: string[]) => void;
+  onAction: (action: ActionType, accountId?: string) => void;
+  setAccounts: (props: SelectedAccountsType) => void;
   isAnyAccountSelected: boolean;
+  selectedAccounts: string[];
 }
+
+type SelectAccountAll = {
+  type: 'all';
+  accounts: Account[];
+  payload: [boolean];
+}
+
+type SelectAccountSingle = {
+  type: 'single';
+  accounts: Account[];
+  payload: [boolean, string];
+}
+
+type SelectedAccountsType = SelectAccountAll | SelectAccountSingle
 
 export const ActionsContext = createContext<ActionsContextType | null>(null)
 
 const ActionsProvider = ({ children }: { children: React.ReactNode }) => {
+  const [removeAccount] = useRemoveAccountMutation();
+  const [startTask] = useStartAccountTaskMutation();
+  const [pauseTask] = usePauseAccountTaskMutation();
+  const [stopTask] = useStopAccountTaskMutation();
+
   const [isOpen, setIsOpen] = useState(false)
   const [selectedAccounts, setSelectedAccounts] = useState<string[]>([])
+  const [removeAccountIds, setRemoveAccountIds] = useState<string[]>([])
+
+  function getAcountIds(accountId?: string): string[] {
+    if (!accountId) return selectedAccounts
+    return [accountId]
+  }
+
+  async function remove() {
+    await removeAccount(removeAccountIds).unwrap()
+    setRemoveAccountIds([])
+  }
 
   const context = {
-    onAction: (action: ActionType) => {
-      if(action === 'remove') {
-        setIsOpen(true)
+    onAction: async (action: ActionType, accountId?: string) => {
+      const ids = getAcountIds(accountId)
+
+      switch(action) {
+        case 'remove':
+          setRemoveAccountIds(ids)
+          setIsOpen(true)
+        break;
+        case 'start':
+          await startTask(ids).unwrap()
+        break;
+        case 'pause':
+          await pauseTask(ids).unwrap()
+        break;
+        case 'stop':
+          await stopTask(ids).unwrap()
+        break;
       }
     },
-    setAccounts: (accountIds: string[]) => {
-      setSelectedAccounts(accountIds);
+    setAccounts: ({ type, payload, accounts }: SelectedAccountsType) => {
+      const [value, accountId = ""] = payload
+
+      switch(type) {
+        case 'all':
+          if (value) setSelectedAccounts(accounts.map((a) => a.id))
+          else setSelectedAccounts([])
+        break;
+        case 'single':
+          if (!value) setSelectedAccounts(selectedAccounts.filter(s => s !== accountId))
+          else setSelectedAccounts([...selectedAccounts, accountId])
+        break;
+      }
     },
+    selectedAccounts,
     isAnyAccountSelected: selectedAccounts?.length > 0
   }
 
@@ -49,7 +107,7 @@ const ActionsProvider = ({ children }: { children: React.ReactNode }) => {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Отмена</AlertDialogCancel>
-            <AlertDialogAction>Подтвердить</AlertDialogAction>
+            <AlertDialogAction onClick={() => remove()}>Подтвердить</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

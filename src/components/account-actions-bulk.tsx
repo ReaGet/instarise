@@ -12,7 +12,7 @@ import {
 import { useState } from 'react'
 
 const AccountBulkActions = () => {
-  const { onAction, isAnyAccountSelected } = useActionsContext()
+  const { onAction, selectedAccounts } = useActionsContext()
   const [currentAction, setCurrentAction] = useState('')
 
   return (
@@ -31,7 +31,7 @@ const AccountBulkActions = () => {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Button size='sm' onClick={() => onAction(currentAction as ActionType)} disabled={isAnyAccountSelected}>Применить</Button>
+      <Button size='sm' onClick={() => onAction(currentAction as ActionType)} disabled={selectedAccounts.length === 0 || currentAction === ''}>Применить</Button>
     </div>
   )
 }

@@ -35,7 +35,7 @@ const AccountActions = ({ accountId, status }: ActionsProps) => {
         { filteredActions.map(({value, text}) => {
           return (
             <DropdownMenuItem className='p-0' key={value}>
-              <Button variant='ghost' size='sm' className='justify-start w-full' onClick={() => onAction(value)}>{text}</Button>
+              <Button variant='ghost' size='sm' className='justify-start w-full' onClick={() => onAction(value, accountId)}>{text}</Button>
             </DropdownMenuItem>
           )
         })}

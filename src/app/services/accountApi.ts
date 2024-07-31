@@ -86,13 +86,6 @@ export const accountApi = api.injectEndpoints({
         method: 'GET',
       })
     }),
-    deleteAccount: builder.mutation<string, string>({
-      query: (accountId) => ({
-        url: `${ACCOUNT_URL}/operations/${accountId}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Account']
-    }),
     updateAccount: builder.mutation<Account, Partial<Account>>({
       query: ({ id: accountId, ...body }) => ({
         url: `${ACCOUNT_URL}/operations/${accountId}`,
@@ -129,11 +122,19 @@ export const accountApi = api.injectEndpoints({
       invalidatesTags: ['Account']
     }),
     pauseAccountTask: builder.mutation<string[], string[]>({
-      query: accountTaskQuery('/mixed/tasks/pause'),
+      query: accountTaskQuery('/tasks/pause'),
       invalidatesTags: ['Account']
     }),
     stopAccountTask: builder.mutation<string[], string[]>({
-      query: accountTaskQuery('/mixed/tasks/stop'),
+      query: accountTaskQuery('/tasks/stop'),
+      invalidatesTags: ['Account']
+    }),
+    removeAccount: builder.mutation<string, string[]>({
+      query: (accountIds) => ({
+        url: `${ACCOUNT_URL}/operations`,
+        method: 'DELETE',
+        body: accountIds
+      }),
       invalidatesTags: ['Account']
     }),
     updateAccountConfig: builder.mutation<string, { accountId: string, config: AccountConfig }>({
@@ -158,7 +159,7 @@ export const accountApi = api.injectEndpoints({
 export const {
   useGetAllAccountsQuery,
   useGetAccountByIdQuery,
-  useDeleteAccountMutation,
+  useRemoveAccountMutation,
   useUpdateAccountMutation,
   useGetAccountDetailsQuery,
   useLazyGetAccountDetailsQuery,

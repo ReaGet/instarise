@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Table,
   TableBody,
@@ -13,7 +12,6 @@ import AccountActions from '@/components/account-actions'
 import StatusBadge from '@/components/status-badge'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
-import { useState } from 'react'
 import type { Account } from '@/app/services/accountApi'
 import { useActionsContext } from '@/app/providers/actions-context'
 
@@ -22,17 +20,22 @@ interface Props {
 }
 
 const AccountsTable = ({ accounts = [] }: Props) => {
-  const { isAnyAccountSelected, setAccounts } = useActionsContext()
-  const [selectedRows, setSelectedRows] = useState<string[]>([])
+  const { selectedAccounts, setAccounts } = useActionsContext()
 
-  function toggleAllCheckbox(value: boolean | string) {
-    if (value) setAccounts(accounts.map((a) => a.id));
-    else setAccounts([]);
+  function toggleAllCheckbox(value: boolean) {
+    setAccounts({
+      type: 'all',
+      accounts,
+      payload: [value]
+    })
   }
 
-  function toggleCheckbox(value: boolean | string, id: string) {
-    if (!value) setAccounts(selectedRows.filter(s => s !== id));
-    else setAccounts([...selectedRows, id])
+  function toggleCheckbox(value: boolean, id: string) {
+    setAccounts({
+      type: 'single',
+      accounts,
+      payload: [value, id]
+    })
   }
   
   return (
@@ -44,7 +47,7 @@ const AccountsTable = ({ accounts = [] }: Props) => {
         <TableRow>
           <TableHead className='w-16'>
             <Checkbox
-              checked={selectedRows.length === accounts.length && accounts.length > 0}
+              checked={selectedAccounts.length === accounts.length && accounts.length > 0}
               onCheckedChange={toggleAllCheckbox}
             />
           </TableHead>
@@ -62,8 +65,8 @@ const AccountsTable = ({ accounts = [] }: Props) => {
             <TableRow key={a.id}>
               <TableCell>
                 <Checkbox
-                  checked={selectedRows.indexOf(a.id) > -1}
-                  onCheckedChange={(value) => toggleCheckbox(value, a.id)}
+                  checked={selectedAccounts.indexOf(a.id) > -1}
+                  onCheckedChange={(value) => toggleCheckbox(Boolean(value), a.id)}
                 />
               </TableCell>
               <TableCell className='font-bold'>

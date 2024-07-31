@@ -33,7 +33,7 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
 export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithReauth,
-  refetchOnMountOrArgChange: true,
+  // refetchOnMountOrArgChange: true,
   tagTypes: ['Account'],
   endpoints: () => ({})
 })
