@@ -70,7 +70,7 @@ const accountTaskQuery = (url: string) => {
   })
 }
 
-// TODO: разделить апи на: Работа с конфигами, работа с аккантами, работа с автоответом
+// TODO: разделить апи на: Работа с конфигами, работа с аккантами, работа с автоответом, работа с тасками
 export const accountApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllAccounts: builder.query<Account[], void>({

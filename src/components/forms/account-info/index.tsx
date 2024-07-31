@@ -49,7 +49,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
             </FormItem>
           )}
         />
-        <ProxyInput form={form} name='proxy' />
+        <ProxyInput form={form} name='proxy' className='flex-col' />
         <Button type='submit' size='sm' className='ml-auto w-24' disabled={isLoading}>
           { isLoading
             ? <Spinner className='w-6 h-6 text-white' />
