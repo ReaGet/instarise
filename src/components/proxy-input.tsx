@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import type { FieldValues, Path, useForm } from 'react-hook-form'
@@ -58,7 +58,8 @@ const useProxy = () => {
 }
 
 const ProxyInput = <T extends FieldValues>({ form, name, className = '' }: ProxyProps<T>) => {
-  const { state, setStatus, reset } = useProxy();
+  const { state, setStatus, reset } = useProxy()
+  const [proxyType, setProxyType] = useState('socks5')
 
   const proxyValue = form.watch(name);
   let isValidProxyValue = false;
@@ -96,7 +97,7 @@ const ProxyInput = <T extends FieldValues>({ form, name, className = '' }: Proxy
       <FormLabel>Прокси</FormLabel>
       <div className={cn('flex gap-2', className)}>
         <div className="w-[120px]">
-          <Select>
+          <Select onValueChange={setProxyType} value={proxyType}>
             <SelectTrigger>
               <SelectValue placeholder="Тип прокси" />
             </SelectTrigger>
