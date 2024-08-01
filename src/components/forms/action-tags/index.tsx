@@ -13,9 +13,10 @@ import { ActionTagsSchema, ActionTagsFormValues } from './schema'
 interface TagsActionsProps {
   onSubmit: (values: ActionTagsFormValues) => void;
   data: ActionTagsFormValues
+  disabled: boolean;
 }
 
-const TagsActionsForm = ({ onSubmit, data }: TagsActionsProps) => {
+const TagsActionsForm = ({ onSubmit, data, disabled }: TagsActionsProps) => {
   const form = useForm<ActionTagsFormValues>({
     resolver: valibotResolver(ActionTagsSchema),
     defaultValues: data,
@@ -25,7 +26,7 @@ const TagsActionsForm = ({ onSubmit, data }: TagsActionsProps) => {
     form.reset(data);
   }, [data]);
 
-  const isControlsEnabled = !form.watch('tags');
+  const isControlsDisabled = !form.watch('tags') || disabled;
 
   return (
     <Form {...form}>
@@ -37,7 +38,7 @@ const TagsActionsForm = ({ onSubmit, data }: TagsActionsProps) => {
             <FormItem>
               <FormControl>
                 <div className="flex items-center gap-2">
-                  <Switch id={field.name} name={field.name} checked={field.value} onCheckedChange={field.onChange} />
+                  <Switch id={field.name} name={field.name} checked={field.value} onCheckedChange={field.onChange} disabled={disabled} />
                   <Label htmlFor={field.name}>Теги</Label>
                 </div>
               </FormControl>
@@ -52,14 +53,14 @@ const TagsActionsForm = ({ onSubmit, data }: TagsActionsProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea rows={8} {...field} disabled={isControlsEnabled} />
+                <Textarea rows={8} {...field} disabled={isControlsDisabled} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Interval fromName='timeout_from' toName='timeout_to' form={form} disabled={isControlsEnabled} />
+        <Interval fromName='timeout_from' toName='timeout_to' form={form} disabled={isControlsDisabled} />
 
         <FormField
           control={form.control}
@@ -68,14 +69,14 @@ const TagsActionsForm = ({ onSubmit, data }: TagsActionsProps) => {
             <FormItem>
               <FormLabel>Глубина выполнения</FormLabel>
               <FormControl>
-                <Input type='number' {...field} disabled={isControlsEnabled} className='max-w-[200px]' />
+                <Input type='number' {...field} disabled={isControlsDisabled} className='max-w-[200px]' />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type='submit' size={'lg'} className='ml-auto'>Сохранить</Button>
+        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled}>Сохранить</Button>
       </form>
     </Form>
   )

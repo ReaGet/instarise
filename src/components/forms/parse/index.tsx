@@ -12,10 +12,11 @@ import { Label } from '@/components/ui/label'
 
 interface ParseProps {
   onSubmit: (values: ParseFormValues) => void;
-  data: ParseFormValues
+  data: ParseFormValues;
+  disabled: boolean;
 }
 
-const ParseForm = ({ onSubmit, data }: ParseProps) => {
+const ParseForm = ({ onSubmit, data, disabled }: ParseProps) => {
   const form = useForm<ParseFormValues>({
     resolver: valibotResolver(ParseSchema),
     defaultValues: data,
@@ -25,7 +26,7 @@ const ParseForm = ({ onSubmit, data }: ParseProps) => {
     form.reset(data);
   }, [data]);
 
-  const isControlsEnabled = !form.watch('parsing');
+  const isControlsDisabled = !form.watch('parsing') || disabled;
 
   return (
     <Form {...form}>
@@ -37,7 +38,7 @@ const ParseForm = ({ onSubmit, data }: ParseProps) => {
             <FormItem>
               <FormControl>
                 <div className="flex items-center gap-2">
-                  <Switch id={field.name} name={field.name} checked={field.value} onCheckedChange={field.onChange} />
+                  <Switch id={field.name} name={field.name} checked={field.value} onCheckedChange={field.onChange} disabled={disabled} />
                   <Label htmlFor={field.name}>Теги</Label>
                 </div>
               </FormControl>
@@ -52,22 +53,22 @@ const ParseForm = ({ onSubmit, data }: ParseProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea rows={8} {...field} disabled={isControlsEnabled} />
+                <Textarea rows={8} {...field} disabled={isControlsDisabled} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         
-        <Toggler title='Подписчики' name='followers' form={form} disabled={isControlsEnabled}>
-          <Amount name='followers_amount' form={form} disabled={isControlsEnabled} />
+        <Toggler title='Подписчики' name='followers' form={form} disabled={isControlsDisabled}>
+          <Amount name='followers_amount' form={form} disabled={isControlsDisabled} />
         </Toggler>
 
-        <Toggler title='Подписки' name='followings' form={form} disabled={isControlsEnabled}>
-          <Amount name='followings_amount' form={form} disabled={isControlsEnabled} />
+        <Toggler title='Подписки' name='followings' form={form} disabled={isControlsDisabled}>
+          <Amount name='followings_amount' form={form} disabled={isControlsDisabled} />
         </Toggler>
 
-        <Button type='submit' size={'lg'} className='ml-auto'>Сохранить</Button>
+        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled}>Сохранить</Button>
       </form>
     </Form>
   )

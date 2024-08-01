@@ -41,8 +41,8 @@ const ActionsPage = () => {
   return (
     <>
       <h1 className='text-lg font-bold'>Действия</h1>
-      <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} />
-      <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} />
+      <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} disabled={currentAccount.status === 'working'} />
+      <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} disabled={currentAccount.status === 'working'} />
     </>
   )
 }
