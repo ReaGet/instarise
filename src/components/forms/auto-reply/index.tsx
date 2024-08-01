@@ -4,8 +4,6 @@ import { useForm } from 'react-hook-form'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Button } from '@/components/ui/button'
 import { AutoReplySchema, AutoReplyFormValues } from './schema'
-import { Switch } from '@/components/ui/switch'
-import { Label } from '@/components/ui/label'
 import { useEffect } from 'react'
 import Interval from '@/components/forms/fields/interval'
 
@@ -35,7 +33,7 @@ const AutoReplyForm = ({ onSubmit, data }: AutoReplyProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea rows={8} {...field} />
+                <Textarea rows={8} {...field} placeholder='{ Сообщение1 | Сообщени2 | Сообщение3 }'/>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -43,7 +41,7 @@ const AutoReplyForm = ({ onSubmit, data }: AutoReplyProps) => {
         />
 
         <Interval fromName='timeout_from' toName='timeout_to' form={form} >
-          Сколько времени прошло с последнего сообщения (в секундах)
+          Сколько времени прошло с последнего сообщения (в днях)
         </Interval>
 
         <Button type='submit' size={'lg'} className='ml-auto'>Сохранить</Button>

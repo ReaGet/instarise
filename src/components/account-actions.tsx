@@ -9,7 +9,7 @@ import { Ellipsis } from 'lucide-react'
 import { ACCOUNT, ACCOUNT_ACTIONS } from '@/consts'
 import { Link } from 'react-router-dom'
 import { AccountStatus } from '@/app/types'
-import { ActionType, useActionsContext } from '@/app/providers/actions-context'
+import { useActionsContext } from '@/app/providers/actions-context'
 
 interface ActionsProps {
   accountId: string;

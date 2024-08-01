@@ -1,4 +1,4 @@
-import { pipe, object, string, type InferOutput, minLength, boolean, number } from 'valibot'
+import { pipe, object, string, type InferOutput, minLength, number } from 'valibot'
 
 export const AutoReplySchema = object({
   text: pipe(string(), minLength(1, 'Поле не может быть пустым')),
