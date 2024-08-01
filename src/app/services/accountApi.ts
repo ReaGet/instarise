@@ -117,6 +117,24 @@ export const accountApi = api.injectEndpoints({
         },
       })
     }),
+    getAutoReplyStatus: builder.query<{ status: boolean }[], string>({
+      query: (accountId) => ({
+        url: `${ACCOUNT_URL}/autoReplyStatus/?client_id=${accountId}`,
+        method: 'GET',
+      }),
+    }),
+    startAutoReply: builder.mutation<string, string>({
+      query: (accountId) => ({
+        url: `${ACCOUNT_URL}/autoReplyStatus/?client_id=${accountId}`,
+        method: 'POST',
+      }),
+    }),
+    stopAutoReply: builder.mutation<string, string>({
+      query: (accountId) => ({
+        url: `${ACCOUNT_URL}/autoReplyStatus/?client_id=${accountId}`,
+        method: 'DELETE',
+      }),
+    }),
     startAccountTask: builder.mutation<string[], string[]>({
       query: accountTaskQuery('/mixed/tasks/start'),
       invalidatesTags: ['Account']
@@ -163,9 +181,12 @@ export const {
   useUpdateAccountMutation,
   useGetAccountDetailsQuery,
   useLazyGetAccountDetailsQuery,
-  useGetAutoReplyConfigQuery,
-  useUpdateAutoReplyConfigMutation,
   useStartAccountTaskMutation,
   useStopAccountTaskMutation,
   usePauseAccountTaskMutation,
+  useGetAutoReplyConfigQuery,
+  useUpdateAutoReplyConfigMutation,
+  useGetAutoReplyStatusQuery,
+  useStartAutoReplyMutation,
+  useStopAutoReplyMutation,
 } = accountApi;

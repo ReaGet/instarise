@@ -25,27 +25,9 @@ const AutoReplyForm = ({ onSubmit, data }: AutoReplyProps) => {
     form.reset(data);
   }, [data]);
 
-  const isControlsEnabled = !form.watch('autoReply');
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
-        <FormField
-          control={form.control}
-          name='autoReply'
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <div className="flex items-center gap-2">
-                  <Switch id={field.name} name={field.name} checked={field.value} onCheckedChange={field.onChange} />
-                  <Label htmlFor={field.name}>Автоответ</Label>
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
         <FormDescription className='-mb-2'>Входящие сообщения проверяются каждые 2 минуты</FormDescription>
         <FormField
           control={form.control}
@@ -53,14 +35,14 @@ const AutoReplyForm = ({ onSubmit, data }: AutoReplyProps) => {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea rows={8} {...field} disabled={isControlsEnabled} />
+                <Textarea rows={8} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Interval fromName='timeout_from' toName='timeout_to' form={form} disabled={isControlsEnabled}>
+        <Interval fromName='timeout_from' toName='timeout_to' form={form} >
           Сколько времени прошло с последнего сообщения (в секундах)
         </Interval>
 
