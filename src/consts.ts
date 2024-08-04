@@ -1,9 +1,10 @@
 import { ActionType } from "./app/providers/actions-context";
 
 export const BASE_URL = '/instarise/';
-export const API_URL = 'http://localhost:3000/';
+export const API_URL = 'http://185.125.231.131/';
 
 export const SIGNIN = `${BASE_URL}sign-in`;
+export const SIGNUP = `${BASE_URL}sign-up`;
 export const DASHBOARD = `${BASE_URL}`;
 export const ACCOUNT = `${BASE_URL}account`;
 

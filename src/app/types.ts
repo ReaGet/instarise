@@ -15,4 +15,17 @@ export interface ReportsTableItem {
   hasErrors?: boolean;
 }
 
+type ErrorDetailType = {
+  loc: string[],
+  msg: string,
+  type: string
+}
+
+export type ErrorRepsonseType = {
+  status: number;
+  data: {
+    detail: ErrorDetailType[];
+  };
+}
+
 export type AccountStatus = 'working' | 'stop' | 'pause' | 'finish';

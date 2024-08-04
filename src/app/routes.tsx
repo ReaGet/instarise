@@ -1,7 +1,8 @@
 import HomePage from '@/pages/page'
 import SignIn from '@/pages/sign-in/page'
+import SignUp from '@/pages/sign-up/page'
 import type { RouteObject } from 'react-router-dom'
-import { ACCOUNT, DASHBOARD, SIGNIN } from '@/consts'
+import { ACCOUNT, DASHBOARD, SIGNIN, SIGNUP } from '@/consts'
 import ErrorPage from '@/pages/error-page'
 import AccountLayout from '@/pages/account/layout'
 import MainLayout from '@/pages/layout'
@@ -23,6 +24,11 @@ export const routes: RouteObject[] = [
   {
     path: SIGNIN,
     element: <SignIn />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: SIGNUP,
+    element: <SignUp />,
     errorElement: <ErrorPage />,
   },
   {

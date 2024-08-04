@@ -4,22 +4,26 @@ import { API_URL } from '@/consts'
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
+  credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).userSlice.token || localStorage.getItem("token")
+    const token = (getState() as RootState).userSlice.access_token || localStorage.getItem("token")
+    console.log(token)
 
     if (token) {
-      headers.set('authorization', `Bearer ${token}`)
+      headers.set('Authorization', `Bearer ${token}`)
     }
+    headers.set('Set-Cookie', `access_token=Bearer ${token}`)
 
     return headers
   },
 })
 
 const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
-  let result = await baseQuery(args, api, extraOptions)
+  const result = await baseQuery(args, api, extraOptions)
 
-  // if (result.error?.status === 403) {
-  //   const refreshResult = await baseQuery(`/refresh`, api, extraOptions)
+  // if (result.error?.status === 401) {
+  //   const refreshResult = await baseQuery(`/auth/refresh`, api, extraOptions)
+  //   console.log(222, refreshResult)
 
   //   if (refreshResult?.data) {
   //     const user = api.getState()?.auth?.user

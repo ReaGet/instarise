@@ -3,46 +3,35 @@ import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useLoginMutation } from '@/app/services/userApi'
+import { useSignupMutation } from '@/app/services/userApi'
 import { Link, useNavigate } from 'react-router-dom'
-import { DASHBOARD, SIGNUP } from '@/consts'
-import { SignInSchema, SignInFormValues } from './schema'
+import { SIGNIN } from '@/consts'
+import { SignUpSchema, SignUpFormValues } from './schema'
 import { ErrorRepsonseType } from '@/app/types'
-import { useHandleError } from '@/hooks/useHandleError'
-import { useCookies } from 'react-cookie'
 
-const SignInForm = () => {
-
-  const form = useForm<SignInFormValues>({
-    resolver: valibotResolver(SignInSchema),
+const SignUpForm = () => {
+  const form = useForm<SignUpFormValues>({
+    resolver: valibotResolver(SignUpSchema),
     defaultValues: {
       username: "",
       password: "",
     },
   })
-
-  const toast = useHandleError()
   const navigate = useNavigate()
-  const [login, { isLoading }] = useLoginMutation()
+  const [signup, { isLoading }] = useSignupMutation()
 
-  const onSubmit = async (values: SignInFormValues) => {
+  const onSubmit = async (values: SignUpFormValues) => {
     try {
-      await login(values).unwrap()
-      
-      navigate(DASHBOARD)
+      await signup(values).unwrap()
+      navigate(SIGNIN)
     } catch(error) {
-      console.log(2222, error)
-      const { status, data = {} } = error as ErrorRepsonseType
-      if (typeof data === 'object' && 'detail' in data) {
-        data!.detail?.forEach(d => {
-          const [_, field] = d.loc as [string, keyof SignInFormValues]
-          form.setError(field, {
-            message: 'Поле заполнено неверно'
-          })
+      console.log(error)
+      const { status, data: { detail } } = error as ErrorRepsonseType
+      if (status === 409) {
+        form.setError('username', {
+          message: 'Пользователь уже зарегистрирован'
         })
       }
-      console.log(status)
-      if (status !== 422) toast()
     }
   }
 
@@ -76,12 +65,12 @@ const SignInForm = () => {
           )}
         />
         <div className='flex items-center justify-between'>
-          <Link to={SIGNUP} className='text-sm hover:underline'>Нет аккаунта?</Link>
-          <Button type='submit' size={'lg'} className='float-right' disabled={isLoading}>Войти</Button>
+          <Link to={SIGNIN} className='text-sm hover:underline'>Есть аккаунт?</Link>
+          <Button type='submit' size={'lg'} className='float-right' disabled={isLoading}>Зарегистрироваться</Button>
         </div>
       </form>
     </Form>
   )
 }
 
-export default SignInForm
+export default SignUpForm
