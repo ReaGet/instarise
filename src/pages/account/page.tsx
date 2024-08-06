@@ -9,7 +9,7 @@ const AccountPage = () => {
   return (
     <>
       <h1 className='text-lg font-bold'>Отчет</h1>
-      <ReportsTable reports={data} />
+      <ReportsTable reports={data || []} />
     </>
   )
 }

@@ -1,5 +1,6 @@
-import { toFormData } from '@/lib/utils';
+import { toFormData } from '@/lib/utils'
 import { api } from './api'
+import type { UserType } from '@/app/features/user/userSlice'
 
 type LoginCredentials = {
   username: string;
@@ -32,7 +33,7 @@ export const userApi = api.injectEndpoints({
         method: 'POST'
       })
     }),
-    signup: builder.mutation<{}, LoginCredentials>({
+    signup: builder.mutation<object, LoginCredentials>({
       query: (userData) => ({
         url: `${AUTH_URL}/register`,
         method: 'POST',
@@ -45,7 +46,7 @@ export const userApi = api.injectEndpoints({
         method: 'POST'
       })
     }),
-    me: builder.query<void, void>({
+    me: builder.query<UserType, void>({
       query: () => ({
         url: `${AUTH_URL}/me`,
         method: 'GET',

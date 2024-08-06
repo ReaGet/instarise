@@ -1,66 +1,9 @@
-import { AccountStatus } from '../types';
+import { Account, AccountConfig } from '@/app/types';
 import { api } from './api'
 import { AutoReplyFormValues } from '@/components/forms/auto-reply/schema';
 
-// const ACCOUNT_URL = '/clients'
-const ACCOUNT_URL = ''
-
-export type Account = {
-  id: string;
-  username: string;
-  photo: string;
-  description: string;
-  config: AccountConfig;
-  auto_reply_id: string;
-  user_id: string;
-  group_id: string;
-  status: AccountStatus;
-  proxy: string;
-}
-
-export type AccountConfig = {
-  people: boolean,
-  people_config: {
-    timeout_from: number,
-    timeout_to: number,
-    posts_timeout_from: number,
-    posts_timeout_to: number,
-    reels_timeout_from: number,
-    reels_timeout_to: number,
-    stories_timeout_from: number,
-    stories_timeout_to: number,
-    follow: boolean,
-    stories_like: boolean,
-    stories_amount: number,
-    posts_like: boolean,
-    posts_amount: number,
-    reels_like: boolean,
-    reels_amount: number,
-    users: string[]
-  },
-  hashtags: boolean,
-  hashtags_config: {
-    timeout_from: number,
-    timeout_to: number,
-    hashtags: string[],
-    amount: number
-  },
-  parsing: boolean,
-  parsing_config: {
-    users: string[],
-    followers: boolean,
-    followers_amount: number,
-    followings: boolean,
-    followings_amount: number
-  }
-}
-
-export type AutoReplyConfig = {
-  text: string;
-  autoReply: boolean;
-  timeout_from: number;
-  timeout_to: number;
-}
+const ACCOUNT_URL = '/clients'
+// const ACCOUNT_URL = ''
 
 const accountTaskQuery = (url: string) => {
   return (ids: string[]) => ({
@@ -73,12 +16,19 @@ const accountTaskQuery = (url: string) => {
 // TODO: разделить апи на: Работа с конфигами, работа с аккантами, работа с автоответом, работа с тасками
 export const accountApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getAllAccounts: builder.query<Account[], void>({
+    getAllAccounts: builder.query<Account[] | null, void>({
       query: () => ({
         url: `${ACCOUNT_URL}/operations/`,
         method: 'GET',
       }),
       providesTags: ['Account'],
+    }),
+    checkProxy: builder.query<boolean, string>({
+      query: (proxy: string) => ({
+        url: `${ACCOUNT_URL}/proxy`,
+        method: 'POST',
+        body: proxy
+      }),
     }),
     getAccountById: builder.query<Account, string>({
       query: (accountId) => ({
@@ -176,6 +126,7 @@ export const accountApi = api.injectEndpoints({
 
 export const {
   useGetAllAccountsQuery,
+  useLazyGetAllAccountsQuery,
   useGetAccountByIdQuery,
   useRemoveAccountMutation,
   useUpdateAccountMutation,
@@ -189,4 +140,5 @@ export const {
   useGetAutoReplyStatusQuery,
   useStartAutoReplyMutation,
   useStopAutoReplyMutation,
+  useLazyCheckProxyQuery,
 } = accountApi;

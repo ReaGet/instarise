@@ -12,12 +12,17 @@ const AddAccountForm = () => {
     defaultValues: {
       username: "",
       password: "",
-      proxy: "",
     },
   })
 
+  let proxy = ''
+
+  function handleProxyChange(newValue: string) {
+    proxy = newValue
+  }
+
   function onSubmit(values: AddAccountFormValues) {
-    console.log(values)
+    console.log({ ...values, proxy })
   }
 
   return (
@@ -49,7 +54,7 @@ const AddAccountForm = () => {
             </FormItem>
           )}
         />
-        <ProxyInput form={form} name='proxy' />
+        <ProxyInput onChange={handleProxyChange} />
         <Button type='submit' size='lg' className='ml-auto'>Добавить</Button>
       </form>
     </Form>

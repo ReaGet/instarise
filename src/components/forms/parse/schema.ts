@@ -1,6 +1,6 @@
 import { pipe, boolean, object, string, type InferOutput, minLength, number } from 'valibot'
 import { mapConfigValues } from '../utils';
-import { AccountConfig } from '@/app/services/accountApi';
+import type { AccountConfig } from '@/app/types';
 
 export const ParseSchema = object({
   parsing: boolean(),

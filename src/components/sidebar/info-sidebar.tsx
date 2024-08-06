@@ -1,5 +1,5 @@
-import { Account } from '@/app/services/accountApi';
-import AccountInfoForm from '@/components/forms/account-info';
+import type { Account } from '@/app/types'
+import AccountInfoForm from '@/components/forms/account-info'
 
 interface SidebarProps {
   data: Account | undefined;

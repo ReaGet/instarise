@@ -1,4 +1,4 @@
-import type { AccountConfig } from '@/app/services/accountApi';
+import type { AccountConfig } from '@/app/types';
 import { pipe, object, number, string, type InferOutput, minLength, boolean } from 'valibot'
 import { mapConfigValues } from '../utils';
 

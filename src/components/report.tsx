@@ -1,4 +1,4 @@
-import { Account } from '@/app/services/accountApi';
+import type { Account } from '@/app/types'
 import { useNumberFormatter } from '@/hooks/useNumberFormatter';
 import { cn } from '@/lib/utils';
 
@@ -28,7 +28,7 @@ const Report = ({ className = '', accounts = [] }: Props) => {
     turnedOffCount = 0,
     pausedCount = 0;
 
-  accounts.forEach(a => {
+  accounts?.forEach(a => {
     switch(a.status) {
       case 'working': turnedOnCount++; break;
       case 'stop': turnedOffCount++; break;
@@ -38,7 +38,7 @@ const Report = ({ className = '', accounts = [] }: Props) => {
 
   return (
     <div className={cn('flex flex-wrap gap-8', className)}>
-      <ReportBlock title='Всего аккаунтов' value={accounts.length} />
+      <ReportBlock title='Всего аккаунтов' value={accounts?.length} />
       {turnedOnCount > 0 && <ReportBlock title='Включено' value={turnedOnCount} />}
       {turnedOffCount > 0 && <ReportBlock title='Отключено' value={turnedOffCount} />}
       {pausedCount > 0 && <ReportBlock title='На паузе' value={pausedCount} />}

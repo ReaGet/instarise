@@ -8,12 +8,11 @@ import { useGetAllAccountsQuery } from '@/app/services/accountApi';
 
 const MainLayout = () => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  useGetAllAccountsQuery();
 
   if (!isAuthenticated) {
     return <Navigate to={SIGNIN} />
   }
-
-  useGetAllAccountsQuery();
 
   return (
     <>

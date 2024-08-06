@@ -7,18 +7,16 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).userSlice.access_token || localStorage.getItem("token")
-    console.log(token)
 
     if (token) {
       headers.set('Authorization', `Bearer ${token}`)
     }
-    headers.set('Set-Cookie', `access_token=Bearer ${token}`)
 
     return headers
   },
 })
 
-const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: {}) => {
+const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: object) => {
   const result = await baseQuery(args, api, extraOptions)
 
   // if (result.error?.status === 401) {

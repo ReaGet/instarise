@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { accountApi, type Account } from "@/app/services/accountApi"
-import { RootState } from "@/app/store";
+import { createSlice } from '@reduxjs/toolkit'
+import { accountApi } from '@/app/services/accountApi'
+import type { Account } from '@/app/types'
+import { RootState } from '@/app/store'
 
 interface InitialState {
   accounts: Account[];
@@ -17,7 +18,7 @@ const accountSlice = createSlice({
   extraReducers: (builder) => {
     builder
     .addMatcher(accountApi.endpoints.getAllAccounts.matchFulfilled, (state, action) => {
-      state.accounts = action.payload;
+      state.accounts = action.payload || [];
     })
   }
 })

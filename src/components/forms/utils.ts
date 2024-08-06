@@ -1,6 +1,7 @@
-import type { AccountConfig } from "@/app/services/accountApi";
+import type { AccountConfig } from '@/app/types'
 
 export const mapConfigValues = <T extends AccountConfig[K], K extends keyof AccountConfig>(obj: T): T => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result: any = {};
   let key: keyof T;
   for (key in obj) {

@@ -6,7 +6,8 @@ import { useAppSelector } from '@/app/hooks'
 import { selectAccountById } from '@/app/features/account/accountSlice'
 import { useParams } from 'react-router-dom'
 import { Spinner } from '@/components/ui/spinner'
-import { AccountConfig, useUpdateAccountMutation } from '@/app/services/accountApi'
+import { useUpdateAccountMutation } from '@/app/services/accountApi'
+import type { AccountConfig } from '@/app/types'
 import { ActionTagsFormValues, TagDtoToForm, TagsDto } from '@/components/forms/action-tags/schema'
 
 const ActionsPage = () => {

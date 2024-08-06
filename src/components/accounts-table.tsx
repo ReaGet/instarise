@@ -12,7 +12,7 @@ import AccountActions from '@/components/account-actions'
 import StatusBadge from '@/components/status-badge'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
-import type { Account } from '@/app/services/accountApi'
+import type { Account } from '@/app/types'
 import { useActionsContext } from '@/app/providers/actions-context'
 
 interface Props {
