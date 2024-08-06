@@ -16,9 +16,9 @@ export interface ReportsTableItem {
 }
 
 type ErrorDetailType = {
-  loc: string[],
-  msg: string,
-  type: string
+  loc: string[];
+  msg: string;
+  type: string;
 }
 
 export type ErrorRepsonseType = {
@@ -29,6 +29,14 @@ export type ErrorRepsonseType = {
 }
 
 export type AccountStatus = 'working' | 'stop' | 'pause' | 'finish';
+
+export type AccountCredentials = {
+  username: string;
+  password: string;
+  group: string;
+  proxy: string;
+  description?: string;
+}
 
 export type Account = {
   id: string;

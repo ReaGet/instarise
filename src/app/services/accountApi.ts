@@ -1,4 +1,4 @@
-import { Account, AccountConfig } from '@/app/types';
+import { Account, AccountConfig, AccountCredentials } from '@/app/types';
 import { api } from './api'
 import { AutoReplyFormValues } from '@/components/forms/auto-reply/schema';
 
@@ -16,6 +16,13 @@ const accountTaskQuery = (url: string) => {
 // TODO: разделить апи на: Работа с конфигами, работа с аккантами, работа с автоответом, работа с тасками
 export const accountApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    loginAccount: builder.mutation<string, AccountCredentials>({
+      query: (credentials) => ({
+        url: `${ACCOUNT_URL}/login`,
+        method: 'POST',
+        body: credentials,
+      })
+    }),
     getAllAccounts: builder.query<Account[] | null, void>({
       query: () => ({
         url: `${ACCOUNT_URL}/operations/`,
@@ -125,6 +132,7 @@ export const accountApi = api.injectEndpoints({
 })
 
 export const {
+  useLoginAccountMutation,
   useGetAllAccountsQuery,
   useLazyGetAllAccountsQuery,
   useGetAccountByIdQuery,

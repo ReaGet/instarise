@@ -5,8 +5,14 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import ProxyInput from '@/components/proxy-input'
 import { AddAccountSchema, AddAccountFormValues } from './schema'
+import { useState } from 'react'
+import { useLoginAccountMutation } from '@/app/services/accountApi'
+import { useAppSelector } from '@/app/hooks'
+import { selectCurrentUser } from '@/app/features/user/userSlice'
 
 const AddAccountForm = () => {
+  const [login, { isLoading }] = useLoginAccountMutation()
+  const currentUser = useAppSelector(selectCurrentUser)
   const form = useForm<AddAccountFormValues>({
     resolver: valibotResolver(AddAccountSchema),
     defaultValues: {
@@ -15,14 +21,19 @@ const AddAccountForm = () => {
     },
   })
 
-  let proxy = ''
+  const [proxy, setPorxy] = useState('')
 
   function handleProxyChange(newValue: string) {
-    proxy = newValue
+    setPorxy(newValue)
   }
 
-  function onSubmit(values: AddAccountFormValues) {
+  async function onSubmit(values: AddAccountFormValues) {
     console.log({ ...values, proxy })
+    await login({
+      group: currentUser!.username,
+      ...values,
+      proxy
+    }).unwrap()
   }
 
   return (
@@ -35,7 +46,7 @@ const AddAccountForm = () => {
             <FormItem>
               <FormLabel>Логин</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -48,14 +59,14 @@ const AddAccountForm = () => {
             <FormItem>
               <FormLabel>Пароль</FormLabel>
               <FormControl>
-                <Input {...field} type='password' />
+                <Input {...field} type='password' disabled={isLoading} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <ProxyInput onChange={handleProxyChange} />
-        <Button type='submit' size='lg' className='ml-auto'>Добавить</Button>
+        <Button type='submit' size='lg' className='ml-auto' disabled={isLoading}>Добавить</Button>
       </form>
     </Form>
   )
