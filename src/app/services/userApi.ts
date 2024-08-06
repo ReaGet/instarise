@@ -40,7 +40,7 @@ export const userApi = api.injectEndpoints({
         body: userData
       })
     }),
-    refresh: builder.query<string, void>({
+    refresh: builder.mutation<string, void>({
       query: () => ({
         url: `${AUTH_URL}/refresh`,
         method: 'POST'
@@ -59,8 +59,9 @@ export const {
   useLoginMutation,
   useLogoutQuery,
   useLazyLogoutQuery,
-  useRefreshQuery,
-  useLazyRefreshQuery,
+  // useRefreshQuery,
+  // // useLazyRefreshQuery,
+  useRefreshMutation,
   useMeQuery,
   useSignupMutation,
 } = userApi

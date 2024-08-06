@@ -9,7 +9,6 @@ import { DASHBOARD, SIGNUP } from '@/consts'
 import { SignInSchema, SignInFormValues } from './schema'
 import { ErrorRepsonseType } from '@/app/types'
 import { useHandleError } from '@/hooks/useHandleError'
-import { useCookies } from 'react-cookie'
 
 const SignInForm = () => {
 

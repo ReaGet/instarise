@@ -1,6 +1,15 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { type RootState } from '@/app/store'
 import { API_URL } from '@/consts'
+import { ActionLogout, ActionSetTokens } from './actions'
+
+type RefreshResponse = {
+  data: {
+    access_token: string;
+    refresh_token: string;
+    token_type: string;
+  }
+}
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,
@@ -16,19 +25,23 @@ const baseQuery = fetchBaseQuery({
   },
 })
 
-const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: object) => {
-  const result = await baseQuery(args, api, extraOptions)
+const baseQueryWithReauth = async (args: string | FetchArgs, baseApi: BaseQueryApi, extraOptions: object) => {
+  let result = await baseQuery(args, baseApi, extraOptions)
 
-  // if (result.error?.status === 401) {
-  //   const refreshResult = await baseQuery(`/auth/refresh`, api, extraOptions)
-  //   console.log(222, refreshResult)
+  if (result.error?.status === 401) {
+    const refreshResult = await baseQuery({
+      url: `${API_URL}auth/refresh`,
+      method: 'POST',
+      credentials: 'include',
+    }, baseApi, extraOptions);
 
-  //   if (refreshResult?.data) {
-  //     const user = api.getState()?.auth?.user
-
-  //     api.dispatch(set)
-  //   }
-  // }
+    if (refreshResult?.data) {
+      result = await baseQuery(args, baseApi, extraOptions)
+    } else {
+      // TODO: logout if no tokens in response
+      // baseApi.dispatch(ActionLogout())
+    }
+  }
   return result;
 }
 
