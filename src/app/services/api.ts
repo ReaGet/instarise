@@ -1,15 +1,6 @@
 import { BaseQueryApi, createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { type RootState } from '@/app/store'
 import { API_URL } from '@/consts'
-import { ActionLogout, ActionSetTokens } from './actions'
-
-type RefreshResponse = {
-  data: {
-    access_token: string;
-    refresh_token: string;
-    token_type: string;
-  }
-}
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_URL,

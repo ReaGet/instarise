@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { userApi } from '@/app/services/userApi'
 import { RootState } from '@/app/store'
-import { ActionLogout, ActionSetTokens } from '@/app/services/actions'
 
 interface InitialState {
   isAuthenticated: boolean;
