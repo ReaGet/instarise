@@ -30,11 +30,10 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
   });
 
   useEffect(() => {
-    form.reset(defaultValues);
-  }, [data]);
+    form.reset(defaultValues)
+  }, [data])
 
   function handleProxyChange(newValue: string) {
-    console.log(1111, newValue)
     setProxy(newValue)
   }
 

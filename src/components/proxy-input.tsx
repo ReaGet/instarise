@@ -97,11 +97,16 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
     });
   }
 
-  function handleChange(value: string) {
+  function handleProxyChange(value: string) {
     const [type, newValue] = splitProxy(value)
     setProxyType(type)
     setProxyValue(newValue)
     onChange(`${proxyType}${value}`)
+  }
+
+  function handleTypeChange(value: string) {
+    setProxyType(value);
+    onChange(`${value}${proxyValue}`)
   }
 
   const CheckButtonChild = () => {
@@ -118,7 +123,7 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
       <FormLabel>Прокси</FormLabel>
       <div className={cn('flex gap-2', className)}>
         <div className="w-[120px]">
-          <Select onValueChange={setProxyType} value={proxyType}>
+          <Select onValueChange={(value) => handleTypeChange(value)} value={proxyType}>
             <SelectTrigger>
               <SelectValue placeholder="Тип прокси" />
             </SelectTrigger>
@@ -132,7 +137,7 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
           </Select>
         </div>
         <div className='relative flex items-center flex-1'>
-          <Input className='py-4' value={proxyValue} onChange={(event) => handleChange(event.target.value)} />
+          <Input className='py-4' value={proxyValue} onChange={(event) => handleProxyChange(event.target.value)} />
           { isValidProxyValue && (
             <Button
               className={cn(
