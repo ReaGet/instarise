@@ -31,8 +31,8 @@ const Report = ({ className = '', accounts = [] }: Props) => {
   accounts?.forEach(a => {
     switch(a.status) {
       case 'working': turnedOnCount++; break;
-      case 'stop': turnedOffCount++; break;
-      case 'pause': pausedCount++; break;
+      case 'stopped': turnedOffCount++; break;
+      case 'paused': pausedCount++; break;
     }
   })
 

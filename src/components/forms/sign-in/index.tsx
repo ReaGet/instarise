@@ -32,8 +32,8 @@ const SignInForm = () => {
     } catch(error) {
       // TODO: решить вопрос с тайпскриптом
       const { status, data = {} } = error as ErrorRepsonseType
-      if (typeof data === 'object' && 'detail' in data) {
-        data!.detail?.forEach(d => {
+      if (typeof data === 'object' && 'detail' in data && Array.isArray(data.detail)) {
+        data!.detail?.forEach((d: any) => {
           const [_, field] = d.loc as [string, keyof SignInFormValues]
           form.setError(field, {
             message: 'Поле заполнено неверно'

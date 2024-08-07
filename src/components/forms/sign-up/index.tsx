@@ -26,7 +26,7 @@ const SignUpForm = () => {
       navigate(SIGNIN)
     } catch(error) {
       // TODO: сделать обработчик ошибок
-      const { status, data: { detail } } = error as ErrorRepsonseType
+      const { status } = error as ErrorRepsonseType
       if (status === 409) {
         form.setError('username', {
           message: 'Пользователь уже зарегистрирован'
