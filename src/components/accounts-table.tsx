@@ -38,6 +38,8 @@ const AccountsTable = ({ accounts = [] }: Props) => {
     })
   }
   
+  // TODO: если прокси стал невалидным, нужно в таблице и внутри показать, что он таков
+  // TODO: Редактирование инфы в самой таблице
   return (
     <Table className='mt-8'>
       { accounts.length === 0 && (

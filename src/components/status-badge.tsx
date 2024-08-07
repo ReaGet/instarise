@@ -20,11 +20,11 @@ const variants: Variants = {
     text: 'Работает',
     color: 'text-green-600'
   },
-  stop: {
+  stopped: {
     text: 'Отключен',
     color: 'text-gray-400'
   },
-  pause: {
+  paused: {
     text: 'Пауза',
     color: 'text-orange-400'
   },

@@ -20,6 +20,7 @@ interface ProxyProps {
   onChange: (newValue: string) => void;
   className?: string;
   value?: string;
+  disabled?: boolean;
 }
 const proxySchema = pipe(string(), minLength(1))
 const proxyCheck = (value: string) => parse(proxySchema, value)
@@ -54,13 +55,22 @@ const useProxy = () => {
   return { state, setStatus, reset };
 }
 
-const splitProxy = (value: string): [string, string] => {
+export const splitProxy = (value: string): [string, string] => {
   const type = value.match(/(socks(4|5)|https?):\/\//)?.[0] || 'socks5://',
     initValue = value.split('://')?.pop() || ''
   return [type, initValue]
 }
 
-const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
+export const concatProxyWithType = (type: string, value: string = '') => {
+  console.log(11, type, value)
+  return !value.trim() ? '' : `${type}${value}` 
+}
+
+export const normalizeProxy = (value: string = '') => {
+  return concatProxyWithType(...splitProxy(value))
+}
+
+const ProxyInput = ({ onChange, className = '', value = '', disabled = false }: ProxyProps) => {
   const { state, setStatus, reset } = useProxy()
   const [proxyValue, setProxyValue] = useState('')
   const [proxyType, setProxyType] = useState('socks5://')
@@ -100,12 +110,12 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
     const [type, newValue] = splitProxy(value)
     setProxyType(type)
     setProxyValue(newValue)
-    onChange(`${proxyType}${value}`)
+    onChange(concatProxyWithType(proxyType, value))
   }
 
   function handleTypeChange(value: string) {
     setProxyType(value);
-    onChange(`${value}${proxyValue}`)
+    onChange(concatProxyWithType(value, proxyValue))
   }
 
   const CheckButtonChild = () => {
@@ -122,7 +132,7 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
       <FormLabel>Прокси</FormLabel>
       <div className={cn('flex gap-2', className)}>
         <div className="w-[120px]">
-          <Select onValueChange={(value) => handleTypeChange(value)} value={proxyType}>
+          <Select onValueChange={(value) => handleTypeChange(value)} value={proxyType} disabled={disabled}>
             <SelectTrigger>
               <SelectValue placeholder="Тип прокси" />
             </SelectTrigger>
@@ -136,7 +146,7 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
           </Select>
         </div>
         <div className='relative flex items-center flex-1'>
-          <Input className='py-4' value={proxyValue} onChange={(event) => handleProxyChange(event.target.value)} />
+          <Input className='py-4' value={proxyValue} onChange={(event) => handleProxyChange(event.target.value)} disabled={disabled} />
           { isValidProxyValue && (
             <Button
               className={cn(
@@ -147,9 +157,11 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
               asChild
               onClick={checkProxy}
             >
-              <div>
-                <CheckButtonChild />
-              </div>
+              { !disabled && (
+                <div>
+                  <CheckButtonChild />
+                </div>
+              )}
             </Button> )
           }
         </div>

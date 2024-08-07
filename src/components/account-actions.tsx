@@ -19,11 +19,11 @@ interface ActionsProps {
 const AccountActions = ({ accountId, status }: ActionsProps) => {
   const { onAction } = useActionsContext()
 
-  const skippingActions = status === 'stop'
+  const skippingActions = status === 'stopped'
     ? ['stop', 'pause']
-    : status === 'pause' ? ['pause'] : ['start'];
+    : status === 'paused' ? ['pause'] : ['start'];
   const filteredActions = ACCOUNT_ACTIONS.filter(a => !skippingActions.includes(a.value))
-
+  // TODO: показывать модалку, если человек пытается запустить задачу, но конфиг пустой
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

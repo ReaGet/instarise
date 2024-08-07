@@ -13,6 +13,7 @@ import { selectGroupId } from '@/app/features/account/accountSlice'
 import { useCreateGroupMutation } from '@/app/services/groupApi'
 import { ErrorRepsonseType } from '@/app/types'
 import { useHandleError } from '@/hooks/useHandleError'
+import { normalizeProxy } from '@/components/proxy-input'
 
 const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
   const [login, { isLoading }] = useLoginAccountMutation()
@@ -46,7 +47,7 @@ const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
       await login({
         group: groupId,
         ...values,
-        proxy
+        proxy: normalizeProxy(proxy),
       }).unwrap()
       onAccountAdded()
     } catch(error) {

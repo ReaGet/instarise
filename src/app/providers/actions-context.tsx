@@ -9,7 +9,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Account, usePauseAccountTaskMutation, useRemoveAccountMutation, useStartAccountTaskMutation, useStopAccountTaskMutation } from '@/app/services/accountApi';
+import { usePauseAccountTaskMutation, useRemoveAccountMutation, useStartAccountTaskMutation, useStopAccountTaskMutation } from '@/app/services/accountApi';
+import type { Account } from '@/app/types';
 
 export type ActionType = 'start' | 'stop' | 'remove' | 'pause'
 
@@ -52,6 +53,7 @@ const ActionsProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   async function remove() {
+    await stopTask(removeAccountIds).unwrap()
     await removeAccount(removeAccountIds).unwrap()
     setRemoveAccountIds([])
   }

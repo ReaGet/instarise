@@ -13,7 +13,7 @@ const InfoSidebar = () => {
       {/* TODO: Добавить скелетон */}
       { !account
         ? <Spinner />
-        : <AccountInfoForm data={account} accountId={id!} />
+        : <AccountInfoForm account={account} />
       } 
     </aside>
   )

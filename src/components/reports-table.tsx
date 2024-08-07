@@ -17,9 +17,9 @@ interface Props {
 
 const Status: Record<AccountStatus, string> = {
   working: 'Работает',
-  pause: 'Пауза',
+  paused: 'Пауза',
   finished: 'Завершен',
-  stop: 'Отключен',
+  stopped: 'Отключен',
 }
 
 const ReportsTable = ({ reports = [] }: Props) => {

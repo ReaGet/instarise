@@ -1,7 +1,7 @@
 import { api } from '@/app/services/api'
 import { AccountStatus } from '../types';
 
-const REPORT_URL = '/reports'
+const REPORT_URL = '/clients'
 
 export type Report = {
   client_id: string;
@@ -20,7 +20,7 @@ export const reportApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getReport: builder.query<Report[], string>({
       query: (accountId) => ({
-        url: `${REPORT_URL}/?client_id=${accountId}`,
+        url: `${REPORT_URL}/tasks/client/${accountId}`,
         method: 'GET',
       })
     })

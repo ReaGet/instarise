@@ -45,7 +45,7 @@ export type ErrorRepsonseType = {
   };
 }
 
-export type AccountStatus = 'working' | 'stop' | 'pause' | 'finished';
+export type AccountStatus = 'working' | 'stopped' | 'paused' | 'finished';
 
 export type AccountCredentials = {
   username: string;

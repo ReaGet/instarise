@@ -92,7 +92,7 @@ export const accountApi = api.injectEndpoints({
       invalidatesTags: ['AutoReply/Status'],
     }),
     startAccountTask: builder.mutation<string[], string[]>({
-      query: accountTaskQuery('/mixed/tasks/start'),
+      query: accountTaskQuery('/mixed/tasks/start/'),
       invalidatesTags: ['Account']
     }),
     pauseAccountTask: builder.mutation<string[], string[]>({
@@ -105,7 +105,7 @@ export const accountApi = api.injectEndpoints({
     }),
     removeAccount: builder.mutation<string, string[]>({
       query: (accountIds) => ({
-        url: `${ACCOUNT_URL}/operations`,
+        url: `${ACCOUNT_URL}/operations/`,
         method: 'DELETE',
         body: accountIds
       }),
