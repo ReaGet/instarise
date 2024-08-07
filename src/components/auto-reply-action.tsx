@@ -27,18 +27,18 @@ function getVariant(status: boolean) {
 
 const AutoReplayAction = ({ accountId }: { accountId: string }) => {
   const [isButtonHovered, setIsButtonHovered] = useState(false)
-  const { data: statusData = [{ status: false }], isLoading: isStatusLoading } = useGetAutoReplyStatusQuery(accountId!)
+  const { data: status = false, isLoading: isStatusLoading } = useGetAutoReplyStatusQuery(accountId!)
   const [start, { isLoading: isStartLoading }] = useStartAutoReplyMutation()
   const [stop, { isLoading: isStopLoading }] = useStopAutoReplyMutation()
 
-  const isWorking = statusData[0]?.status
+  const isWorking = status
   const buttonProps = getVariant(isWorking)
 
   const isLoading = isStatusLoading || isStartLoading || isStopLoading
   
   async function handleClick() {
-    if (isWorking) await stop(accountId).unwrap();
-    else await start(accountId).unwrap();
+    if (isWorking) await stop([accountId]).unwrap();
+    else await start([accountId]).unwrap();
   }
 
   return (

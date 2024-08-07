@@ -39,6 +39,6 @@ export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithReauth,
   refetchOnMountOrArgChange: true,
-  tagTypes: ['Account', 'Group', 'User/Info', 'AutoReply'],
+  tagTypes: ['Account', 'Group', 'User/Info', 'AutoReply', 'AutoReply/Status'],
   endpoints: () => ({})
 })

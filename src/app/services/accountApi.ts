@@ -68,23 +68,28 @@ export const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ['AutoReply'],
     }),
-    getAutoReplyStatus: builder.query<{ status: boolean }[], string>({
+    getAutoReplyStatus: builder.query<boolean, string>({
       query: (accountId) => ({
-        url: `${ACCOUNT_URL}/autoReplyStatus/?client_id=${accountId}`,
+        url: `${ACCOUNT_URL}/auto-reply/${accountId}`,
         method: 'GET',
       }),
+      providesTags: ['AutoReply/Status'],
     }),
-    startAutoReply: builder.mutation<string, string>({
-      query: (accountId) => ({
-        url: `${ACCOUNT_URL}/autoReplyStatus/?client_id=${accountId}`,
+    startAutoReply: builder.mutation<string, string[]>({
+      query: (accountIds) => ({
+        url: `${ACCOUNT_URL}/auto-reply`,
         method: 'POST',
+        body: accountIds
       }),
+      invalidatesTags: ['AutoReply/Status'],
     }),
-    stopAutoReply: builder.mutation<string, string>({
-      query: (accountId) => ({
-        url: `${ACCOUNT_URL}/autoReplyStatus/?client_id=${accountId}`,
+    stopAutoReply: builder.mutation<string, string[]>({
+      query: (accountIds) => ({
+        url: `${ACCOUNT_URL}/auto-reply`,
         method: 'DELETE',
+        body: accountIds
       }),
+      invalidatesTags: ['AutoReply/Status'],
     }),
     startAccountTask: builder.mutation<string[], string[]>({
       query: accountTaskQuery('/mixed/tasks/start'),
@@ -135,6 +140,7 @@ export const {
   useStopAccountTaskMutation,
   usePauseAccountTaskMutation,
   useGetAutoReplyConfigQuery,
+  useLazyGetAutoReplyConfigQuery,
   useUpdateAutoReplyConfigMutation,
   useGetAutoReplyStatusQuery,
   useStartAutoReplyMutation,
