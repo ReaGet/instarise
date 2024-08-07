@@ -21,7 +21,8 @@ export const accountApi = api.injectEndpoints({
         url: `${ACCOUNT_URL}/login`,
         method: 'POST',
         body: credentials,
-      })
+      }),
+      invalidatesTags: ['Account'],
     }),
     getAllAccounts: builder.query<Account[] | null, void>({
       query: () => ({

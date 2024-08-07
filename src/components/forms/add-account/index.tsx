@@ -5,14 +5,23 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import ProxyInput from '@/components/proxy-input'
 import { AddAccountSchema, AddAccountFormValues } from './schema'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLoginAccountMutation } from '@/app/services/accountApi'
 import { useAppSelector } from '@/app/hooks'
-import { selectCurrentUser } from '@/app/features/user/userSlice'
+import { selectCurrentUser, UserType } from '@/app/features/user/userSlice'
+import { selectGroupId } from '@/app/features/account/accountSlice'
+import { useCreateGroupMutation } from '@/app/services/groupApi'
+import { ErrorRepsonseType } from '@/app/types'
+import { useHandleError } from '@/hooks/useHandleError'
 
-const AddAccountForm = () => {
+const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
   const [login, { isLoading }] = useLoginAccountMutation()
-  const currentUser = useAppSelector(selectCurrentUser)
+  const currentUser = useAppSelector(selectCurrentUser) || {} as UserType
+  const groupId = useAppSelector(selectGroupId)
+  const [createGroup, { isLoading: isCreateGroupLoading }] = useCreateGroupMutation()
+  const [proxy, setProxy] = useState('')
+  const toast = useHandleError()
+
   const form = useForm<AddAccountFormValues>({
     resolver: valibotResolver(AddAccountSchema),
     defaultValues: {
@@ -21,19 +30,33 @@ const AddAccountForm = () => {
     },
   })
 
-  const [proxy, setPorxy] = useState('')
+  useEffect(() => {
+    if (!groupId && currentUser?.id && !isCreateGroupLoading) {
+      createGroup(currentUser!.id)
+    }
+  }, [])
+
 
   function handleProxyChange(newValue: string) {
-    setPorxy(newValue)
+    setProxy(newValue)
   }
 
   async function onSubmit(values: AddAccountFormValues) {
     console.log({ ...values, proxy })
-    await login({
-      group: currentUser!.username,
-      ...values,
-      proxy
-    }).unwrap()
+    try {
+      await login({
+        group: groupId,
+        ...values,
+        proxy
+      }).unwrap()
+      onAccountAdded()
+    } catch(error) {
+      const { status, data = {} } = error as ErrorRepsonseType
+      console.log(status, data)
+      if (status === 500 || status === 'FETCH_ERROR') {
+        toast()
+      }
+    }
   }
 
   return (

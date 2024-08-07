@@ -5,14 +5,15 @@ import { SIGNIN } from '@/consts';
 import { useAppSelector } from '@/app/hooks';
 import { selectIsAuthenticated } from '@/app/features/user/userSlice';
 import { useGetAllAccountsQuery } from '@/app/services/accountApi';
+import { useGetAllGroupsQuery } from '@/app/services/groupApi';
 
 const MainLayout = () => {
-  const isAuthenticated = useAppSelector(selectIsAuthenticated);
-  useGetAllAccountsQuery();
+  useGetAllAccountsQuery()
+  useGetAllGroupsQuery()
 
-  if (!isAuthenticated) {
-    return <Navigate to={SIGNIN} />
-  }
+  const isAuthenticated = useAppSelector(selectIsAuthenticated)
+
+  if (!isAuthenticated) return <Navigate to={SIGNIN} />
 
   return (
     <>

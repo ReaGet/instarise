@@ -18,14 +18,13 @@ const AUTH_URL = '/auth'
 export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginCredentials>({
-      query: (userData) => {
-        return {
-          url: `${AUTH_URL}/login`,
-          method: 'POST',
-          body: toFormData(userData),
-          formData: true,
-        }
-      }
+      query: (userData) => ({
+        url: `${AUTH_URL}/login`,
+        method: 'POST',
+        body: toFormData(userData),
+        formData: true,
+      }),
+      invalidatesTags: ['User/Info']
     }),
     logout: builder.query<string, void>({
       query: () => ({
@@ -50,7 +49,8 @@ export const userApi = api.injectEndpoints({
       query: () => ({
         url: `${AUTH_URL}/me`,
         method: 'GET',
-      })
+      }),
+      providesTags: ['User/Info'],
     })
   })
 })

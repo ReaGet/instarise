@@ -52,6 +52,7 @@ const userSlice = createSlice({
       .addMatcher(userApi.endpoints.logout.matchFulfilled, (state) => {
         state.access_token = ''
         state.refresh_token = ''
+        state.current = null
         state.isAuthenticated = false;
       })
       .addMatcher(userApi.endpoints.me.matchFulfilled, (state, action) => {

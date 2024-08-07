@@ -28,7 +28,7 @@ const variants: Variants = {
     text: 'Пауза',
     color: 'text-orange-400'
   },
-  finish: {
+  finished: {
     text: 'Завершен',
     color: 'text-primary'
   },

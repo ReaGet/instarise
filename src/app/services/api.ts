@@ -18,7 +18,6 @@ const baseQuery = fetchBaseQuery({
 
 const baseQueryWithReauth = async (args: string | FetchArgs, baseApi: BaseQueryApi, extraOptions: object) => {
   let result = await baseQuery(args, baseApi, extraOptions)
-
   if (result.error?.status === 401) {
     const refreshResult = await baseQuery({
       url: `${API_URL}auth/refresh`,
@@ -39,7 +38,7 @@ const baseQueryWithReauth = async (args: string | FetchArgs, baseApi: BaseQueryA
 export const api = createApi({
   reducerPath: 'splitApi',
   baseQuery: baseQueryWithReauth,
-  // refetchOnMountOrArgChange: true,
-  tagTypes: ['Account'],
+  refetchOnMountOrArgChange: true,
+  tagTypes: ['Account', 'Group', 'User/Info'],
   endpoints: () => ({})
 })

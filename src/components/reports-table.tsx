@@ -18,7 +18,7 @@ interface Props {
 const Status: Record<AccountStatus, string> = {
   working: 'Работает',
   pause: 'Пауза',
-  finish: 'Завершен',
+  finished: 'Завершен',
   stop: 'Отключен',
 }
 
@@ -47,7 +47,7 @@ const ReportsTable = ({ reports = [] }: Props) => {
             <TableCell>{r.progress}</TableCell>
             <TableCell className='text-right'>
               { Status[r.status] }
-              { r.status === 'finish' && (
+              { r.status === 'finished' && (
                 <span className='ml-2 text-xs'>({ format(r.time_end) })</span>
               ) }
             </TableCell>

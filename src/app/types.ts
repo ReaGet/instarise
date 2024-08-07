@@ -21,14 +21,21 @@ type ErrorDetailType = {
   type: string;
 }
 
+export type GroupType = {
+  id: string;
+  name: string;
+  docker_id: string;
+  user_id: string;
+}
+
 export type ErrorRepsonseType = {
-  status: number;
+  status: number | string;
   data: {
     detail: ErrorDetailType[];
   };
 }
 
-export type AccountStatus = 'working' | 'stop' | 'pause' | 'finish';
+export type AccountStatus = 'working' | 'stop' | 'pause' | 'finished';
 
 export type AccountCredentials = {
   username: string;

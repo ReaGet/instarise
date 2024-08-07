@@ -7,10 +7,12 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from '@/components/ui/button'
 import AddAccountForm from '@/components/forms/add-account'
+import { useState } from "react"
 
 const AddAccount = () => {
+  const [isOpen, setIsOpen] = useState(false)
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button size='sm'>Добавить аккаунт</Button>
       </DialogTrigger>
@@ -18,7 +20,7 @@ const AddAccount = () => {
         <DialogHeader>
           <DialogTitle>Добавить аккаунт</DialogTitle>
         </DialogHeader>
-        <AddAccountForm />
+        <AddAccountForm onAccountAdded={() => setIsOpen(false)} />
       </DialogContent>
     </Dialog>
   )
