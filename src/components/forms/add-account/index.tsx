@@ -15,6 +15,7 @@ import { ErrorRepsonseType } from '@/app/types'
 import { useHandleError } from '@/hooks/useHandleError'
 import { normalizeProxy } from '@/components/proxy-input'
 
+// TODO: выводить сообщение, если аккаунт, который мы хотим добавить, уже существиет у другого пользователя
 const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
   const [login, { isLoading }] = useLoginAccountMutation()
   const currentUser = useAppSelector(selectCurrentUser) || {} as UserType
