@@ -6,6 +6,11 @@ export interface AccountsTableItem {
   proxy: string;
 }
 
+export type AccountDetailsType = {
+  description: string;
+  proxy: string;
+}
+
 export interface ReportsTableItem {
   id: string;
   createdAt: string;

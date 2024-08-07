@@ -6,18 +6,19 @@ import { useForm } from 'react-hook-form'
 import { valibotResolver } from '@hookform/resolvers/valibot'
 import { Button } from '@/components/ui/button'
 import ProxyInput from '@/components/proxy-input'
-import { useUpdateAccountMutation } from '@/app/services/accountApi'
+import { useUpdateAccountInfoMutation, useUpdateAccountMutation } from '@/app/services/accountApi'
 import type { Account } from '@/app/types'
 import { Spinner } from '@/components/ui/spinner'
 import { AccountInfoSchema, AccountInfoFormValues} from './schema'
 
 interface SidebarProps {
   data: Account;
+  accountId: string;
 }
 
 // TODO: уменьшить колечетсво рендеров
-const AccountInfoForm = ({ data }: SidebarProps) => {
-  const [updateAccount, { isLoading }] = useUpdateAccountMutation()
+const AccountInfoForm = ({ data, accountId }: SidebarProps) => {
+  const [updateDetails, { isLoading }] = useUpdateAccountInfoMutation()
   const [proxy, setProxy] = useState(data.proxy || '')
 
   const defaultValues: AccountInfoFormValues = {
@@ -38,7 +39,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
   }
 
   async function onSubmit(values: AccountInfoFormValues) {
-    await updateAccount({ ...data, ...values, proxy }).unwrap()
+    await updateDetails({ accountId, details: { ...values, proxy } }).unwrap()
   }
 
   return (

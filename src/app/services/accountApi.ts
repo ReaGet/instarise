@@ -1,4 +1,4 @@
-import { Account, AccountConfig, AccountCredentials, AccountInfoType, AutoReplyConfig } from '@/app/types';
+import { Account, AccountConfig, AccountCredentials, AccountDetailsType, AccountInfoType, AutoReplyConfig } from '@/app/types';
 import { api } from './api'
 
 const ACCOUNT_URL = '/clients'
@@ -123,6 +123,14 @@ export const accountApi = api.injectEndpoints({
         url: `${ACCOUNT_URL}/account-info/${accountId}`,
         method: 'GET',
       })
+    }),
+    updateAccountInfo: builder.mutation<string, { accountId: string, details: AccountDetailsType }>({
+      query: ({ accountId, details }) => ({
+        url: `${ACCOUNT_URL}/operations/${accountId}`,
+        method: 'PUT',
+        body: details,
+      }),
+      invalidatesTags: ['Account'],
     })
   }),
 })
@@ -146,4 +154,5 @@ export const {
   useStartAutoReplyMutation,
   useStopAutoReplyMutation,
   useLazyCheckProxyQuery,
+  useUpdateAccountInfoMutation,
 } = accountApi;
