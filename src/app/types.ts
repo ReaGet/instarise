@@ -3,12 +3,12 @@ export interface AccountsTableItem {
   name: string;
   description: string;
   status: AccountStatus;
-  proxy: string;
+  proxy: string | null;
 }
 
 export type AccountDetailsType = {
   description: string;
-  proxy: string;
+  proxy: string | null;
 }
 
 export interface ReportsTableItem {
@@ -51,7 +51,7 @@ export type AccountCredentials = {
   username: string;
   password: string;
   group: string;
-  proxy: string;
+  proxy: string | null;
   description?: string;
 }
 
@@ -65,7 +65,7 @@ export type Account = {
   user_id: string;
   group_id: string;
   status: AccountStatus;
-  proxy: string;
+  proxy: string | null;
 }
 
 export type AccountConfig = {

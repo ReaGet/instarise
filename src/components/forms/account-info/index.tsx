@@ -45,7 +45,7 @@ const AccountInfoForm = ({ account }: SidebarProps) => {
       accountId: account.id,
       details: {
         ...values,
-        proxy: normalizeProxy(proxy)
+        proxy: normalizeProxy(proxy) || null
       }
     }).unwrap()
   }

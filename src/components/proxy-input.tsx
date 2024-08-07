@@ -62,7 +62,6 @@ export const splitProxy = (value: string): [string, string] => {
 }
 
 export const concatProxyWithType = (type: string, value: string = '') => {
-  console.log(11, type, value)
   return !value.trim() ? '' : `${type}${value}` 
 }
 
