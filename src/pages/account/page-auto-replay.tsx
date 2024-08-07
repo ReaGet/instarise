@@ -1,32 +1,19 @@
 import AutoReplyForm from '@/components/forms/auto-reply'
 import type { AutoReplyFormValues } from '@/components/forms/auto-reply/schema'
-import { useGetAutoReplyConfigQuery, useLazyGetAutoReplyConfigQuery, useUpdateAutoReplyConfigMutation } from '@/app/services/accountApi'
+import { useGetAutoReplyConfigQuery, useUpdateAutoReplyConfigMutation } from '@/app/services/accountApi'
 import { useParams } from 'react-router-dom'
 import { Spinner } from '@/components/ui/spinner'
 import AutoReplayAction from '@/components/auto-reply-action'
 import { AutoReplyInitialConfig } from '@/consts'
-import { useEffect, useState } from 'react'
-import { AutoReplyConfig } from '@/app/types'
 
 const AutoReplayPage = () => {
   const { id } = useParams()
-  const [config, setConfig] = useState<AutoReplyConfig | null>(null)
-  const [loadConfig] = useLazyGetAutoReplyConfigQuery()
   const [updateConfig, { isLoading }] = useUpdateAutoReplyConfigMutation()
-  console.log(config)
+  let { data: config, isLoading: isLoadingConfig } = useGetAutoReplyConfigQuery(id!)
 
-  useEffect(() => {
-    try {
-      loadConfig(id!).unwrap().then((data) => {
-        if (!data) setConfig(AutoReplyInitialConfig)
-        else setConfig(data)
-      })
-    } catch(e) {
-      console.log(`Error while fetching auto-reply config`, e)
-    }
-  }, [])
+  config = config || AutoReplyInitialConfig
 
-  if (!config) return <Spinner />
+  if (!config || isLoadingConfig) return <Spinner />
 
   async function onSubmit(values: AutoReplyFormValues) {
     await updateConfig({
