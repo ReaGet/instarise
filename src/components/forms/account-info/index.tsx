@@ -18,7 +18,7 @@ interface SidebarProps {
 // TODO: уменьшить колечетсво рендеров
 const AccountInfoForm = ({ data }: SidebarProps) => {
   const [updateAccount, { isLoading }] = useUpdateAccountMutation()
-  const [proxy, setProxy] = useState('')
+  const [proxy, setProxy] = useState(data.proxy || '')
 
   const defaultValues: AccountInfoFormValues = {
     description: data.description || ''
@@ -34,6 +34,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
   }, [data]);
 
   function handleProxyChange(newValue: string) {
+    console.log(1111, newValue)
     setProxy(newValue)
   }
 
@@ -59,7 +60,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
             </FormItem>
           )}
         />
-        <ProxyInput onChange={handleProxyChange} className='flex-col' value='' />
+        <ProxyInput onChange={handleProxyChange} className='flex-col' value={proxy} />
         <Button type='submit' size='sm' className='ml-auto w-24' disabled={isLoading}>
           { isLoading
             ? <Spinner className='w-6 h-6 text-white' />

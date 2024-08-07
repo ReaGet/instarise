@@ -54,9 +54,15 @@ const useProxy = () => {
   return { state, setStatus, reset };
 }
 
+const splitProxy = (value: string): [string, string] => {
+  const type = value.match(/(socks(4|5)|https?):\/\//)?.[0] || 'socks5://',
+    initValue = value.split('://')?.pop() || ''
+  return [type, initValue]
+}
+
 const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
   const { state, setStatus, reset } = useProxy()
-  const [proxyValue, setProxyValue] = useState(value)
+  const [proxyValue, setProxyValue] = useState('')
   const [proxyType, setProxyType] = useState('socks5://')
   const [checkProxyRequest] = useLazyCheckProxyQuery();
 
@@ -69,8 +75,17 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
   }
 
   useEffect(() => {
-    reset();
-  }, [proxyValue])
+    if (value) {
+      const [type, initValue] = splitProxy(value)
+      setProxyType(type)
+      setProxyValue(initValue)
+    }
+    reset()
+  }, [])
+
+  useEffect(() => {
+    reset()
+  }, [proxyValue, proxyType])
 
   async function checkProxy() {
     if (state.status !== 'initial') return;
@@ -83,7 +98,9 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
   }
 
   function handleChange(value: string) {
-    setProxyValue(value)
+    const [type, newValue] = splitProxy(value)
+    setProxyType(type)
+    setProxyValue(newValue)
     onChange(`${proxyType}${value}`)
   }
 
@@ -115,7 +132,7 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
           </Select>
         </div>
         <div className='relative flex items-center flex-1'>
-          <Input className='py-4' onChange={(event) => handleChange(event.target.value)} />
+          <Input className='py-4' value={proxyValue} onChange={(event) => handleChange(event.target.value)} />
           { isValidProxyValue && (
             <Button
               className={cn(
