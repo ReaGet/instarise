@@ -39,7 +39,6 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
 
   async function onSubmit(values: AccountInfoFormValues) {
     await updateAccount({ ...data, ...values, proxy }).unwrap()
-    console.log(values)
   }
 
   return (

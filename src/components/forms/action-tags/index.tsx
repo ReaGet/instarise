@@ -9,14 +9,18 @@ import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import Interval from '@/components/forms/fields/interval'
 import { ActionTagsSchema, ActionTagsFormValues } from './schema'
+import Toggler from '../fields/toggler'
+import Amount from '../fields/amount'
+import { Spinner } from '@/components/ui/spinner'
 
 interface TagsActionsProps {
   onSubmit: (values: ActionTagsFormValues) => void;
   data: ActionTagsFormValues
   disabled: boolean;
+  isLoading: boolean;
 }
 
-const TagsActionsForm = ({ onSubmit, data, disabled }: TagsActionsProps) => {
+const TagsActionsForm = ({ onSubmit, data, disabled, isLoading }: TagsActionsProps) => {
   const form = useForm<ActionTagsFormValues>({
     resolver: valibotResolver(ActionTagsSchema),
     defaultValues: data,
@@ -28,9 +32,19 @@ const TagsActionsForm = ({ onSubmit, data, disabled }: TagsActionsProps) => {
 
   const isControlsDisabled = !form.watch('tags') || disabled;
 
+  function handleSubmit(values: ActionTagsFormValues) {
+    if (values.tags && !values.hashtags.length) {
+      form.setError('hashtags', {
+        message: 'Поле не может быть пустым',
+      })
+      return
+    }
+    onSubmit(values)
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
         <FormField
           control={form.control}
           name='tags'
@@ -75,8 +89,30 @@ const TagsActionsForm = ({ onSubmit, data, disabled }: TagsActionsProps) => {
             </FormItem>
           )}
         />
+        
+        <Toggler title='Подписаться по списку' name='follow' form={form} disabled={isControlsDisabled} />
 
-        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled}>Сохранить</Button>
+        <Toggler title='Пролайкать посты' name='posts_like' form={form} disabled={isControlsDisabled}>
+          <Interval fromName='posts_timeout_from' toName='posts_timeout_to' form={form} disabled={isControlsDisabled} />
+          <Amount name='posts_amount' form={form} disabled={isControlsDisabled} />
+        </Toggler>
+
+        <Toggler title='Сторис' name='stories_like' form={form} disabled={isControlsDisabled}>
+          <Interval fromName='stories_timeout_from' toName='stories_timeout_to' form={form} disabled={isControlsDisabled} />
+          <Amount name='stories_amount' form={form} disabled={isControlsDisabled} />
+        </Toggler>
+
+        <Toggler title='Поставить лайк на рилсы' name='reels_like' form={form} disabled={isControlsDisabled}>
+          <Interval fromName='reels_timeout_from' toName='reels_timeout_to' form={form} disabled={isControlsDisabled} />
+          <Amount name='reels_amount' form={form} disabled={isControlsDisabled} />
+        </Toggler>
+
+        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled || isLoading}>
+          { isLoading
+            ? <Spinner className='w-6 h-6 text-white' />
+            : 'Сохранить'
+          }
+        </Button>
       </form>
     </Form>
   )

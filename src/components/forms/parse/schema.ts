@@ -1,10 +1,10 @@
-import { pipe, boolean, object, string, type InferOutput, minLength, number } from 'valibot'
+import { boolean, object, string, type InferOutput, number } from 'valibot'
 import { mapConfigValues } from '../utils';
 import type { AccountConfig } from '@/app/types';
 
 export const ParseSchema = object({
   parsing: boolean(),
-  users: pipe(string(), minLength(1, 'Поле не может быть пустым')),
+  users: string(),
   followers: boolean(),
   followers_amount: number(),
   followings: boolean(),
@@ -22,7 +22,6 @@ export const ParseDtoToForm = (dto: AccountConfig): ParseFormValues => {
 }
 
 export const ParseDto = ({ parsing, ...parsing_config }: ParseFormValues): Pick<AccountConfig, 'parsing' | 'parsing_config'> => {
-  console.log(parsing_config.users.split(',').map((u: string) => u.trim()))
   return {
     parsing,
     parsing_config: {

@@ -1,10 +1,10 @@
 import type { AccountConfig } from '@/app/types';
-import { pipe, boolean, object, string, type InferOutput, minLength, number } from 'valibot'
+import { boolean, object, string, type InferOutput, number } from 'valibot'
 import { mapConfigValues } from '../utils';
 
 export const ActionAccountsSchema = object({
   people: boolean(),
-  users: pipe(string(), minLength(1, 'Поле не может быть пустым')),
+  users: string(),
   timeout_from: number(),
   timeout_to: number(),
   follow: boolean(),

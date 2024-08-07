@@ -9,14 +9,15 @@ import { Spinner } from '@/components/ui/spinner'
 import { useUpdateAccountMutation } from '@/app/services/accountApi'
 import type { AccountConfig } from '@/app/types'
 import { ActionTagsFormValues, TagDtoToForm, TagsDto } from '@/components/forms/action-tags/schema'
+import { ActionsInitialConfig } from '@/consts'
 
 const ActionsPage = () => {
-  const [updateAccount] = useUpdateAccountMutation();
+  const [updateAccount, { isLoading }] = useUpdateAccountMutation();
   const { id } = useParams()
   const currentAccount = useAppSelector(selectAccountById(id!))
-  const config = currentAccount?.config
+  const config = currentAccount?.config || ActionsInitialConfig
 
-  if (!config) return <Spinner />
+  if (!config || !currentAccount) return <Spinner />
 
   async function onAccountSubmit(values: ActionAccountsFormValues) {
     await handleSubmit({
@@ -42,8 +43,8 @@ const ActionsPage = () => {
   return (
     <>
       <h1 className='text-lg font-bold'>Действия</h1>
-      <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} disabled={currentAccount.status === 'working'} />
-      <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} disabled={currentAccount.status === 'working'} />
+      <AccountActionsForm onSubmit={onAccountSubmit} data={AccountDtoToForm(config)} disabled={currentAccount.status === 'working'} isLoading={isLoading} />
+      <TagsActionsForm onSubmit={onTagsSubmit} data={TagDtoToForm(config)} disabled={currentAccount.status === 'working'} isLoading={isLoading} />
     </>
   )
 }

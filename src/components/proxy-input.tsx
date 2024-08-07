@@ -92,7 +92,6 @@ const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
 
     setStatus('loading');
     checkProxyRequest(`${proxyType}${proxyValue}`).then(({ data }) => {
-      console.log(data)
       setStatus(data ? 'valid' : 'wrong');
     });
   }

@@ -1,13 +1,29 @@
 import type { AccountConfig } from '@/app/types';
-import { pipe, object, number, string, type InferOutput, minLength, boolean } from 'valibot'
+import { object, number, string, type InferOutput, boolean } from 'valibot'
 import { mapConfigValues } from '../utils';
 
 export const ActionTagsSchema = object({
   tags: boolean(),
-  hashtags: pipe(string(), minLength(1, 'Поле не может быть пустым')),
+  hashtags: string(),
   amount: number(),
   timeout_from: number(),
   timeout_to: number(),
+  follow: boolean(),
+  // Posts
+  posts_like: boolean(),
+  posts_timeout_from: number(),
+  posts_timeout_to: number(),
+  posts_amount: number(),
+  // Stories
+  stories_like: boolean(),
+  stories_timeout_from: number(),
+  stories_timeout_to: number(),
+  stories_amount: number(),
+  // Reels
+  reels_like: boolean(),
+  reels_timeout_from: number(),
+  reels_timeout_to: number(),
+  reels_amount: number(),
 })
 
 export type ActionTagsFormValues = InferOutput<typeof ActionTagsSchema>;

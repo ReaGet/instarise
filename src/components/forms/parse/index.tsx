@@ -9,14 +9,16 @@ import Amount from '@/components/forms/fields/amount'
 import { ParseSchema, ParseFormValues } from './schema'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
+import { Spinner } from '@/components/ui/spinner'
 
 interface ParseProps {
   onSubmit: (values: ParseFormValues) => void;
   data: ParseFormValues;
   disabled: boolean;
+  isLoading: boolean;
 }
 
-const ParseForm = ({ onSubmit, data, disabled }: ParseProps) => {
+const ParseForm = ({ onSubmit, data, disabled, isLoading }: ParseProps) => {
   const form = useForm<ParseFormValues>({
     resolver: valibotResolver(ParseSchema),
     defaultValues: data,
@@ -28,9 +30,19 @@ const ParseForm = ({ onSubmit, data, disabled }: ParseProps) => {
 
   const isControlsDisabled = !form.watch('parsing') || disabled;
 
+  function handleSubmit(values: ParseFormValues) {
+    if (values.parsing && !values.users.length) {
+      form.setError('users', {
+        message: 'Поле не может быть пустым',
+      })
+      return
+    }
+    onSubmit(values)
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='flex flex-col w-full max-w-[500px] gap-4'>
         <FormField
           control={form.control}
           name='parsing'
@@ -68,7 +80,12 @@ const ParseForm = ({ onSubmit, data, disabled }: ParseProps) => {
           <Amount name='followings_amount' form={form} disabled={isControlsDisabled} />
         </Toggler>
 
-        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled}>Сохранить</Button>
+        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled || isLoading}>
+          { isLoading
+            ? <Spinner className='w-6 h-6 text-white' />
+            : 'Сохранить'
+          }
+        </Button>
       </form>
     </Form>
   )

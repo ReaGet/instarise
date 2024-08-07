@@ -42,7 +42,6 @@ const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
   }
 
   async function onSubmit(values: AddAccountFormValues) {
-    console.log({ ...values, proxy })
     try {
       await login({
         group: groupId,
@@ -51,8 +50,8 @@ const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
       }).unwrap()
       onAccountAdded()
     } catch(error) {
-      const { status, data = {} } = error as ErrorRepsonseType
-      console.log(status, data)
+      // TODO: добавить обработку ошибок
+      const { status } = error as ErrorRepsonseType
       if (status === 500 || status === 'FETCH_ERROR') {
         toast()
       }

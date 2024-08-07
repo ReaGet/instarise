@@ -25,7 +25,7 @@ const SignUpForm = () => {
       await signup(values).unwrap()
       navigate(SIGNIN)
     } catch(error) {
-      console.log(error)
+      // TODO: сделать обработчик ошибок
       const { status, data: { detail } } = error as ErrorRepsonseType
       if (status === 409) {
         form.setError('username', {

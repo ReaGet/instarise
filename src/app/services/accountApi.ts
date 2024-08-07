@@ -45,10 +45,10 @@ export const accountApi = api.injectEndpoints({
       })
     }),
     updateAccount: builder.mutation<Account, Partial<Account>>({
-      query: ({ id: accountId, ...body }) => ({
-        url: `${ACCOUNT_URL}/operations/${accountId}`,
-        method: 'PUT',
-        body: body,
+      query: ({ id: accountId, config }) => ({
+        url: `${ACCOUNT_URL}/config/client/${accountId}`,
+        method: 'POST',
+        body: config,
       }),
       invalidatesTags: ['Account']
     }),

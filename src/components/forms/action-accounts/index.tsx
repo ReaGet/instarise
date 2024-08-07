@@ -10,14 +10,16 @@ import Toggler from '@/components/forms/fields/toggler'
 import Amount from '@/components/forms/fields/amount'
 import { useEffect } from 'react'
 import { ActionAccountsSchema, ActionAccountsFormValues } from './schema'
+import { Spinner } from '@/components/ui/spinner'
 
 interface AccountsActionsProps {
   onSubmit: (values: ActionAccountsFormValues) => void;
   data: ActionAccountsFormValues;
   disabled: boolean;
+  isLoading: boolean;
 }
 
-const AccountsActionsForm = ({ onSubmit, data, disabled }: AccountsActionsProps) => {
+const AccountsActionsForm = ({ onSubmit, data, disabled, isLoading }: AccountsActionsProps) => {
   const form = useForm<ActionAccountsFormValues>({
     resolver: valibotResolver(ActionAccountsSchema),
     defaultValues: data,
@@ -29,9 +31,19 @@ const AccountsActionsForm = ({ onSubmit, data, disabled }: AccountsActionsProps)
 
   const isControlsDisabled = !form.watch('people') || disabled;
 
+  function handleSubmit(values: ActionAccountsFormValues) {
+    if (values.people && !values.users.length) {
+      form.setError('users', {
+        message: 'Поле не может быть пустым',
+      })
+      return
+    }
+    onSubmit(values)
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col w-full max-w-[500px] gap-6'>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className='flex flex-col w-full max-w-[500px] gap-6'>
         <FormField
           control={form.control}
           name='people'
@@ -80,7 +92,12 @@ const AccountsActionsForm = ({ onSubmit, data, disabled }: AccountsActionsProps)
           <Amount name='reels_amount' form={form} disabled={isControlsDisabled} />
         </Toggler>
 
-        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled}>Сохранить</Button>
+        <Button type='submit' size={'lg'} className='ml-auto' disabled={disabled || isLoading}>
+          { isLoading
+            ? <Spinner className='w-6 h-6 text-white' />
+            : 'Сохранить'
+          }
+        </Button>
       </form>
     </Form>
   )

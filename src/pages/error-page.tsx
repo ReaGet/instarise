@@ -9,7 +9,6 @@ interface IError {
 
 const ErrorPage = () => {
   const error = useRouteError() as IError;
-  console.log(error)
   return (
     <main className='flex items-center justify-center w-screen h-screen px-6'>
       <div className='flex flex-col items-start justify-center gap-12 text-primary'>

@@ -30,7 +30,7 @@ const SignInForm = () => {
       
       navigate(DASHBOARD)
     } catch(error) {
-      console.log(2222, error)
+      // TODO: решить вопрос с тайпскриптом
       const { status, data = {} } = error as ErrorRepsonseType
       if (typeof data === 'object' && 'detail' in data) {
         data!.detail?.forEach(d => {
@@ -40,7 +40,6 @@ const SignInForm = () => {
           })
         })
       }
-      console.log(status)
       if (status !== 422) toast()
     }
   }
