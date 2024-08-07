@@ -1,15 +1,19 @@
 import type { Account } from '@/app/types'
 import AccountInfoForm from '@/components/forms/account-info'
+import { selectAccountById } from '@/app/features/account/accountSlice'
+import { useParams } from 'react-router-dom'
+import { useAppSelector } from '@/app/hooks'
 
-interface SidebarProps {
-  data: Account | undefined;
-}
+const InfoSidebar = () => {
+  const { id } = useParams();
+  const account = useAppSelector(selectAccountById(id!)) || {} as Account;
 
-const InfoSidebar = ({ data }: SidebarProps) => {
+  console.log(account)
+
   return (
     <aside className='w-[220px] lg:w-[250px] h-full py-6 pl-6 border-l'>
       {/* TODO: Добавить скелетон */}
-      { data && <AccountInfoForm data={data} /> }
+      { account && <AccountInfoForm data={account} /> }
     </aside>
   )
 }

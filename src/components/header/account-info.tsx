@@ -1,14 +1,15 @@
 import { useParams } from 'react-router-dom'
 import { useGetAccountDetailsQuery } from '@/app/services/accountApi';
 import { useNumberFormatter } from '@/hooks/useNumberFormatter';
+import { AccountInfoType } from '@/app/types';
 
 const AccountInfo = () => {
   const numberFormat = useNumberFormatter();
   const { id } = useParams();
-  const { data = [{ followers: 0, followings: 0 }], isLoading } = useGetAccountDetailsQuery(id!);
+  const { data = {} as AccountInfoType, isLoading } = useGetAccountDetailsQuery(id!);
 
-  const followers = isLoading ? 0 : data[0].followers || 0;
-  const followings = isLoading ? 0 : data[0].followings || 0;
+  const followers = isLoading ? 0 : data?.followers || 0;
+  const followings = isLoading ? 0 : data?.followings || 0;
 
   return (
     <div className='text-sm'>

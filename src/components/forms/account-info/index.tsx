@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import StatusBadge from '@/components/status-badge'
 import { Textarea } from '@/components/ui/textarea'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -18,18 +18,27 @@ interface SidebarProps {
 // TODO: уменьшить колечетсво рендеров
 const AccountInfoForm = ({ data }: SidebarProps) => {
   const [updateAccount, { isLoading }] = useUpdateAccountMutation()
+  const [proxy, setProxy] = useState('')
+
+  const defaultValues: AccountInfoFormValues = {
+    description: data.description || ''
+  }
 
   const form = useForm<AccountInfoFormValues>({
     resolver: valibotResolver(AccountInfoSchema),
-    defaultValues: data
+    defaultValues
   });
 
   useEffect(() => {
-    form.reset(data);
+    form.reset(defaultValues);
   }, [data]);
 
+  function handleProxyChange(newValue: string) {
+    setProxy(newValue)
+  }
+
   async function onSubmit(values: AccountInfoFormValues) {
-    await updateAccount({ ...data, ...values }).unwrap()
+    await updateAccount({ ...data, ...values, proxy }).unwrap()
     console.log(values)
   }
 
@@ -50,7 +59,7 @@ const AccountInfoForm = ({ data }: SidebarProps) => {
             </FormItem>
           )}
         />
-        <ProxyInput form={form} name='proxy' className='flex-col' />
+        <ProxyInput onChange={handleProxyChange} className='flex-col' value='' />
         <Button type='submit' size='sm' className='ml-auto w-24' disabled={isLoading}>
           { isLoading
             ? <Spinner className='w-6 h-6 text-white' />

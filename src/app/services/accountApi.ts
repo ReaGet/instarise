@@ -1,4 +1,4 @@
-import { Account, AccountConfig, AccountCredentials } from '@/app/types';
+import { Account, AccountConfig, AccountCredentials, AccountInfoType } from '@/app/types';
 import { api } from './api'
 import { AutoReplyFormValues } from '@/components/forms/auto-reply/schema';
 
@@ -120,12 +120,9 @@ export const accountApi = api.injectEndpoints({
         body: config
       })
     }),
-    getAccountDetails: builder.query<{
-      followers: number;
-      followings: number;
-    }[], string>({
+    getAccountDetails: builder.query<AccountInfoType, string>({
       query: (accountId) => ({
-        url: `${ACCOUNT_URL}/info/?client_id=${accountId}`,
+        url: `${ACCOUNT_URL}/account-info/${accountId}`,
         method: 'GET',
       })
     })

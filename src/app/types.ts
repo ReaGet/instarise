@@ -21,6 +21,11 @@ type ErrorDetailType = {
   type: string;
 }
 
+export type AccountInfoType = {
+  followers: number;
+  followings: number;
+}
+
 export type GroupType = {
   id: string;
   name: string;

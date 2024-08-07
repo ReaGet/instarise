@@ -19,6 +19,7 @@ import { useLazyCheckProxyQuery } from '@/app/services/accountApi';
 interface ProxyProps {
   onChange: (newValue: string) => void;
   className?: string;
+  value?: string;
 }
 const proxySchema = pipe(string(), minLength(1))
 const proxyCheck = (value: string) => parse(proxySchema, value)
@@ -53,9 +54,9 @@ const useProxy = () => {
   return { state, setStatus, reset };
 }
 
-const ProxyInput = ({ onChange, className = '' }: ProxyProps) => {
+const ProxyInput = ({ onChange, className = '', value = '' }: ProxyProps) => {
   const { state, setStatus, reset } = useProxy()
-  const [proxyValue, setProxyValue] = useState('')
+  const [proxyValue, setProxyValue] = useState(value)
   const [proxyType, setProxyType] = useState('socks5://')
   const [checkProxyRequest] = useLazyCheckProxyQuery();
 
