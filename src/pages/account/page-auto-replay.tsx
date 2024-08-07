@@ -4,19 +4,25 @@ import { useGetAutoReplyConfigQuery, useUpdateAutoReplyConfigMutation } from '@/
 import { useParams } from 'react-router-dom'
 import { Spinner } from '@/components/ui/spinner'
 import AutoReplayAction from '@/components/auto-reply-action'
+import { AutoReplyInitialConfig } from '@/consts'
 
 const AutoReplayPage = () => {
   const { id } = useParams()
-  const { data = [] } = useGetAutoReplyConfigQuery(id!)
-  const [updateConfig] = useUpdateAutoReplyConfigMutation()
+  let { data } = useGetAutoReplyConfigQuery(id!)
+  const [updateConfig, { isLoading }] = useUpdateAutoReplyConfigMutation()
+  data = data || AutoReplyInitialConfig
+  console.log(data)
 
-  if (data.length === 0) return <Spinner />
+  if (!data) return <Spinner />
 
   async function onSubmit(values: AutoReplyFormValues) {
     await updateConfig({
       accountId: id!,
       config: {
-        ...values,
+        text: values.text,
+        timeout: {
+          hours: values.timeout,
+        },
       }
     }).unwrap()
   }
@@ -27,7 +33,7 @@ const AutoReplayPage = () => {
         <h1 className='text-lg font-bold'>Автоответ</h1>
         <AutoReplayAction accountId={id!} />
       </div> 
-      <AutoReplyForm onSubmit={onSubmit} data={data[0]} />
+      <AutoReplyForm onSubmit={onSubmit} data={{ text: data.text, timeout: data.timeout?.hours || 1 }} isLoading={isLoading} />
     </>
   )
 }

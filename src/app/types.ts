@@ -115,7 +115,5 @@ export type AccountConfig = {
 
 export type AutoReplyConfig = {
   text: string;
-  autoReply: boolean;
-  timeout_from: number;
-  timeout_to: number;
+  timeout: Record<string, number>;
 }

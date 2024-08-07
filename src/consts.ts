@@ -1,5 +1,5 @@
 import { ActionType } from "./app/providers/actions-context";
-import { AccountConfig } from "./app/types";
+import { AccountConfig, AutoReplyConfig } from "./app/types";
 
 export const BASE_URL = '/';
 export const API_URL = 'https://instbot.ru/';
@@ -66,4 +66,9 @@ export const ActionsInitialConfig: AccountConfig = {
     followings: false,
     followings_amount: 10
   }
+}
+
+export const AutoReplyInitialConfig: AutoReplyConfig = {
+  text: '',
+  timeout: { hours: 0 },
 }

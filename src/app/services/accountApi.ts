@@ -1,6 +1,5 @@
-import { Account, AccountConfig, AccountCredentials, AccountInfoType } from '@/app/types';
+import { Account, AccountConfig, AccountCredentials, AccountInfoType, AutoReplyConfig } from '@/app/types';
 import { api } from './api'
-import { AutoReplyFormValues } from '@/components/forms/auto-reply/schema';
 
 const ACCOUNT_URL = '/clients'
 // const ACCOUNT_URL = ''
@@ -52,28 +51,22 @@ export const accountApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Account']
     }),
-    // updateConfig: builder.mutation<string, { accountId: string, body: AccountConfig }>({
-    //   query: ({ accountId, body }) => ({
-    //     url: `${ACCOUNT_URL}/operations/${accountId}`,
-    //     method: 'PUT',
-    //     body: body
-    //   })
-    // }),
-    getAutoReplyConfig: builder.query<AutoReplyFormValues[], string>({
+    getAutoReplyConfig: builder.query<AutoReplyConfig, string>({
       query: (accountId) => ({
-        url: `${ACCOUNT_URL}/autoReply/?client_id=${accountId}`,
+        url: `${ACCOUNT_URL}/config/auto-reply/${accountId}`,
         method: 'GET',
-      })
+      }),
+      providesTags: ['AutoReply'],
     }),
-    updateAutoReplyConfig: builder.mutation<string, { accountId: string, config: AutoReplyFormValues }>({
+    updateAutoReplyConfig: builder.mutation<string, { accountId: string, config: AutoReplyConfig }>({
       query: ({ accountId, config }) => ({
-        url: `${ACCOUNT_URL}/autoReply/${accountId}`,
-        method: 'PUT',
+        url: `${ACCOUNT_URL}/config/auto-reply/${accountId}`,
+        method: 'POST',
         body: {
           ...config,
-          client_id: accountId,
         },
-      })
+      }),
+      invalidatesTags: ['AutoReply'],
     }),
     getAutoReplyStatus: builder.query<{ status: boolean }[], string>({
       query: (accountId) => ({
