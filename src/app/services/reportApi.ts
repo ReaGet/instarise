@@ -8,12 +8,13 @@ export type Report = {
   id: string;
   pid: string;
   status: AccountStatus;
-  action_type: string;
-  progress: string;
+  action_type: 'action' | 'parsing';
   time_start: string;
   time_end: string;
-  errors: object;
-  output: object;
+  progress_people: string;
+  progress_hashtags: string;
+  is_error_people: boolean;
+  is_error_hashtags: boolean;
 }
 
 export const reportApi = api.injectEndpoints({
