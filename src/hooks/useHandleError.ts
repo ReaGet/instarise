@@ -3,9 +3,9 @@ import { useToast } from "@/components/ui/use-toast"
 export const useHandleError = () => {
   const { toast } = useToast()
 
-  return () => {
+  return (msg?: string) => {
     toast({
-      description: 'Ошибка сервера',
+      description: msg || 'Ошибка сервера',
     })
   }
 }

@@ -41,7 +41,7 @@ export type GroupType = {
 export type ErrorRepsonseType = {
   status: number | string;
   data: {
-    detail: ErrorDetailType[];
+    detail: ErrorDetailType[] | string;
   };
 }
 

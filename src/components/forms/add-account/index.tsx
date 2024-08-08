@@ -53,9 +53,12 @@ const AddAccountForm = ({ onAccountAdded }: { onAccountAdded: () => void }) => {
       onAccountAdded()
     } catch(error) {
       // TODO: добавить обработку ошибок
-      const { status } = error as ErrorRepsonseType
+      const { status, data: { detail } } = error as ErrorRepsonseType
       if (status === 500 || status === 'FETCH_ERROR') {
         toast()
+      }
+      if (status === 422 && typeof detail === 'string') {
+        toast(detail)
       }
     }
   }
