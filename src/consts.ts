@@ -2,7 +2,7 @@ import { ActionType } from "./app/providers/actions-context";
 import { AccountConfig, AutoReplyConfig } from "./app/types";
 
 export const BASE_URL = '/';
-export const API_URL = 'https://instbot.ru/';
+export const API_URL = 'https://instbot.ru/api';
 
 export const SIGNIN = `${BASE_URL}sign-in`;
 export const SIGNUP = `${BASE_URL}sign-up`;
