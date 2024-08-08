@@ -17,11 +17,47 @@ export type Report = {
   is_error_hashtags: boolean;
 }
 
+export type TaskLogType = {
+  follow: boolean;
+  posts_like: number;
+  stories_like: number;
+  reels_like: number;
+}
+
+export type LogsSuccessType = {
+  people: Record<string, TaskLogType>;
+  hashtags: Record<string, TaskLogType>;
+}
+
+type AccountLogErrorType = {
+  error: string;
+  follow: boolean;
+  posts_like: number;
+  stories_like: number;
+  reels_like: number;
+}
+
+export type LogsErrorType = {
+  people: Record<string, AccountLogErrorType>;
+  hashtags: Record<string, AccountLogErrorType>;
+}
+
+export type LogsType = {
+  logs: LogsSuccessType;
+  errors: LogsErrorType;
+}
+
 export const reportApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getReport: builder.query<Report[], string>({
+    getReports: builder.query<Report[], string>({
       query: (accountId) => ({
         url: `${REPORT_URL}/tasks/client/${accountId}`,
+        method: 'GET',
+      })
+    }),
+    getReportsLogs: builder.query<LogsType, string>({
+      query: (taskId) => ({
+        url: `${REPORT_URL}/tasks/logs/${taskId}`,
         method: 'GET',
       })
     })
@@ -29,5 +65,6 @@ export const reportApi = api.injectEndpoints({
 })
 
 export const {
-  useGetReportQuery
+  useGetReportsQuery,
+  useGetReportsLogsQuery,
 } = reportApi

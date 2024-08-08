@@ -12,6 +12,8 @@ import { useDateFormatter } from '@/hooks/useDateFormatter'
 import { AccountStatus } from '@/app/types'
 import { Button } from '@/components/ui/button'
 import { Info } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { ACCOUNT } from '@/consts'
 
 interface Props {
   reports: Report[]
@@ -29,15 +31,17 @@ const ActionTypeMapper = {
   parsing: 'Сбор данных',
 }
 
-const ReportProgress = ({ text, isError }: { text: string, isError: boolean}) => {
+const ReportProgress = ({ text, isError, taskId, accountId }: { text: string, isError: boolean, taskId: string, accountId: string }) => {
   if (!text) return null
 
   return (
     <div className='flex items-center gap-1'>
       { text }
       { isError && (
-        <Button variant='ghost' size='sm' className='w-7 h-7 p-0'>
-          <Info className='w-4 h-4 text-red-500' />
+        <Button variant='ghost' size='sm' className='w-7 h-7 p-0' asChild>
+          <Link to={`${ACCOUNT}/${accountId}/logs/${taskId}`}>
+            <Info className='w-4 h-4 text-red-500' />
+          </Link>
         </Button>
       )}
     </div>
@@ -68,8 +72,8 @@ const ReportsTable = ({ reports = [] }: Props) => {
             <TableCell>{ActionTypeMapper[r.action_type]}</TableCell>
             <TableCell>
               <div className='flex flex-col gap-[0.1rem]'>
-                <ReportProgress text={r.progress_people} isError={r.is_error_people} />
-                <ReportProgress text={r.progress_hashtags} isError={r.is_error_hashtags} />
+                <ReportProgress text={r.progress_people} isError={r.is_error_people} taskId={r.id} accountId={r.client_id} />
+                <ReportProgress text={r.progress_hashtags} isError={r.is_error_hashtags} taskId={r.id} accountId={r.client_id} />
               </div>
             </TableCell>
             <TableCell className='text-right'>

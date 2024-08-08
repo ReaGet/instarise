@@ -1,10 +1,10 @@
 import ReportsTable from '@/components/reports-table';
 import { useParams } from 'react-router-dom'
-import { useGetReportQuery } from '@/app/services/reportApi';
+import { useGetReportsQuery } from '@/app/services/reportApi';
 
 const AccountPage = () => {
   const { id } = useParams();
-  const { data = [] } = useGetReportQuery(id!);
+  const { data = [] } = useGetReportsQuery(id!);
 
   return (
     <>

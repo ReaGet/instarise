@@ -12,6 +12,7 @@ import ActionsPage from '@/pages/account/page-actions';
 import AutoReplyPage from '@/pages/account/page-auto-replay';
 import ParsePage from '@/pages/account/parse/page';
 import ParseResultsPage from '@/pages/account/parse/page-results';
+import LogsPage from '@/pages/account/page-logs'
 
 // const AccountPage = lazy(() => import('@/pages/account/page'))
 // const ActionsPage = lazy(() => import('@/pages/account/page-actions'))
@@ -26,11 +27,11 @@ export const routes: RouteObject[] = [
     element: <SignIn />,
     errorElement: <ErrorPage />,
   },
-  {
-    path: SIGNUP,
-    element: <SignUp />,
-    errorElement: <ErrorPage />,
-  },
+  // {
+  //   path: SIGNUP,
+  //   element: <SignUp />,
+  //   errorElement: <ErrorPage />,
+  // },
   {
     element: <MainLayout />,
     errorElement: <ErrorPage />,
@@ -61,6 +62,10 @@ export const routes: RouteObject[] = [
           {
             path: `${ACCOUNT}/:id/parse/results`,
             element: <ParseResultsPage />
+          },
+          {
+            path: `${ACCOUNT}/:id/logs/:taskId`,
+            element: <LogsPage />
           },
         ]
       }
