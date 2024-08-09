@@ -24,8 +24,8 @@ const LogsPage = () => {
 
   return (
     <div className='flex flex-col gap-9'>
-      <Button variant='outline' size='sm' className='mr-auto'>
-        <Link to={`${ACCOUNT}/${id}`}>Назад</Link>
+      <Button variant='outline' size='sm' className='p-0 mr-auto'>
+        <Link to={`${ACCOUNT}/${id}`} className='px-3'>Назад</Link>
       </Button>
       <Tabs defaultValue={hash}>
         <TabsList className="grid grid-cols-2 w-[290px]">

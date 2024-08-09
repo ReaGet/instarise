@@ -24,22 +24,27 @@ export type TaskLogType = {
   reels_like: number;
 }
 
+export type TaskErrorType = {
+  error: string
+}
+
+
 export type LogsSuccessType = {
   people: Record<string, TaskLogType>;
   hashtags: Record<string, TaskLogType>;
 }
 
-type AccountLogErrorType = {
-  error: string;
-  follow: boolean;
-  posts_like: number;
-  stories_like: number;
-  reels_like: number;
-}
+// type AccountLogErrorType = {
+//   error: string;
+//   follow: boolean;
+//   posts_like: number;
+//   stories_like: number;
+//   reels_like: number;
+// }
 
 export type LogsErrorType = {
-  people: Record<string, AccountLogErrorType>;
-  hashtags: Record<string, AccountLogErrorType>;
+  people: Record<string, TaskErrorType>;
+  hashtags: Record<string, TaskErrorType>;
 }
 
 export type LogsType = {

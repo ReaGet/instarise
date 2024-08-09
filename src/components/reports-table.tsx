@@ -45,7 +45,7 @@ const ReportProgress = ({ text, isError, data }: { text: string, isError: boolea
               <Link to={`${ACCOUNT}/${data.client_id}/logs/${data.id}#errors`}>
                 <Info className='w-4 h-4 text-red-500' />
               </Link>
-            ) : <Info className='w-4 h-4 text-red-500' />
+            ) : <div><Info className='w-4 h-4 text-red-500' /></div>
           }
         </Button>
       )}
