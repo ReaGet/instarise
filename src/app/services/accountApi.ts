@@ -122,7 +122,7 @@ export const accountApi = api.injectEndpoints({
       query: (accountId) => ({
         url: `${ACCOUNT_URL}/account-info/${accountId}`,
         method: 'GET',
-      })
+      }),
     }),
     updateAccountInfo: builder.mutation<string, { accountId: string, details: AccountDetailsType }>({
       query: ({ accountId, details }) => ({

@@ -11,7 +11,7 @@ import type { Report } from '@/app/services/reportApi'
 import { useDateFormatter } from '@/hooks/useDateFormatter'
 import { AccountStatus } from '@/app/types'
 import { Button } from '@/components/ui/button'
-import { Info } from 'lucide-react'
+import { ChevronRight, Info } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 
@@ -31,17 +31,22 @@ const ActionTypeMapper = {
   parsing: 'Сбор данных',
 }
 
-const ReportProgress = ({ text, isError, taskId, accountId }: { text: string, isError: boolean, taskId: string, accountId: string }) => {
+const ReportProgress = ({ text, isError, data }: { text: string, isError: boolean, data: Report }) => {
   if (!text) return null
+  const isCanSeeLogs = ['finished', 'paused'].includes(data.status)
 
   return (
     <div className='flex items-center gap-1'>
       { text }
       { isError && (
-        <Button variant='ghost' size='sm' className='w-7 h-7 p-0' asChild>
-          <Link to={`${ACCOUNT}/${accountId}/logs/${taskId}`}>
-            <Info className='w-4 h-4 text-red-500' />
-          </Link>
+        <Button variant='ghost' size='sm' className='shrink-0 w-7 h-7 p-0' asChild>
+          { isCanSeeLogs
+            ? (
+              <Link to={`${ACCOUNT}/${data.client_id}/logs/${data.id}#errors`}>
+                <Info className='w-4 h-4 text-red-500' />
+              </Link>
+            ) : <Info className='w-4 h-4 text-red-500' />
+          }
         </Button>
       )}
     </div>
@@ -57,8 +62,8 @@ const ReportsTable = ({ reports = [] }: Props) => {
       )}
       <TableHeader>
         <TableRow>
-          <TableHead className='w-[200px]'>Время и дата начала</TableHead>
-          <TableHead className='w-[200px]'>Тип задачи</TableHead>
+          <TableHead className='w-[180px]'>Время и дата начала</TableHead>
+          <TableHead className='w-[100px]'>Тип задачи</TableHead>
           <TableHead>Прогресс</TableHead>
           <TableHead className='text-right'>Статус задачи</TableHead>
         </TableRow>
@@ -71,16 +76,25 @@ const ReportsTable = ({ reports = [] }: Props) => {
             <TableCell>{format(r.time_start)}</TableCell>
             <TableCell>{ActionTypeMapper[r.action_type]}</TableCell>
             <TableCell>
-              <div className='flex flex-col gap-[0.1rem]'>
-                <ReportProgress text={r.progress_people} isError={r.is_error_people} taskId={r.id} accountId={r.client_id} />
-                <ReportProgress text={r.progress_hashtags} isError={r.is_error_hashtags} taskId={r.id} accountId={r.client_id} />
+              <div className='flex flex-col'>
+                <ReportProgress text={r.progress_people} isError={r.is_error_people} data={r} />
+                <ReportProgress text={r.progress_hashtags} isError={r.is_error_hashtags} data={r} />
               </div>
             </TableCell>
-            <TableCell className='text-right'>
-              { Status[r.status] }
-              { r.status === 'finished' && (
-                <span className='ml-2'>({ format(r.time_end) })</span>
-              ) }
+            <TableCell>
+              <div className='flex items-center justify-end'>
+                { Status[r.status] }
+                { r.status === 'finished' && (
+                  <span className='ml-2'>({ format(r.time_end) })</span>
+                ) }
+                { ['finished', 'paused'].includes(r.status) && (
+                  <Button variant='ghost' size='sm' className='shrink-0 w-7 h-7 p-0 ml-1' asChild>
+                    <Link to={`${ACCOUNT}/${r.client_id}/logs/${r.id}`}>
+                      <ChevronRight className='w-4 h-4' />
+                    </Link>
+                  </Button>
+                )}
+              </div>
             </TableCell>
           </TableRow>
         )

@@ -51,7 +51,7 @@ const ParseForm = ({ onSubmit, data, disabled, isLoading }: ParseProps) => {
               <FormControl>
                 <div className="flex items-center gap-2">
                   <Switch id={field.name} name={field.name} checked={field.value} onCheckedChange={field.onChange} disabled={disabled} />
-                  <Label htmlFor={field.name}>Теги</Label>
+                  <Label htmlFor={field.name}>Люди</Label>
                 </div>
               </FormControl>
               <FormMessage />

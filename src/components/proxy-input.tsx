@@ -145,7 +145,13 @@ const ProxyInput = ({ onChange, className = '', value = '', disabled = false }: 
           </Select>
         </div>
         <div className='relative flex items-center flex-1'>
-          <Input className='py-4' value={proxyValue} onChange={(event) => handleProxyChange(event.target.value)} disabled={disabled} />
+          <Input
+            className='py-4'
+            value={proxyValue}
+            onChange={(event) => handleProxyChange(event.target.value)}
+            disabled={disabled}
+            placeholder='user:pass@ip:port'
+          />
           { isValidProxyValue && (
             <Button
               className={cn(

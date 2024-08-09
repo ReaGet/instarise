@@ -1,6 +1,7 @@
 import type { AccountConfig } from '@/app/types';
 import { object, number, string, type InferOutput, boolean } from 'valibot'
 import { mapConfigValues } from '../utils';
+import { arrayToString, stringToArray } from '@/lib/utils';
 
 export const ActionTagsSchema = object({
   tags: boolean(),
@@ -32,7 +33,7 @@ export const TagDtoToForm = (dto: AccountConfig): ActionTagsFormValues => {
   return {
     ...mapConfigValues(dto.hashtags_config),
     tags: dto.hashtags,
-    hashtags: dto.hashtags_config.hashtags.join(', '),
+    hashtags: arrayToString(dto.hashtags_config.hashtags),
   }
 }
 
@@ -41,7 +42,7 @@ export const TagsDto = ({ tags, ...hashtag_config }: ActionTagsFormValues): Pick
     hashtags: tags,
     hashtags_config: {
       ...hashtag_config,
-      hashtags: hashtag_config.hashtags.split(',').map((u: string) => u.trim()),
+      hashtags: stringToArray(hashtag_config.hashtags),
     }
   }
 }

@@ -1,6 +1,7 @@
-import type { AccountConfig } from '@/app/types';
+import type { AccountConfig } from '@/app/types'
 import { boolean, object, string, type InferOutput, number } from 'valibot'
-import { mapConfigValues } from '../utils';
+import { mapConfigValues } from '../utils'
+import { arrayToString, stringToArray } from '@/lib/utils'
 
 export const ActionAccountsSchema = object({
   people: boolean(),
@@ -31,7 +32,7 @@ export const AccountDtoToForm = (dto: AccountConfig): ActionAccountsFormValues =
   return {
     ...mapConfigValues(dto.people_config),
     people: dto.people,
-    users: dto.people_config.users.join(', '),
+    users: arrayToString(dto.people_config.users),
   }
 }
 
@@ -40,7 +41,7 @@ export const AccountsDto = ({ people, ...people_config }: ActionAccountsFormValu
     people,
     people_config: {
       ...people_config,
-      users: people_config.users.split(',').map((u: string) => u.trim()),
+      users: stringToArray(people_config.users),
     }
   }
 }

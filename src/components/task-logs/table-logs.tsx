@@ -8,6 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { mapHashtagLogs, mapPeopleLogs } from './utils'
 
 type Props = {
   data: LogsSuccessType
@@ -17,51 +24,65 @@ const dataExists = (data: object = {}) => {
   return data && Object.keys(data).length > 0
 }
 
-// const taskMapper = {
-//   follow: 'Подписаться',
-//   posts_like: 'Пролайкано постов',
-//   stories_like: 'Пролайкано сторис',
-//   reels_like: 'Пролайкано рилсов',
-// }
-
 const LogsBlock = <T extends object, K extends keyof T>({ data, type }: { data: T; type: K }) => {
-  const entries: [string, TaskLogType][] = Object.entries(data)
+  let entries: [string, TaskLogType][] = []
+  const isPeople = type === 'people'
+
+  if (isPeople) {
+    entries = mapPeopleLogs(data)
+    console.log('people', entries)
+  } else {
+    entries = mapHashtagLogs(data)
+  }
+
   return (
-    <div className='flex flex-col py-3 _px-4 _border rounded-md'>
-      {/* <h3 className='px-2 text-base font-semibold'>{type === 'people' ? 'Люди' : 'Теги'}</h3> */}
-
+    <div className='flex flex-col'>
       <Table className='mt-1'>
-      <TableCaption>Действия по { type === 'people' ? 'людям' : 'тегам' }</TableCaption>
-      { !entries.length && (
-        <TableCaption key='caption'>Пусто</TableCaption>
-      )}
-      <TableHeader className='text-xs'>
-        <TableRow>
-          <TableHead>Аккаунт</TableHead>
-          <TableHead>Подписка</TableHead>
-          <TableHead className='text-center'>Лайки (посты)</TableHead>
-          <TableHead className='text-center'>Лайки (сторис)</TableHead>
-          <TableHead className='text-center'>Лайки (рилсы)</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-
-      { entries.map(([key, taskInfo]) => {
-        if (!dataExists(taskInfo)) return <TableRow key={key}></TableRow>
-
-        return (
-          <TableRow key={key} className='text-xs'>
-            <TableCell>@{key}</TableCell>
-            <TableCell>{taskInfo.follow ? 'Подписано' : ''}</TableCell>
-            <TableCell className='text-center'>{taskInfo.posts_like}</TableCell>
-            <TableCell className='text-center'>{taskInfo.stories_like}</TableCell>
-            <TableCell className='text-center'>{taskInfo.reels_like}</TableCell>
+        { !entries.length && (
+          <TableCaption key='caption'>Пусто</TableCaption>
+        )}
+        <TableHeader className='text-xs'>
+          <TableRow>
+            <TableHead>{ isPeople ? 'Аккаунт' : 'Хештег' }</TableHead>
+            <TableHead>Подписка</TableHead>
+            <TableHead className='text-center'>Лайки (посты)</TableHead>
+            <TableHead className='text-center'>Лайки (сторис)</TableHead>
+            <TableHead className='text-center'>Лайки (рилсы)</TableHead>
           </TableRow>
-        )
-      })}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+
+        { entries.map(([key, taskInfo], i) => {
+          if (!dataExists(taskInfo)) return <TableRow key={key}></TableRow>
+
+          return (
+            <TableRow key={i} className='text-xs'>
+              <TableCell>{isPeople ? '@' : '#' }{key}</TableCell>
+              <TableCell>{taskInfo.follow}</TableCell>
+              <TableCell className='text-center'>{taskInfo.posts_like}</TableCell>
+              <TableCell className='text-center'>{taskInfo?.stories_like}</TableCell>
+              <TableCell className='text-center'>{taskInfo.reels_like}</TableCell>
+            </TableRow>
+          )
+        })}
+        </TableBody>
+      </Table>
     </div>
+  )
+}
+
+const LogsBlockCard = <T extends object, K extends keyof T>({ data, type }: { data: T; type: K }) => {
+  if (!data) return null
+
+  return (
+    <Card>
+      <CardHeader className='pb-3'>
+        <CardTitle>По { type === 'people' ? 'людям' : 'тегам' }</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <LogsBlock data={data} type={type} />
+      </CardContent>
+    </Card>
   )
 }
 
@@ -70,9 +91,8 @@ const TableLogs = ({ data }: Props) => {
 
   return (
     <section className='flex flex-col gap-5'>
-      <h2 className='-mb-5 text-sm font-bold'>Выполнено</h2>
-      { dataExists(people) && <LogsBlock data={people} type='people' /> }
-      { dataExists(hashtags) && <LogsBlock data={hashtags} type='hashtags' /> }
+      <LogsBlockCard data={people} type='people' />
+      <LogsBlockCard data={hashtags} type='hashtags' />
     </section>
   )
 }
