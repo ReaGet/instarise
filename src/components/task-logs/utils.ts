@@ -25,8 +25,7 @@ export const mapHashtagLogs = <T extends object>(data: T) => {
 
 export const mapHashtagErrors = <T extends object>(data: T) => {
   return Object.entries(data).map(([hashtag, error]) => {
-    const _error = typeof error === 'string' ? { error } : { ...error }
-    // console.log(111, hashtag, _error)
+    let _error = typeof error === 'string' ? { error } : { ...error }
     return [hashtag, _error]
   }) as [string, TaskLogType][]
 }

@@ -19,7 +19,7 @@ interface ActionsProps {
 const AccountActions = ({ accountId, status }: ActionsProps) => {
   const { onAction } = useActionsContext()
 
-  const skippingActions = status === 'stopped'
+  const skippingActions = ['stopped', 'finished'].includes(status)
     ? ['stop', 'pause']
     : status === 'paused' ? ['pause'] : ['start'];
   const filteredActions = ACCOUNT_ACTIONS.filter(a => !skippingActions.includes(a.value))

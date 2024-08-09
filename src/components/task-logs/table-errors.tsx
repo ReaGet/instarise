@@ -29,9 +29,9 @@ const LogsBlock = <T extends object, K extends keyof T>({ data, type }: { data: 
   const isPeople = type === 'people'
 
   if (isPeople) {
-    entries = mapPeopleLogs(data)
+    entries = mapPeopleLogs(data).filter(([, data]) => dataExists(data))
   } else {
-    entries = mapHashtagErrors(data)
+    entries = mapHashtagErrors(data).filter(([, data]) => dataExists(data))
   }
 
   return (

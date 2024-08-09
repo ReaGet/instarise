@@ -35,7 +35,7 @@ const AutoReplayAction = ({ accountId }: { accountId: string }) => {
   const buttonProps = getVariant(isWorking)
 
   const isLoading = isStatusLoading || isStartLoading || isStopLoading
-  
+  // TODO: Нужно, чтобы бэк возвращал сообщение, если конфиг пустой. И тут, и в задачах
   async function handleClick() {
     if (isWorking) await stop([accountId]).unwrap();
     else await start([accountId]).unwrap();

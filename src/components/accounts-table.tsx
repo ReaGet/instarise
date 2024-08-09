@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom'
 import { ACCOUNT } from '@/consts'
 import type { Account } from '@/app/types'
 import { useActionsContext } from '@/app/providers/actions-context'
+import AutoReplayAction from './auto-reply-action'
 
 interface Props {
   accounts: Account[]
@@ -54,9 +55,10 @@ const AccountsTable = ({ accounts = [] }: Props) => {
             />
           </TableHead>
           <TableHead className='w-[200px]'>Название</TableHead>
-          <TableHead className='w-[600px]'>Описание</TableHead>
+          <TableHead className='w-[500px]'>Описание</TableHead>
           <TableHead>Прокси</TableHead>
           <TableHead>Статус</TableHead>
+          <TableHead>Автоответ</TableHead>
           <TableHead className='text-right'>Действие</TableHead>
         </TableRow>
       </TableHeader>
@@ -80,6 +82,9 @@ const AccountsTable = ({ accounts = [] }: Props) => {
               <TableCell>{a.proxy}</TableCell>
               <TableCell>
                 <StatusBadge status={a.status} />
+              </TableCell>
+              <TableCell>
+                <AutoReplayAction accountId={a.id} />
               </TableCell>
               <TableCell className='text-right'>
                 <AccountActions accountId={a.id} status={a.status} />
