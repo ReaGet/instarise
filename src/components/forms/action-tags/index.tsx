@@ -12,6 +12,7 @@ import { ActionTagsSchema, ActionTagsFormValues } from './schema'
 import Toggler from '../fields/toggler'
 import Amount from '../fields/amount'
 import { Spinner } from '@/components/ui/spinner'
+import { handleNumberValue } from '../fields/utils'
 
 interface TagsActionsProps {
   onSubmit: (values: ActionTagsFormValues) => void;
@@ -83,7 +84,12 @@ const TagsActionsForm = ({ onSubmit, data, disabled, isLoading }: TagsActionsPro
             <FormItem>
               <FormLabel>Глубина выполнения</FormLabel>
               <FormControl>
-                <Input type='number' {...field} disabled={isControlsDisabled} className='max-w-[200px]' />
+                <Input
+                  type='number'
+                  {...field} onChange={(e) => field.onChange(handleNumberValue(e.target.value))}
+                  disabled={isControlsDisabled}
+                  className='max-w-[200px]'
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
