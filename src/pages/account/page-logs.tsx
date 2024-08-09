@@ -1,8 +1,8 @@
 import { useGetReportsLogsQuery } from '@/app/services/reportApi';
 import { Spinner } from '@/components/ui/spinner';
 import { Link, useParams } from 'react-router-dom';
-import TableLogs from '@/components/logs/table-logs';
-import TableErrors from '@/components/logs/table-errors';
+import TableLogs from '@/components/task-logs/table-logs';
+import TableErrors from '@/components/task-logs/table-errors';
 import { Button } from '@/components/ui/button';
 import { ACCOUNT } from '@/consts';
 
