@@ -29,17 +29,16 @@ const LogsBlock = <T extends object, K extends keyof T>({ data, type }: { data: 
   const isPeople = type === 'people'
 
   if (isPeople) {
-    entries = mapPeopleLogs(data)
-    console.log('people', entries)
+    entries = mapPeopleLogs(data).filter(([, info]) => dataExists(info))
   } else {
-    entries = mapHashtagLogs(data)
+    entries = mapHashtagLogs(data).filter(([, info]) => dataExists(info))
   }
 
   return (
     <div className='flex flex-col'>
       <Table className='mt-1'>
         { !entries.length && (
-          <TableCaption key='caption'>Пусто</TableCaption>
+          <TableCaption key='caption'>Нет данных</TableCaption>
         )}
         <TableHeader className='text-xs'>
           <TableRow>

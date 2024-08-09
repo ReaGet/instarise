@@ -60,6 +60,10 @@ export const routes: RouteObject[] = [
             element: <ParsePage />
           },
           {
+            path: `${ACCOUNT}/:id/parse/:taskId`,
+            element: <ParseResultsPage />
+          },
+          {
             path: `${ACCOUNT}/:id/parse/results`,
             element: <ParseResultsPage />
           },

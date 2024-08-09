@@ -52,6 +52,28 @@ export type LogsType = {
   errors: LogsErrorType;
 }
 
+export type ParseSuccessType = {
+  parsing: {
+    [accountName: string]: {
+      followers?: string[];
+      followings?: string[];
+    }
+  }
+}
+
+export type ParseErrorType = {
+  parsing: {
+    [accountName: string]: {
+      error: string;
+    }
+  }
+}
+
+export type ParseType = {
+  logs: ParseSuccessType;
+  errors: ParseErrorType;
+}
+
 export const reportApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getReports: builder.query<Report[], string>({
@@ -65,6 +87,12 @@ export const reportApi = api.injectEndpoints({
         url: `${REPORT_URL}/tasks/logs/${taskId}`,
         method: 'GET',
       })
+    }),
+    getReportsParseLogs: builder.query<ParseType, string>({
+      query: (taskId) => ({
+        url: `${REPORT_URL}/tasks/logs/${taskId}`,
+        method: 'GET',
+      })
     })
   }),
 })
@@ -72,4 +100,5 @@ export const reportApi = api.injectEndpoints({
 export const {
   useGetReportsQuery,
   useGetReportsLogsQuery,
+  useGetReportsParseLogsQuery,
 } = reportApi

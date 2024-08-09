@@ -34,6 +34,7 @@ const ActionTypeMapper = {
 const ReportProgress = ({ text, isError, data }: { text: string, isError: boolean, data: Report }) => {
   if (!text) return null
   const isCanSeeLogs = ['finished', 'paused'].includes(data.status)
+  const link = data.action_type === 'parsing' ? 'parse' : 'logs'
 
   return (
     <div className='flex items-center gap-1'>
@@ -42,7 +43,7 @@ const ReportProgress = ({ text, isError, data }: { text: string, isError: boolea
         <Button variant='ghost' size='sm' className='shrink-0 w-7 h-7 p-0' asChild>
           { isCanSeeLogs
             ? (
-              <Link to={`${ACCOUNT}/${data.client_id}/logs/${data.id}#errors`}>
+              <Link to={`${ACCOUNT}/${data.client_id}/${link}/${data.id}#errors`}>
                 <Info className='w-4 h-4 text-red-500' />
               </Link>
             ) : <div><Info className='w-4 h-4 text-red-500' /></div>
@@ -71,6 +72,8 @@ const ReportsTable = ({ reports = [] }: Props) => {
       <TableBody>
 
       { reports.map((r) => {
+        const link = r.action_type === 'parsing' ? 'parse' : 'logs'
+
         return (
           <TableRow key={r.id} className='text-xs'>
             <TableCell>{format(r.time_start)}</TableCell>
@@ -89,7 +92,7 @@ const ReportsTable = ({ reports = [] }: Props) => {
                 ) }
                 { ['finished', 'paused'].includes(r.status) && (
                   <Button variant='ghost' size='sm' className='shrink-0 w-7 h-7 p-0 ml-1' asChild>
-                    <Link to={`${ACCOUNT}/${r.client_id}/logs/${r.id}`}>
+                    <Link to={`${ACCOUNT}/${r.client_id}/${link}/${r.id}`}>
                       <ChevronRight className='w-4 h-4' />
                     </Link>
                   </Button>
